@@ -1,19 +1,36 @@
 {
   "name": "sustambitech-bi",
-  "version": "1.0.0",
-  "description": "SustAmbiTech - Plataforma de Sustentabilidade Ambiental com BI",
+  "version": "2.0.0",
+  "description": "SustAmbiTech Eletropostos — Plataforma de Postos de Recarga EV com BI | by Kayham",
   "scripts": {
-    "dev": "vite",
-    "dev:sandbox": "wrangler pages dev dist --ip 0.0.0.0 --port 3000",
-    "dev:d1": "wrangler pages dev dist --d1=sustambitech-production --local --ip 0.0.0.0 --port 3000",
-    "build": "vite build",
-    "preview": "wrangler pages dev dist",
-    "deploy": "npm run build && wrangler pages deploy dist",
-    "cf-typegen": "wrangler types --env-interface CloudflareBindings",
-    "db:migrate:local": "wrangler d1 migrations apply sustambitech-production --local",
-    "db:migrate:prod": "wrangler d1 migrations apply sustambitech-production",
-    "db:seed:local": "wrangler d1 execute sustambitech-production --local --file=./seed.sql",
-    "db:reset": "rm -rf .wrangler/state/v3/d1 && npm run db:migrate:local && npm run db:seed:local"
+    "dev":              "vite",
+    "build":            "vite build",
+
+    "dev:local":        "npm run build && wrangler pages dev dist --d1=sustambitech-production --local --ip 0.0.0.0 --port 3000",
+    "dev:pm2":          "pm2 start ecosystem.config.cjs",
+    "dev:stop":         "pm2 delete all",
+    "dev:logs":         "pm2 logs sustambitech-bi --nostream",
+
+    "db:schema:local":  "wrangler d1 execute sustambitech-production --local --file=./migrations/0001_initial_schema.sql",
+    "db:seed:local":    "wrangler d1 execute sustambitech-production --local --file=./seed.sql",
+    "db:reset:local":   "rimraf .wrangler/state/v3/d1 && npm run db:schema:local && npm run db:seed:local",
+    "db:query:local":   "wrangler d1 execute sustambitech-production --local --command",
+    "db:stats:local":   "wrangler d1 execute sustambitech-production --local --command=\"SELECT 'postos' as tabela, COUNT(*) as total FROM postos_recarga UNION SELECT 'conectores', COUNT(*) FROM dim_conectores UNION SELECT 'usuarios', COUNT(*) FROM usuarios UNION SELECT 'avaliacoes', COUNT(*) FROM avaliacoes_postos\"",
+
+    "db:create:prod":   "wrangler d1 create sustambitech-production",
+    "db:schema:prod":   "wrangler d1 execute sustambitech-production --file=./migrations/0001_initial_schema.sql",
+    "db:seed:prod":     "wrangler d1 execute sustambitech-production --file=./seed.sql",
+    "db:query:prod":    "wrangler d1 execute sustambitech-production --command",
+    "db:stats:prod":    "wrangler d1 execute sustambitech-production --command=\"SELECT 'postos' as tabela, COUNT(*) as total FROM postos_recarga UNION SELECT 'conectores', COUNT(*) FROM dim_conectores UNION SELECT 'usuarios', COUNT(*) FROM usuarios UNION SELECT 'avaliacoes', COUNT(*) FROM avaliacoes_postos\"",
+
+    "deploy":           "npm run build && wrangler pages deploy dist --project-name sustambitech",
+    "deploy:prod":      "npm run build && wrangler pages deploy dist --project-name sustambitech-bi",
+    "preview":          "npm run build && wrangler pages dev dist",
+    "whoami":           "wrangler whoami",
+
+    "git:status":       "git status",
+    "git:log":          "git log --oneline -10",
+    "git:push":         "git push origin main"
   },
   "dependencies": {
     "hono": "^4.6.0"

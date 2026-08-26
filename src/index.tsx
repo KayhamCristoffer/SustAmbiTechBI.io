@@ -2,1581 +2,815 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { serveStatic } from 'hono/cloudflare-workers'
 
-type Bindings = {
-  DB: D1Database
-}
-
+type Bindings = { DB: D1Database }
 const app = new Hono<{ Bindings: Bindings }>()
 
-// CORS para integração com Power BI
-app.use('/*', cors({
-  origin: '*',
-  allowMethods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowHeaders: ['Content-Type', 'Authorization']
-}))
-
-// Servir arquivos estáticos
-app.use('/static/*', serveStatic({ root: './' }))
+app.use('/api/*', cors())
+app.use('/static/*', serveStatic({ root: './public' }))
 
 // ============================================================
-// FUNÇÕES UTILITÁRIAS
+// HELPERS
 // ============================================================
-
-function toCSV(data: any[], columns?: string[]): string {
-  if (!data || data.length === 0) return ''
-  const keys = columns || Object.keys(data[0])
-  const header = keys.join(',')
-  const rows = data.map(row =>
-    keys.map(k => {
-      const v = row[k]
-      if (v === null || v === undefined) return ''
-      const str = String(v)
-      return str.includes(',') || str.includes('"') || str.includes('\n')
-        ? `"${str.replace(/"/g, '""')}"` : str
-    }).join(',')
-  )
-  return [header, ...rows].join('\n')
+function toCsv(rows: Record<string, unknown>[]): string {
+  if (!rows.length) return ''
+  const keys = Object.keys(rows[0])
+  const lines = [keys.join(','), ...rows.map(r => keys.map(k => `"${String(r[k] ?? '').replace(/"/g, '""')}"`).join(','))]
+  return lines.join('\n')
+}
+function jsonOrCsv(c: any, rows: Record<string, unknown>[]) {
+  if (c.req.query('format') === 'csv') {
+    c.header('Content-Type', 'text/csv; charset=utf-8')
+    c.header('Content-Disposition', 'attachment; filename="export.csv"')
+    return c.body(toCsv(rows))
+  }
+  return c.json({ total: rows.length, data: rows })
 }
 
 // ============================================================
-// PÁGINA PRINCIPAL - DASHBOARD
-// ============================================================
-app.get('/', (c) => {
-  return c.html(htmlDashboard())
-})
-
-// Mapa Mental
-app.get('/mindmap', (c) => {
-  return c.html(htmlMindMap())
-})
-
-// ============================================================
-// APIs REST - DADOS PARA POWER BI
+// API ROUTES
 // ============================================================
 
-// --- RESUMO GERAL (KPIs) ---
-app.get('/api/kpis', async (c) => {
-  try {
-    const db = c.env.DB
-    const [
-      usuarios,
-      denuncias,
-      reciclagem,
-      educacao,
-      ecopontos,
-      alertas
-    ] = await Promise.all([
-      db.prepare('SELECT COUNT(*) as total, SUM(pontos_sustentabilidade) as total_pontos FROM dim_usuarios WHERE ativo=1').first(),
-      db.prepare("SELECT COUNT(*) as total, SUM(CASE WHEN status='resolvido' THEN 1 ELSE 0 END) as resolvidas FROM fato_denuncias").first(),
-      db.prepare('SELECT COUNT(*) as coletas, ROUND(SUM(quantidade_kg),2) as total_kg, ROUND(SUM(co2_evitado_kg),2) as co2_evitado FROM fato_reciclagem').first(),
-      db.prepare('SELECT COUNT(*) as total, SUM(CASE WHEN concluido=1 THEN 1 ELSE 0 END) as concluidas, SUM(pontuacao) as total_pontos FROM fato_educacao_ambiental').first(),
-      db.prepare('SELECT COUNT(*) as total, SUM(CASE WHEN ativo=1 THEN 1 ELSE 0 END) as ativos FROM fato_ecopontos').first(),
-      db.prepare("SELECT COUNT(*) as total, SUM(CASE WHEN severidade='critico' THEN 1 ELSE 0 END) as criticos FROM tb_alertas WHERE ativo=1").first()
-    ])
-    return c.json({ usuarios, denuncias, reciclagem, educacao, ecopontos, alertas })
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
+app.get('/api/postos', async (c) => {
+  const { cidade, tipo, ativo, conector, limit = '100', offset = '0' } = c.req.query() as Record<string, string>
+  let sql = `SELECT p.*, ROUND(AVG(a.nota),1) as media_nota, COUNT(DISTINCT a.id) as total_avaliacoes,
+    GROUP_CONCAT(DISTINCT c.codigo) as conectores, COUNT(DISTINCT pc.id) as num_tomadas
+    FROM postos_recarga p
+    LEFT JOIN avaliacoes_postos a ON p.id = a.posto_id
+    LEFT JOIN postos_conectores pc ON p.id = pc.posto_id
+    LEFT JOIN dim_conectores c ON pc.conector_id = c.id
+    WHERE 1=1`
+  const params: unknown[] = []
+  if (cidade) { sql += ' AND LOWER(p.cidade) LIKE LOWER(?)'; params.push(`%${cidade}%`) }
+  if (tipo) { sql += ' AND p.tipo_ponto = ?'; params.push(tipo) }
+  if (ativo !== undefined) { sql += ' AND p.ativo = ?'; params.push(ativo === 'true' || ativo === '1' ? 1 : 0) }
+  if (conector) { sql += ' AND c.codigo = ?'; params.push(conector.toUpperCase()) }
+  sql += ' GROUP BY p.id ORDER BY p.nome LIMIT ? OFFSET ?'
+  params.push(parseInt(limit), parseInt(offset))
+  const rows = (await c.env.DB.prepare(sql).bind(...params).all()).results
+  return jsonOrCsv(c, rows as Record<string, unknown>[])
 })
 
-// --- QUALIDADE DO AR ---
-app.get('/api/qualidade-ar', async (c) => {
-  try {
-    const limit = Number(c.req.query('limit') || 100)
-    const format = c.req.query('format') || 'json'
-    const data = await c.env.DB.prepare(`
-      SELECT q.*, r.nome as regiao_nome, r.estado, r.regiao_brasil
-      FROM fato_qualidade_ar q
-      LEFT JOIN dim_regioes r ON q.regiao_id = r.id
-      ORDER BY q.data_medicao DESC LIMIT ?
-    `).bind(limit).all()
-    if (format === 'csv') {
-      c.header('Content-Type', 'text/csv')
-      c.header('Content-Disposition', 'attachment; filename="qualidade_ar.csv"')
-      return c.text(toCSV(data.results))
-    }
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
+app.get('/api/postos/:id', async (c) => {
+  const id = c.req.param('id')
+  const posto = await c.env.DB.prepare(`
+    SELECT p.*, GROUP_CONCAT(DISTINCT c.codigo) as conectores,
+    ROUND(AVG(a.nota),1) as media_nota, COUNT(DISTINCT a.id) as total_avaliacoes
+    FROM postos_recarga p
+    LEFT JOIN postos_conectores pc ON p.id = pc.posto_id
+    LEFT JOIN dim_conectores c ON pc.conector_id = c.id
+    LEFT JOIN avaliacoes_postos a ON p.id = a.posto_id
+    WHERE p.id = ? GROUP BY p.id
+  `).bind(id).first()
+  if (!posto) return c.json({ error: 'Posto não encontrado' }, 404)
+  const avaliacoes = (await c.env.DB.prepare('SELECT * FROM avaliacoes_postos WHERE posto_id = ? ORDER BY data_avaliacao DESC').bind(id).all()).results
+  return c.json({ ...posto, avaliacoes })
 })
 
-// --- QUALIDADE DA ÁGUA ---
-app.get('/api/qualidade-agua', async (c) => {
-  try {
-    const limit = Number(c.req.query('limit') || 100)
-    const format = c.req.query('format') || 'json'
-    const data = await c.env.DB.prepare(`
-      SELECT q.*, r.nome as regiao_nome, r.estado, r.regiao_brasil
-      FROM fato_qualidade_agua q
-      LEFT JOIN dim_regioes r ON q.regiao_id = r.id
-      ORDER BY q.data_medicao DESC LIMIT ?
-    `).bind(limit).all()
-    if (format === 'csv') {
-      c.header('Content-Type', 'text/csv')
-      c.header('Content-Disposition', 'attachment; filename="qualidade_agua.csv"')
-      return c.text(toCSV(data.results))
-    }
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
+app.get('/api/resumo', async (c) => {
+  const [total, cidades, conectores, tiposCount, kpis] = await Promise.all([
+    c.env.DB.prepare(`SELECT COUNT(*) as total, SUM(CASE WHEN ativo=1 THEN 1 ELSE 0 END) as ativos FROM postos_recarga WHERE tipo_ponto='Posto Eletro'`).first(),
+    c.env.DB.prepare(`SELECT cidade, COUNT(*) as quantidade FROM postos_recarga WHERE tipo_ponto='Posto Eletro' AND ativo=1 GROUP BY cidade ORDER BY quantidade DESC`).all(),
+    c.env.DB.prepare(`SELECT c.codigo, c.nome, c.corrente, c.nivel, c.potencia_max_kw, c.descricao, COUNT(DISTINCT pc.posto_id) as num_postos, SUM(pc.quantidade) as total_tomadas FROM postos_conectores pc JOIN dim_conectores c ON pc.conector_id = c.id GROUP BY c.id ORDER BY num_postos DESC`).all(),
+    c.env.DB.prepare(`SELECT tipo_ponto, COUNT(*) as qtd FROM postos_recarga GROUP BY tipo_ponto`).all(),
+    c.env.DB.prepare(`SELECT * FROM kpis_ev`).all()
+  ])
+  return c.json({ resumo: total, por_cidade: cidades.results, conectores: conectores.results, tipos: tiposCount.results, kpis: kpis.results })
 })
 
-// --- CONSUMO DE ENERGIA ---
-app.get('/api/energia', async (c) => {
-  try {
-    const limit = Number(c.req.query('limit') || 200)
-    const format = c.req.query('format') || 'json'
-    const data = await c.env.DB.prepare(`
-      SELECT e.*, r.nome as regiao_nome, r.estado, r.regiao_brasil,
-             f.nome as fonte_nome, f.tipo as fonte_tipo, f.renovavel
-      FROM fato_consumo_energia e
-      LEFT JOIN dim_regioes r ON e.regiao_id = r.id
-      LEFT JOIN dim_fontes_energia f ON e.fonte_energia_id = f.id
-      ORDER BY e.data_referencia DESC LIMIT ?
-    `).bind(limit).all()
-    if (format === 'csv') {
-      c.header('Content-Type', 'text/csv')
-      c.header('Content-Disposition', 'attachment; filename="energia.csv"')
-      return c.text(toCSV(data.results))
-    }
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
+app.get('/api/mapa', async (c) => {
+  const rows = (await c.env.DB.prepare(`
+    SELECT p.id, p.nome, p.tipo_ponto, p.ativo, p.latitude, p.longitude,
+    p.bairro, p.cidade, p.estado, p.rua, p.numero, p.horario_funcionamento, p.acesso, p.observacoes,
+    GROUP_CONCAT(DISTINCT c.codigo) as conectores,
+    ROUND(AVG(a.nota),1) as media_nota
+    FROM postos_recarga p
+    LEFT JOIN postos_conectores pc ON p.id = pc.posto_id
+    LEFT JOIN dim_conectores c ON pc.conector_id = c.id
+    LEFT JOIN avaliacoes_postos a ON p.id = a.posto_id
+    WHERE p.latitude IS NOT NULL AND p.longitude IS NOT NULL
+    GROUP BY p.id
+  `).all()).results
+  return c.json({ total: rows.length, data: rows })
 })
 
-// Resumo por fonte de energia
-app.get('/api/energia/por-fonte', async (c) => {
-  try {
-    const data = await c.env.DB.prepare(`
-      SELECT f.nome as fonte, f.tipo, f.renovavel,
-             ROUND(SUM(e.consumo_kwh),0) as total_kwh,
-             ROUND(SUM(e.emissao_co2_kg),0) as total_co2_kg,
-             ROUND(SUM(e.custo_real),2) as total_custo,
-             COUNT(*) as registros
-      FROM fato_consumo_energia e
-      LEFT JOIN dim_fontes_energia f ON e.fonte_energia_id = f.id
-      GROUP BY f.id, f.nome, f.tipo, f.renovavel
-      ORDER BY total_kwh DESC
-    `).all()
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
+app.get('/api/conectores', async (c) => {
+  const rows = (await c.env.DB.prepare('SELECT * FROM dim_conectores ORDER BY nivel, potencia_max_kw DESC').all()).results
+  return c.json({ total: rows.length, data: rows })
 })
 
-// Evolução mensal de consumo
-app.get('/api/energia/evolucao', async (c) => {
-  try {
-    const data = await c.env.DB.prepare(`
-      SELECT strftime('%Y-%m', data_referencia) as mes,
-             ROUND(SUM(consumo_kwh),0) as total_kwh,
-             ROUND(SUM(emissao_co2_kg),0) as total_co2_kg,
-             ROUND(SUM(custo_real),2) as total_custo
-      FROM fato_consumo_energia
-      GROUP BY mes ORDER BY mes ASC
-    `).all()
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
+app.get('/api/veiculos', async (c) => {
+  const rows = (await c.env.DB.prepare(`
+    SELECT tv.*, GROUP_CONCAT(DISTINCT c.codigo) as conectores_compativeis
+    FROM dim_tipos_veiculos tv
+    LEFT JOIN veiculos_conectores vc ON tv.id = vc.veiculo_id AND vc.compativel = 1
+    LEFT JOIN dim_conectores c ON vc.conector_id = c.id
+    GROUP BY tv.id
+  `).all()).results
+  return c.json({ total: rows.length, data: rows })
 })
 
-// --- RECICLAGEM ---
-app.get('/api/reciclagem', async (c) => {
-  try {
-    const limit = Number(c.req.query('limit') || 200)
-    const format = c.req.query('format') || 'json'
-    const data = await c.env.DB.prepare(`
-      SELECT rc.*, r.nome as regiao_nome, r.estado, r.regiao_brasil,
-             t.nome as tipo_residuo, t.classificacao, t.cor_padrao_separacao,
-             u.nome as usuario_nome, u.tipo_usuario
-      FROM fato_reciclagem rc
-      LEFT JOIN dim_regioes r ON rc.regiao_id = r.id
-      LEFT JOIN dim_tipos_residuos t ON rc.tipo_residuo_id = t.id
-      LEFT JOIN dim_usuarios u ON rc.usuario_id = u.id
-      ORDER BY rc.data_coleta DESC LIMIT ?
-    `).bind(limit).all()
-    if (format === 'csv') {
-      c.header('Content-Type', 'text/csv')
-      c.header('Content-Disposition', 'attachment; filename="reciclagem.csv"')
-      return c.text(toCSV(data.results))
-    }
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
-})
-
-// Reciclagem por tipo de resíduo
-app.get('/api/reciclagem/por-tipo', async (c) => {
-  try {
-    const data = await c.env.DB.prepare(`
-      SELECT t.nome as tipo, t.classificacao, t.cor_padrao_separacao,
-             ROUND(SUM(rc.quantidade_kg),2) as total_kg,
-             ROUND(SUM(rc.co2_evitado_kg),2) as co2_evitado,
-             ROUND(SUM(rc.valor_arrecadado),2) as valor_total,
-             COUNT(*) as coletas
-      FROM fato_reciclagem rc
-      LEFT JOIN dim_tipos_residuos t ON rc.tipo_residuo_id = t.id
-      GROUP BY t.id, t.nome, t.classificacao, t.cor_padrao_separacao
-      ORDER BY total_kg DESC
-    `).all()
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
-})
-
-// --- VEÍCULOS ELÉTRICOS ---
-app.get('/api/veiculos-eletricos', async (c) => {
-  try {
-    const format = c.req.query('format') || 'json'
-    const data = await c.env.DB.prepare(`
-      SELECT v.*, r.nome as regiao_nome, r.estado, r.regiao_brasil
-      FROM fato_veiculos_eletricos v
-      LEFT JOIN dim_regioes r ON v.regiao_id = r.id
-      ORDER BY v.data_referencia DESC, v.regiao_id ASC
-    `).all()
-    if (format === 'csv') {
-      c.header('Content-Type', 'text/csv')
-      c.header('Content-Disposition', 'attachment; filename="veiculos_eletricos.csv"')
-      return c.text(toCSV(data.results))
-    }
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
-})
-
-// Evolução da frota
-app.get('/api/veiculos-eletricos/evolucao', async (c) => {
-  try {
-    const data = await c.env.DB.prepare(`
-      SELECT strftime('%Y', data_referencia) as ano,
-             SUM(total_veiculos_eletricos) as total_eletricos,
-             SUM(total_hibridos) as total_hibridos,
-             SUM(novos_emplacamentos_eletricos) as novos_emplacamentos,
-             SUM(eletropostos_ativos) as total_eletropostos,
-             ROUND(SUM(co2_evitado_kg)/1000,2) as co2_evitado_ton
-      FROM fato_veiculos_eletricos
-      GROUP BY ano ORDER BY ano ASC
-    `).all()
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
-})
-
-// --- INDICADORES CLIMÁTICOS ---
-app.get('/api/clima', async (c) => {
-  try {
-    const limit = Number(c.req.query('limit') || 200)
-    const format = c.req.query('format') || 'json'
-    const data = await c.env.DB.prepare(`
-      SELECT c.*, r.nome as regiao_nome, r.estado, r.regiao_brasil
-      FROM fato_indicadores_climaticos c
-      LEFT JOIN dim_regioes r ON c.regiao_id = r.id
-      ORDER BY c.data_referencia DESC LIMIT ?
-    `).bind(limit).all()
-    if (format === 'csv') {
-      c.header('Content-Type', 'text/csv')
-      c.header('Content-Disposition', 'attachment; filename="clima.csv"')
-      return c.text(toCSV(data.results))
-    }
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
-})
-
-// --- COBERTURA VEGETAL ---
-app.get('/api/cobertura-vegetal', async (c) => {
-  try {
-    const format = c.req.query('format') || 'json'
-    const data = await c.env.DB.prepare(`
-      SELECT cv.*, r.nome as regiao_nome, r.estado, r.regiao_brasil
-      FROM fato_cobertura_vegetal cv
-      LEFT JOIN dim_regioes r ON cv.regiao_id = r.id
-      ORDER BY cv.data_referencia DESC, cv.regiao_id ASC
-    `).all()
-    if (format === 'csv') {
-      c.header('Content-Type', 'text/csv')
-      c.header('Content-Disposition', 'attachment; filename="cobertura_vegetal.csv"')
-      return c.text(toCSV(data.results))
-    }
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
-})
-
-// --- EDUCAÇÃO AMBIENTAL ---
-app.get('/api/educacao', async (c) => {
-  try {
-    const format = c.req.query('format') || 'json'
-    const data = await c.env.DB.prepare(`
-      SELECT e.*, u.nome as usuario_nome, u.tipo_usuario,
-             r.nome as regiao_nome, r.estado,
-             cat.nome as categoria_nome
-      FROM fato_educacao_ambiental e
-      LEFT JOIN dim_usuarios u ON e.usuario_id = u.id
-      LEFT JOIN dim_regioes r ON e.regiao_id = r.id
-      LEFT JOIN dim_categorias cat ON e.categoria_id = cat.id
-      ORDER BY e.data_atividade DESC LIMIT 500
-    `).all()
-    if (format === 'csv') {
-      c.header('Content-Type', 'text/csv')
-      c.header('Content-Disposition', 'attachment; filename="educacao_ambiental.csv"')
-      return c.text(toCSV(data.results))
-    }
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
-})
-
-// --- DENÚNCIAS ---
-app.get('/api/denuncias', async (c) => {
-  try {
-    const format = c.req.query('format') || 'json'
-    const data = await c.env.DB.prepare(`
-      SELECT d.*, r.nome as regiao_nome, r.estado, r.regiao_brasil,
-             u.nome as usuario_nome, u.tipo_usuario
-      FROM fato_denuncias d
-      LEFT JOIN dim_regioes r ON d.regiao_id = r.id
-      LEFT JOIN dim_usuarios u ON d.usuario_id = u.id
-      ORDER BY d.data_denuncia DESC LIMIT 500
-    `).all()
-    if (format === 'csv') {
-      c.header('Content-Type', 'text/csv')
-      c.header('Content-Disposition', 'attachment; filename="denuncias.csv"')
-      return c.text(toCSV(data.results))
-    }
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
-})
-
-// --- ECOPONTOS ---
-app.get('/api/ecopontos', async (c) => {
-  try {
-    const format = c.req.query('format') || 'json'
-    const data = await c.env.DB.prepare(`
-      SELECT e.*, r.regiao_brasil
-      FROM fato_ecopontos e
-      LEFT JOIN dim_regioes r ON e.regiao_id = r.id
-      ORDER BY e.avaliacao_media DESC
-    `).all()
-    if (format === 'csv') {
-      c.header('Content-Type', 'text/csv')
-      c.header('Content-Disposition', 'attachment; filename="ecopontos.csv"')
-      return c.text(toCSV(data.results))
-    }
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
-})
-
-// --- KPIs E METAS ---
-app.get('/api/metas', async (c) => {
-  try {
-    const format = c.req.query('format') || 'json'
-    const data = await c.env.DB.prepare(`
-      SELECT m.*, cat.nome as categoria_nome, cat.cor_hex, cat.ods_relacionado
-      FROM tb_kpis_metas m
-      LEFT JOIN dim_categorias cat ON m.categoria_id = cat.id
-      ORDER BY m.ano_referencia DESC, m.percentual_atingimento DESC
-    `).all()
-    if (format === 'csv') {
-      c.header('Content-Type', 'text/csv')
-      c.header('Content-Disposition', 'attachment; filename="kpis_metas.csv"')
-      return c.text(toCSV(data.results))
-    }
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
-})
-
-// --- ALERTAS ---
-app.get('/api/alertas', async (c) => {
-  try {
-    const data = await c.env.DB.prepare(`
-      SELECT a.*, r.nome as regiao_nome, r.estado
-      FROM tb_alertas a
-      LEFT JOIN dim_regioes r ON a.regiao_id = r.id
-      WHERE a.ativo = 1
-      ORDER BY CASE a.severidade 
-        WHEN 'emergencia' THEN 1 
-        WHEN 'critico' THEN 2 
-        WHEN 'aviso' THEN 3 
-        ELSE 4 END, a.data_alerta DESC
-    `).all()
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
-})
-
-// --- REGIÕES ---
 app.get('/api/regioes', async (c) => {
-  try {
-    const data = await c.env.DB.prepare('SELECT * FROM dim_regioes ORDER BY nome ASC').all()
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
+  const rows = (await c.env.DB.prepare(`
+    SELECT r.*, COUNT(DISTINCT p.id) as total_postos,
+    COUNT(DISTINCT CASE WHEN p.ativo=1 AND p.tipo_ponto='Posto Eletro' THEN p.id END) as eletropostos_ativos
+    FROM dim_regioes r
+    LEFT JOIN postos_recarga p ON p.regiao_id = r.id
+    GROUP BY r.id ORDER BY total_postos DESC
+  `).all()).results
+  return c.json({ total: rows.length, data: rows })
 })
 
-// --- ANÁLISES AGGREGADAS PARA BI ---
+app.get('/api/avaliacoes', async (c) => {
+  const posto_id = c.req.query('posto_id')
+  let sql = 'SELECT a.*, u.nome, u.sobrenome FROM avaliacoes_postos a LEFT JOIN usuarios u ON a.usuario_id = u.id WHERE 1=1'
+  const params: unknown[] = []
+  if (posto_id) { sql += ' AND a.posto_id = ?'; params.push(posto_id) }
+  sql += ' ORDER BY a.data_avaliacao DESC LIMIT 100'
+  const rows = (await c.env.DB.prepare(sql).bind(...params).all()).results
+  return c.json({ total: rows.length, data: rows })
+})
+
+app.post('/api/avaliacoes', async (c) => {
+  const body = await c.req.json()
+  const { posto_id, nota, comentario } = body
+  if (!posto_id || !nota) return c.json({ error: 'posto_id e nota são obrigatórios' }, 400)
+  if (nota < 1 || nota > 5) return c.json({ error: 'Nota deve ser entre 1 e 5' }, 400)
+  const result = await c.env.DB.prepare('INSERT INTO avaliacoes_postos (posto_id, nota, comentario) VALUES (?, ?, ?)').bind(posto_id, nota, comentario || '').run()
+  return c.json({ success: true, id: result.meta.last_row_id }, 201)
+})
+
+app.get('/api/clima', async (c) => {
+  const cidade = c.req.query('cidade') || 'São Paulo'
+  const historico = (await c.env.DB.prepare('SELECT * FROM clima_historico WHERE cidade = ? ORDER BY data DESC LIMIT 30').bind(cidade).all()).results
+  let atual = null
+  try {
+    const url = 'https://api.open-meteo.com/v1/forecast?latitude=-23.5505&longitude=-46.6333&current=temperature_2m,relative_humidity_2m,precipitation,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode&forecast_days=7&timezone=America/Sao_Paulo'
+    const resp = await fetch(url)
+    if (resp.ok) atual = await resp.json()
+  } catch (_) {}
+  return c.json({ cidade, atual, historico })
+})
+
 app.get('/api/bi/resumo-regional', async (c) => {
-  try {
-    const format = c.req.query('format') || 'json'
-    const data = await c.env.DB.prepare(`
-      SELECT r.nome as regiao, r.estado, r.regiao_brasil,
-        (SELECT COUNT(*) FROM dim_usuarios u WHERE u.regiao_id = r.id) as total_usuarios,
-        (SELECT ROUND(AVG(q.indice_qualidade_ar),1) FROM fato_qualidade_ar q WHERE q.regiao_id = r.id) as iqa_medio,
-        (SELECT ROUND(AVG(qa.indice_qualidade_agua),1) FROM fato_qualidade_agua qa WHERE qa.regiao_id = r.id) as iqa_agua_medio,
-        (SELECT SUM(rc.quantidade_kg) FROM fato_reciclagem rc WHERE rc.regiao_id = r.id) as total_reciclado_kg,
-        (SELECT COUNT(*) FROM fato_denuncias d WHERE d.regiao_id = r.id) as total_denuncias,
-        (SELECT SUM(e.consumo_kwh) FROM fato_consumo_energia e WHERE e.regiao_id = r.id) as consumo_energia_kwh
-      FROM dim_regioes r
-      ORDER BY r.nome ASC
-    `).all()
-    if (format === 'csv') {
-      c.header('Content-Type', 'text/csv')
-      c.header('Content-Disposition', 'attachment; filename="resumo_regional.csv"')
-      return c.text(toCSV(data.results))
-    }
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
+  const rows = (await c.env.DB.prepare('SELECT * FROM vw_resumo_cidades').all()).results
+  return jsonOrCsv(c, rows as Record<string, unknown>[])
 })
 
-// Análise temporal
-app.get('/api/bi/tendencias', async (c) => {
-  try {
-    const data = await c.env.DB.prepare(`
-      SELECT 
-        strftime('%Y-%m', data_coleta) as mes,
-        ROUND(SUM(quantidade_kg),2) as reciclagem_kg,
-        ROUND(SUM(co2_evitado_kg),2) as co2_evitado_kg,
-        COUNT(*) as num_coletas
-      FROM fato_reciclagem
-      GROUP BY mes
-      ORDER BY mes ASC
-    `).all()
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
+app.get('/api/bi/conectores-distribuicao', async (c) => {
+  const rows = (await c.env.DB.prepare(`
+    SELECT c.codigo, c.nome, c.corrente, c.nivel, c.potencia_max_kw,
+    COUNT(DISTINCT pc.posto_id) as num_postos, SUM(pc.quantidade) as total_tomadas
+    FROM dim_conectores c LEFT JOIN postos_conectores pc ON c.id = pc.conector_id
+    GROUP BY c.id ORDER BY num_postos DESC
+  `).all()).results
+  return jsonOrCsv(c, rows as Record<string, unknown>[])
 })
 
-// Análise de emissões por fonte
-app.get('/api/bi/emissoes-co2', async (c) => {
-  try {
-    const data = await c.env.DB.prepare(`
-      SELECT 
-        strftime('%Y-%m', e.data_referencia) as mes,
-        r.regiao_brasil,
-        f.tipo as tipo_fonte,
-        ROUND(SUM(e.emissao_co2_kg)/1000,2) as co2_toneladas,
-        ROUND(SUM(e.consumo_kwh)/1000,2) as consumo_mwh,
-        SUM(CASE WHEN f.renovavel=1 THEN e.consumo_kwh ELSE 0 END) as kwh_renovavel,
-        SUM(CASE WHEN f.renovavel=0 THEN e.consumo_kwh ELSE 0 END) as kwh_nao_renovavel
-      FROM fato_consumo_energia e
-      LEFT JOIN dim_fontes_energia f ON e.fonte_energia_id = f.id
-      LEFT JOIN dim_regioes r ON e.regiao_id = r.id
-      GROUP BY mes, r.regiao_brasil, f.tipo
-      ORDER BY mes ASC
-    `).all()
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
-  }
+app.get('/api/bi/postos-full', async (c) => {
+  const rows = (await c.env.DB.prepare('SELECT * FROM vw_postos_detalhado').all()).results
+  return jsonOrCsv(c, rows as Record<string, unknown>[])
 })
 
-// Ranking de denúncias
-app.get('/api/bi/ranking-denuncias', async (c) => {
-  try {
-    const data = await c.env.DB.prepare(`
-      SELECT r.nome as regiao, r.estado, r.regiao_brasil,
-        COUNT(*) as total_denuncias,
-        SUM(CASE WHEN d.status='resolvido' THEN 1 ELSE 0 END) as resolvidas,
-        SUM(CASE WHEN d.status='pendente' THEN 1 ELSE 0 END) as pendentes,
-        SUM(CASE WHEN d.impacto_estimado='critico' THEN 1 ELSE 0 END) as criticas,
-        ROUND(100.0 * SUM(CASE WHEN d.status='resolvido' THEN 1 ELSE 0 END) / COUNT(*), 1) as taxa_resolucao
-      FROM fato_denuncias d
-      LEFT JOIN dim_regioes r ON d.regiao_id = r.id
-      GROUP BY r.id, r.nome, r.estado, r.regiao_brasil
-      ORDER BY total_denuncias DESC
-    `).all()
-    return c.json(data.results)
-  } catch (e) {
-    return c.json({ error: String(e) }, 500)
+app.post('/api/upload/postos', async (c) => {
+  const body = await c.req.json()
+  const { registros } = body
+  if (!Array.isArray(registros) || !registros.length) return c.json({ error: 'Lista de registros inválida' }, 400)
+  let importados = 0, erros = 0
+  const detalhes: string[] = []
+  for (const r of registros) {
+    try {
+      if (!r.nome || !r.cidade || !r.latitude || !r.longitude) {
+        erros++; detalhes.push(`Linha ${importados + erros}: campos obrigatórios ausentes`); continue
+      }
+      await c.env.DB.prepare(`INSERT INTO postos_recarga (nome, tipo_ponto, ativo, rua, numero, bairro, cidade, estado, cep, latitude, longitude, acesso, horario_funcionamento, observacoes, email_cadastro, data_cadastro) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)`)
+        .bind(r.nome, r.tipo_ponto || 'Posto Eletro', r.ativo !== false ? 1 : 0, r.rua || '', r.numero || '', r.bairro || '', r.cidade, r.estado || 'SP', r.cep || '', parseFloat(r.latitude), parseFloat(r.longitude), r.acesso || 'público', r.horario_funcionamento || '', r.observacoes || '', r.email || '').run()
+      importados++
+    } catch (e) { erros++; detalhes.push(`Erro: ${(e as Error).message}`) }
   }
+  await c.env.DB.prepare('INSERT INTO log_importacoes (tipo, arquivo_nome, registros_importados, registros_erros, detalhes_erros) VALUES (?,?,?,?,?)').bind('postos', body.arquivo || 'upload', importados, erros, detalhes.join('\n')).run()
+  return c.json({ success: true, importados, erros, detalhes })
 })
 
-// Schema das tabelas (documentação para Power BI)
-app.get('/api/schema', async (c) => {
+app.get('/api/log', async (c) => {
+  const rows = (await c.env.DB.prepare('SELECT * FROM log_importacoes ORDER BY importado_em DESC LIMIT 50').all()).results
+  return c.json({ total: rows.length, data: rows })
+})
+
+app.get('/api/schema', (c) => {
   return c.json({
-    version: '1.0.0',
-    descricao: 'SustAmbiTech - Schema do banco de dados para integração com Power BI',
-    tabelas: {
-      dimensoes: ['dim_regioes', 'dim_categorias', 'dim_usuarios', 'dim_tipos_residuos', 'dim_fontes_energia', 'dim_especies'],
-      fatos: ['fato_qualidade_ar', 'fato_qualidade_agua', 'fato_consumo_energia', 'fato_reciclagem', 'fato_veiculos_eletricos', 'fato_indicadores_climaticos', 'fato_cobertura_vegetal', 'fato_educacao_ambiental', 'fato_denuncias', 'fato_consumo_consciente', 'fato_politicas_ambientais', 'fato_ecopontos'],
-      suporte: ['tb_kpis_metas', 'tb_alertas', 'tb_logs_atividade']
-    },
-    endpoints_powerbi: {
-      kpis: '/api/kpis',
-      qualidade_ar: '/api/qualidade-ar?format=csv',
-      qualidade_agua: '/api/qualidade-agua?format=csv',
-      energia: '/api/energia?format=csv',
-      energia_por_fonte: '/api/energia/por-fonte',
-      reciclagem: '/api/reciclagem?format=csv',
-      reciclagem_por_tipo: '/api/reciclagem/por-tipo',
-      veiculos_eletricos: '/api/veiculos-eletricos?format=csv',
-      evolucao_frota: '/api/veiculos-eletricos/evolucao',
-      clima: '/api/clima?format=csv',
-      cobertura_vegetal: '/api/cobertura-vegetal?format=csv',
-      educacao: '/api/educacao?format=csv',
-      denuncias: '/api/denuncias?format=csv',
-      ecopontos: '/api/ecopontos?format=csv',
-      metas: '/api/metas?format=csv',
-      alertas: '/api/alertas',
-      resumo_regional: '/api/bi/resumo-regional?format=csv',
-      tendencias: '/api/bi/tendencias',
-      emissoes_co2: '/api/bi/emissoes-co2',
-      ranking_denuncias: '/api/bi/ranking-denuncias'
-    }
+    tabelas: ['postos_recarga','dim_conectores','postos_conectores','dim_tipos_veiculos','veiculos_conectores','dim_regioes','dim_operadores','usuarios','avaliacoes_postos','feedbacks','clima_historico','log_importacoes','kpis_ev'],
+    views: ['vw_resumo_cidades','vw_postos_detalhado'],
+    endpoints: ['/api/postos','/api/postos/:id','/api/resumo','/api/mapa','/api/conectores','/api/veiculos','/api/regioes','/api/avaliacoes','/api/clima','/api/bi/resumo-regional','/api/bi/conectores-distribuicao','/api/bi/postos-full','/api/upload/postos','/api/log','/api/schema']
   })
 })
 
 // ============================================================
-// HTML: DASHBOARD PRINCIPAL
+// PÁGINAS HTML
 // ============================================================
-function htmlDashboard(): string {
-  return `<!DOCTYPE html>
+
+const NAV = `
+<nav style="position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid #1e293b;background:#0a0f1e;">
+  <a href="/" style="display:flex;align-items:center;gap:6px;text-decoration:none;margin-right:8px;">
+    <span style="font-size:1.5rem">&#9889;</span>
+    <span style="font-weight:700;color:white">SustAmbiTech</span>
+    <span style="font-size:.7rem;color:#4ade80;font-weight:600">Eletropostos</span>
+  </a>
+  <a href="/"          style="padding:6px 12px;border-radius:8px;color:#d1d5db;text-decoration:none;font-size:.875rem;">&#127968; Dashboard</a>
+  <a href="/mapa"      style="padding:6px 12px;border-radius:8px;color:#d1d5db;text-decoration:none;font-size:.875rem;">&#128205; Mapa</a>
+  <a href="/admin/upload" style="padding:6px 12px;border-radius:8px;color:#d1d5db;text-decoration:none;font-size:.875rem;">&#128196; Importar</a>
+  <a href="/mindmap"   style="padding:6px 12px;border-radius:8px;color:#d1d5db;text-decoration:none;font-size:.875rem;">&#128301; Mapa Mental</a>
+  <a href="/tutorial"  style="padding:6px 12px;border-radius:8px;color:#d1d5db;text-decoration:none;font-size:.875rem;">&#127891; Tutorial</a>
+  <span style="margin-left:auto;font-size:.75rem;color:#4b5563">by Kayham</span>
+</nav>`
+
+// ============================================================
+// GET / — Dashboard Principal
+// ============================================================
+app.get('/', (c) => {
+  const html = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SustAmbiTech BI - Dashboard Ambiental</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SustAmbiTech Eletropostos</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-  :root {
-    --green-dark: #1a3d1a;
-    --green-mid: #2d6a2d;
-    --green-light: #4CAF50;
-    --green-pale: #8BC34A;
-    --bg: #0f2010;
-    --card: #162516;
-    --border: #2a5c2a;
-    --text: #e8f5e9;
-    --text-muted: #a5d6a7;
-  }
-  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
-  .kpi-card { background: linear-gradient(135deg, var(--green-mid), var(--green-dark)); border: 1px solid var(--green-light); border-radius: 12px; padding: 1.25rem; }
-  .nav-btn { color: var(--text-muted); padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
-  .nav-btn:hover, .nav-btn.active { background: var(--green-mid); color: white; }
-  .chart-container { position: relative; height: 280px; }
-  .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
-  .badge-green { background: #1b5e20; color: #a5d6a7; }
-  .badge-yellow { background: #f57f17; color: #fff9c4; }
-  .badge-red { background: #b71c1c; color: #ffcdd2; }
-  .badge-blue { background: #0d47a1; color: #bbdefb; }
-  .tab { cursor: pointer; padding: 0.5rem 1.25rem; border-radius: 8px; font-weight: 600; color: var(--text-muted); }
-  .tab.active { background: var(--green-light); color: white; }
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
-  th { background: var(--green-dark); color: var(--green-pale); padding: 0.75rem; text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
-  td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); color: var(--text); }
-  tr:hover td { background: #1f3d1f; }
-  .progress-bar { background: #1a3d1a; border-radius: 99px; height: 8px; overflow: hidden; }
-  .progress-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--green-pale), var(--green-light)); }
-  .api-tag { background: #0d2d0d; border: 1px solid #2a5c2a; border-radius: 6px; padding: 4px 10px; font-family: monospace; font-size: 0.8rem; color: #81c784; display: inline-block; margin: 2px; }
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--green-mid); border-radius: 3px; }
-  .alert-critico { border-left: 4px solid #f44336; }
-  .alert-aviso { border-left: 4px solid #ff9800; }
-  .alert-info { border-left: 4px solid #2196F3; }
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0f1e;color:#e2e8f0;}
+.card{background:linear-gradient(135deg,#0f1629 0%,#1a2340 100%);border:1px solid #2d3748;border-radius:12px;}
+.card-green{border-color:#22c55e;background:linear-gradient(135deg,#052e16 0%,#0f2a1a 100%);}
+.card-blue{border-color:#3b82f6;background:linear-gradient(135deg,#0a1628 0%,#0f1e38 100%);}
+.card-yellow{border-color:#f59e0b;background:linear-gradient(135deg,#1a1000 0%,#241800 100%);}
+.card-purple{border-color:#a855f7;background:linear-gradient(135deg,#1a0a2e 0%,#200f38 100%);}
+.kpi-val{font-size:2.2rem;font-weight:700;line-height:1;}
+.tag{padding:2px 8px;border-radius:99px;font-size:.75rem;font-weight:600;}
+.tag-green{background:#14532d;color:#4ade80;}
+.tag-blue{background:#1e3a5f;color:#60a5fa;}
+.tag-red{background:#450a0a;color:#f87171;}
+.conector-badge{padding:3px 8px;border-radius:6px;font-size:.78rem;font-weight:700;border:1px solid;display:inline-block;margin:1px;}
+.clima-day{background:#1a2340;border-radius:10px;padding:8px 12px;text-align:center;min-width:70px;}
+table{width:100%;border-collapse:collapse;}
+th{background:#1a2340;padding:10px 14px;text-align:left;font-size:.85rem;color:#94a3b8;}
+td{padding:10px 14px;border-bottom:1px solid #1e293b;font-size:.9rem;}
+tr:hover td{background:rgba(59,130,246,.05);}
+.tab-btn{padding:.4rem .9rem;border-radius:8px;font-size:.875rem;cursor:pointer;transition:all .2s;color:#94a3b8;background:none;border:none;}
+.tab-btn.active{background:#3b82f6;color:white;}
 </style>
 </head>
 <body>
-
-<!-- NAVBAR -->
-<nav style="background: #0d1f0d; border-bottom: 1px solid #2a5c2a;" class="sticky top-0 z-50">
-  <div class="max-w-screen-xl mx-auto px-4 py-3 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #4CAF50, #2d6a2d)">
-        <i class="fas fa-leaf text-white text-sm"></i>
-      </div>
-      <div>
-        <h1 class="font-bold text-base" style="color: #8BC34A">SustAmbiTech BI</h1>
-        <p class="text-xs" style="color: #66bb6a">Plataforma de Inteligência Ambiental</p>
-      </div>
-    </div>
-    <div class="flex items-center gap-2">
-      <a href="/" class="nav-btn active text-sm"><i class="fas fa-chart-line mr-1"></i>Dashboard</a>
-      <a href="/mindmap" class="nav-btn text-sm"><i class="fas fa-project-diagram mr-1"></i>Mapa Mental</a>
-      <a href="/api/schema" target="_blank" class="nav-btn text-sm"><i class="fas fa-code mr-1"></i>API Docs</a>
-    </div>
-  </div>
-</nav>
-
-<!-- MAIN -->
-<main class="max-w-screen-xl mx-auto px-4 py-6">
-
-  <!-- HEADER -->
-  <div class="flex items-center justify-between mb-6">
-    <div>
-      <h2 class="text-2xl font-bold" style="color: #a5d6a7">Painel de Indicadores Ambientais</h2>
-      <p class="text-sm mt-1" style="color: #66bb6a">Dados integrados e prontos para exportação ao Power BI</p>
-    </div>
-    <div class="flex gap-2">
-      <span id="last-update" class="text-xs" style="color: #66bb6a; padding: 0.4rem 0.8rem; background: #0d2d0d; border-radius: 6px; border: 1px solid #2a5c2a">
-        <i class="fas fa-sync-alt mr-1"></i>Carregando...
-      </span>
-    </div>
+${NAV}
+<main class="max-w-7xl mx-auto px-4 py-6">
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold text-white mb-1">Infraestrutura de Recarga El&#233;trica</h1>
+    <p class="text-gray-400">Grande S&#227;o Paulo &#8212; Dados reais de 57+ eletropostos migrados do Firebase</p>
   </div>
 
-  <!-- ALERTAS -->
-  <div id="alertas-container" class="mb-6 space-y-2"></div>
-
-  <!-- KPIs -->
-  <div id="kpis-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6"></div>
-
-  <!-- TABS -->
-  <div class="flex flex-wrap gap-2 mb-6">
-    <button class="tab active" onclick="showTab('visao-geral')"><i class="fas fa-globe mr-1"></i>Visão Geral</button>
-    <button class="tab" onclick="showTab('energia')"><i class="fas fa-bolt mr-1"></i>Energia</button>
-    <button class="tab" onclick="showTab('reciclagem')"><i class="fas fa-recycle mr-1"></i>Reciclagem</button>
-    <button class="tab" onclick="showTab('veiculos')"><i class="fas fa-car mr-1"></i>Mobilidade</button>
-    <button class="tab" onclick="showTab('qualidade')"><i class="fas fa-wind mr-1"></i>Qualidade</button>
-    <button class="tab" onclick="showTab('metas')"><i class="fas fa-target mr-1"></i>Metas & KPIs</button>
-    <button class="tab" onclick="showTab('powerbi')"><i class="fas fa-plug mr-1"></i>Power BI</button>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+    <div class="card card-green p-5"><div class="text-green-400 text-sm mb-1"><i class="fas fa-charging-station mr-1"></i>Eletropostos Ativos</div><div class="kpi-val text-green-400" id="kpiTotal">...</div></div>
+    <div class="card card-blue  p-5"><div class="text-blue-400  text-sm mb-1"><i class="fas fa-city mr-1"></i>Cidades Atendidas</div><div class="kpi-val text-blue-400"  id="kpiCidades">...</div></div>
+    <div class="card card-yellow p-5"><div class="text-yellow-400 text-sm mb-1"><i class="fas fa-plug mr-1"></i>Tipos de Conector</div><div class="kpi-val text-yellow-400" id="kpiConectores">...</div></div>
+    <div class="card card-purple p-5"><div class="text-purple-400 text-sm mb-1"><i class="fas fa-bolt mr-1"></i>Tomadas Instaladas</div><div class="kpi-val text-purple-400" id="kpiTomadas">...</div></div>
   </div>
 
-  <!-- TAB: VISÃO GERAL -->
-  <div id="tab-visao-geral" class="tab-content active">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <div class="card">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-chart-bar mr-2"></i>Reciclagem por Tipo (kg)</h3>
-        <div class="chart-container"><canvas id="chartResiduos"></canvas></div>
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+    <div class="card p-5 lg:col-span-2">
+      <div class="flex gap-2 mb-4 flex-wrap">
+        <button class="tab-btn active" onclick="showTab('postos',event)"><i class="fas fa-list mr-1"></i>Postos</button>
+        <button class="tab-btn" onclick="showTab('cidades',event)"><i class="fas fa-city mr-1"></i>Por Cidade</button>
+        <button class="tab-btn" onclick="showTab('conectores-tab',event)"><i class="fas fa-plug mr-1"></i>Conectores</button>
+        <button class="tab-btn" onclick="showTab('veiculos-tab',event)"><i class="fas fa-car mr-1"></i>Ve&#237;culos</button>
       </div>
-      <div class="card">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-chart-pie mr-2"></i>Frota Veículos (2024)</h3>
-        <div class="chart-container"><canvas id="chartFrota"></canvas></div>
-      </div>
-      <div class="card">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-chart-line mr-2"></i>Evolução da Frota Elétrica (SP)</h3>
-        <div class="chart-container"><canvas id="chartEvolucaoFrota"></canvas></div>
-      </div>
-      <div class="card">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-bell mr-2"></i>Denúncias por Região</h3>
-        <div class="chart-container"><canvas id="chartDenuncias"></canvas></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB: ENERGIA -->
-  <div id="tab-energia" class="tab-content">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <div class="card">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-bolt mr-2"></i>Consumo por Fonte de Energia</h3>
-        <div class="chart-container"><canvas id="chartEnergiaPorFonte"></canvas></div>
-      </div>
-      <div class="card">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-chart-line mr-2"></i>Evolução Mensal de Consumo</h3>
-        <div class="chart-container"><canvas id="chartEnergiaEvolucao"></canvas></div>
-      </div>
-      <div class="card lg:col-span-2">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-table mr-2"></i>Detalhamento por Fonte</h3>
-        <div style="overflow-x: auto;"><table id="tabela-energia"></table></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB: RECICLAGEM -->
-  <div id="tab-reciclagem" class="tab-content">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <div class="card">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-chart-bar mr-2"></i>Volume por Tipo de Resíduo (kg)</h3>
-        <div class="chart-container"><canvas id="chartReciclagemTipo"></canvas></div>
-      </div>
-      <div class="card">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-leaf mr-2"></i>CO₂ Evitado por Tipo (kg)</h3>
-        <div class="chart-container"><canvas id="chartCO2Evitado"></canvas></div>
-      </div>
-      <div class="card lg:col-span-2">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-table mr-2"></i>Detalhamento por Resíduo</h3>
-        <div style="overflow-x: auto;"><table id="tabela-reciclagem"></table></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB: VEÍCULOS -->
-  <div id="tab-veiculos" class="tab-content">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <div class="card">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-car-side mr-2"></i>Crescimento da Frota (2020-2024)</h3>
-        <div class="chart-container"><canvas id="chartVeiculosAnual"></canvas></div>
-      </div>
-      <div class="card">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-charging-station mr-2"></i>Expansão de Eletropostos</h3>
-        <div class="chart-container"><canvas id="chartEletropostos"></canvas></div>
-      </div>
-      <div class="card lg:col-span-2">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-table mr-2"></i>Dados por Região</h3>
-        <div style="overflow-x: auto;"><table id="tabela-veiculos"></table></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB: QUALIDADE -->
-  <div id="tab-qualidade" class="tab-content">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <div class="card">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-wind mr-2"></i>IQA - Índice de Qualidade do Ar</h3>
-        <div class="chart-container"><canvas id="chartIQA"></canvas></div>
-      </div>
-      <div class="card">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-tint mr-2"></i>IQA - Qualidade da Água</h3>
-        <div class="chart-container"><canvas id="chartIQAAgua"></canvas></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB: METAS -->
-  <div id="tab-metas" class="tab-content">
-    <div class="card">
-      <h3 class="font-semibold mb-6" style="color: #a5d6a7"><i class="fas fa-bullseye mr-2"></i>KPIs e Metas Estratégicas 2025</h3>
-      <div id="metas-container" class="space-y-4"></div>
-    </div>
-  </div>
-
-  <!-- TAB: POWER BI -->
-  <div id="tab-powerbi" class="tab-content">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <div class="card">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-plug mr-2"></i>Integração com Power BI</h3>
-        <p class="text-sm mb-4" style="color: #81c784">
-          Use os endpoints abaixo diretamente no Power BI via <strong>Web Connector</strong> (Obter Dados → Web).
-          Os endpoints com <code>?format=csv</code> retornam CSV para importação direta.
-        </p>
-        <div class="space-y-3" id="powerbi-endpoints"></div>
-      </div>
-      <div class="card">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-database mr-2"></i>Modelo Estrela - Tabelas</h3>
-        <div class="space-y-3">
-          <div>
-            <p class="text-xs font-bold mb-2" style="color: #81c784">📊 TABELAS FATO</p>
-            <div class="flex flex-wrap gap-1">
-              ${['fato_qualidade_ar','fato_qualidade_agua','fato_consumo_energia','fato_reciclagem','fato_veiculos_eletricos','fato_indicadores_climaticos','fato_cobertura_vegetal','fato_educacao_ambiental','fato_denuncias','fato_ecopontos'].map(t => `<span class="api-tag">${t}</span>`).join('')}
-            </div>
-          </div>
-          <div>
-            <p class="text-xs font-bold mb-2 mt-3" style="color: #81c784">🗂️ TABELAS DIMENSÃO</p>
-            <div class="flex flex-wrap gap-1">
-              ${['dim_regioes','dim_categorias','dim_usuarios','dim_tipos_residuos','dim_fontes_energia'].map(t => `<span class="api-tag">${t}</span>`).join('')}
-            </div>
-          </div>
-          <div>
-            <p class="text-xs font-bold mb-2 mt-3" style="color: #81c784">⚙️ TABELAS DE SUPORTE</p>
-            <div class="flex flex-wrap gap-1">
-              ${['tb_kpis_metas','tb_alertas'].map(t => `<span class="api-tag">${t}</span>`).join('')}
-            </div>
-          </div>
+      <div id="tab-postos">
+        <div class="flex gap-2 mb-3">
+          <input id="searchInput" type="text" placeholder="Buscar nome, bairro..." class="flex-1 bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" onkeyup="filterTable()">
+          <select id="cityFilter" class="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" onchange="filterTable()">
+            <option value="">Todas</option>
+          </select>
+        </div>
+        <div class="overflow-auto max-h-72">
+          <table id="postosTable">
+            <thead><tr><th>Nome</th><th>Cidade/Bairro</th><th>Conectores</th><th>Nota</th><th>Status</th></tr></thead>
+            <tbody id="postosBody"><tr><td colspan="5" class="text-center text-gray-500 py-4">Carregando...</td></tr></tbody>
+          </table>
         </div>
       </div>
-      <div class="card lg:col-span-2">
-        <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-info-circle mr-2"></i>Banco de Dados Gratuito (Cloudflare D1)</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="p-4 rounded-lg" style="background: #0d2d0d; border: 1px solid #2a5c2a">
-            <h4 class="font-bold mb-2" style="color: #a5d6a7">☁️ Cloudflare D1 (Gratuito)</h4>
-            <ul class="text-sm space-y-1" style="color: #81c784">
-              <li>✅ 5 GB de armazenamento grátis</li>
-              <li>✅ 5 milhões de leituras/dia</li>
-              <li>✅ 100.000 escritas/dia</li>
-              <li>✅ SQLite compatível</li>
-              <li>✅ API REST automática</li>
-              <li>✅ Sem servidor para gerenciar</li>
-            </ul>
-          </div>
-          <div class="p-4 rounded-lg" style="background: #0d2d0d; border: 1px solid #2a5c2a">
-            <h4 class="font-bold mb-2" style="color: #a5d6a7">📊 Power BI - Métodos de Conexão</h4>
-            <ul class="text-sm space-y-1" style="color: #81c784">
-              <li>🔗 Web Connector (JSON/CSV)</li>
-              <li>🔗 Power Query (HTTP)</li>
-              <li>🔄 Atualização automática</li>
-              <li>📋 Modelo de dados estrela</li>
-              <li>🗃️ 19 endpoints disponíveis</li>
-              <li>📥 Export CSV/JSON direto</li>
-            </ul>
-          </div>
-          <div class="p-4 rounded-lg" style="background: #0d2d0d; border: 1px solid #2a5c2a">
-            <h4 class="font-bold mb-2" style="color: #a5d6a7">📈 Relatórios Sugeridos no Power BI</h4>
-            <ul class="text-sm space-y-1" style="color: #81c784">
-              <li>🌿 Painel de Sustentabilidade</li>
-              <li>🌡️ Análise Climática Regional</li>
-              <li>♻️ Dashboard de Reciclagem</li>
-              <li>⚡ Eficiência Energética</li>
-              <li>🚗 Mobilidade Verde</li>
-              <li>🏆 Ranking de KPIs por ODS</li>
-            </ul>
-          </div>
+      <div id="tab-cidades" style="display:none"><canvas id="chartCidades" height="200"></canvas></div>
+      <div id="tab-conectores-tab" style="display:none"><div id="conectoresList"></div></div>
+      <div id="tab-veiculos-tab" style="display:none"><div id="veiculosList"></div></div>
+    </div>
+
+    <div class="card p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <i class="fas fa-cloud-sun text-yellow-400 text-xl"></i>
+        <h3 class="font-semibold text-white">Clima &#8212; S&#227;o Paulo</h3>
+      </div>
+      <div id="climaAtual" class="mb-4 text-center">
+        <div class="text-5xl font-bold text-yellow-300" id="tempAtual">--&#176;C</div>
+        <div class="text-gray-400 text-sm mt-1" id="condicaoAtual">Carregando...</div>
+        <div class="flex justify-center gap-4 mt-2 text-sm">
+          <span class="text-red-400"><i class="fas fa-arrow-up"></i> <span id="tempMax">--</span></span>
+          <span class="text-blue-400"><i class="fas fa-arrow-down"></i> <span id="tempMin">--</span></span>
         </div>
+      </div>
+      <div class="flex gap-1 overflow-x-auto pb-1" id="previsaoSemana"></div>
+      <div class="mt-4">
+        <div class="text-xs text-gray-500 mb-2">Hist&#243;rico (&#176;C)</div>
+        <canvas id="chartClima" height="120"></canvas>
       </div>
     </div>
   </div>
 
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    <div class="card p-5">
+      <h3 class="font-semibold text-white mb-3"><i class="fas fa-plug text-yellow-400 mr-2"></i>Distribui&#231;&#227;o de Conectores</h3>
+      <canvas id="chartConectores" height="200"></canvas>
+    </div>
+    <div class="card p-5">
+      <h3 class="font-semibold text-white mb-3"><i class="fas fa-chart-bar text-blue-400 mr-2"></i>Postos x Tomadas por Padr&#227;o</h3>
+      <canvas id="chartPostosCidade" height="200"></canvas>
+    </div>
+  </div>
+
+  <div class="card p-5 mb-6">
+    <h3 class="font-semibold text-white mb-3"><i class="fas fa-database text-green-400 mr-2"></i>Endpoints para Power BI</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <a href="/api/bi/resumo-regional?format=csv" class="flex items-center gap-2 bg-gray-900 hover:bg-gray-800 p-3 rounded-lg border border-gray-700 text-sm text-blue-400 transition">
+        <i class="fas fa-file-csv text-green-400"></i>/api/bi/resumo-regional
+      </a>
+      <a href="/api/bi/conectores-distribuicao?format=csv" class="flex items-center gap-2 bg-gray-900 hover:bg-gray-800 p-3 rounded-lg border border-gray-700 text-sm text-blue-400 transition">
+        <i class="fas fa-file-csv text-green-400"></i>/api/bi/conectores-distribuicao
+      </a>
+      <a href="/api/bi/postos-full?format=csv" class="flex items-center gap-2 bg-gray-900 hover:bg-gray-800 p-3 rounded-lg border border-gray-700 text-sm text-blue-400 transition">
+        <i class="fas fa-file-csv text-green-400"></i>/api/bi/postos-full
+      </a>
+    </div>
+  </div>
 </main>
-
-<!-- FOOTER -->
-<footer style="background: #0d1f0d; border-top: 1px solid #2a5c2a; margin-top: 3rem; padding: 1.5rem;">
-  <div class="max-w-screen-xl mx-auto px-4 text-center text-sm" style="color: #66bb6a">
-    <p>🌱 SustAmbiTech BI &copy; 2025 | Desenvolvido para análise ambiental com Power BI</p>
-    <p class="mt-1">Banco de dados: Cloudflare D1 (gratuito) | Framework: Hono + TypeScript | Deploy: Cloudflare Pages</p>
-  </div>
+<footer class="text-center py-4 text-gray-600 text-sm border-t border-gray-800">
+  &#9889; SustAmbiTech Eletropostos &#8212; Desenvolvido por <strong class="text-green-400">Kayham</strong>
 </footer>
-
 <script>
-const BASE = window.location.origin;
-
-// Tabs
-function showTab(name) {
-  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  event.target.classList.add('active');
-  // Lazy load charts
-  loadTabData(name);
+function showTab(tab,ev) {
+  document.querySelectorAll('[id^="tab-"]').forEach(function(el){ el.style.display='none' })
+  document.getElementById('tab-'+tab).style.display='block'
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active') })
+  if(ev&&ev.target) ev.target.classList.add('active')
 }
-
-// Chart defaults
-Chart.defaults.color = '#a5d6a7';
-Chart.defaults.borderColor = '#2a5c2a';
-
-const GREEN_PALETTE = ['#4CAF50','#8BC34A','#2196F3','#FF9800','#9C27B0','#00BCD4','#FF5722','#607D8B','#795548','#F44336'];
-
-function makeChart(id, config) {
-  const ctx = document.getElementById(id);
-  if (!ctx) return;
-  const existing = Chart.getChart(ctx);
-  if (existing) existing.destroy();
-  return new Chart(ctx, config);
-}
-
-// ===================== LOAD DATA =====================
-
-async function loadKPIs() {
-  try {
-    const r = await fetch(BASE + '/api/kpis');
-    const d = await r.json();
-    const grid = document.getElementById('kpis-grid');
-    const kpis = [
-      { label: 'Usuários', value: d.usuarios?.total || 0, sub: d.usuarios?.total_pontos?.toLocaleString('pt-BR') + ' pts', icon: 'fa-users', color: '#4CAF50' },
-      { label: 'Coletas Reciclagem', value: d.reciclagem?.coletas || 0, sub: (d.reciclagem?.total_kg || 0).toLocaleString('pt-BR') + ' kg', icon: 'fa-recycle', color: '#8BC34A' },
-      { label: 'CO₂ Evitado', value: ((d.reciclagem?.co2_evitado || 0)/1000).toFixed(1) + 't', sub: 'em reciclagem', icon: 'fa-leaf', color: '#00BCD4' },
-      { label: 'Ativid. Educação', value: d.educacao?.total || 0, sub: d.educacao?.concluidas + ' concluídas', icon: 'fa-graduation-cap', color: '#FF9800' },
-      { label: 'Ecopontos', value: d.ecopontos?.ativos || 0, sub: 'ativos', icon: 'fa-map-marker-alt', color: '#9C27B0' },
-      { label: 'Denúncias', value: d.denuncias?.total || 0, sub: d.denuncias?.resolvidas + ' resolvidas', icon: 'fa-flag', color: '#FF5722' },
-    ];
-    grid.innerHTML = kpis.map(k => \`
-      <div class="kpi-card text-center">
-        <div style="width:40px;height:40px;border-radius:50%;background:\${k.color}22;display:flex;align-items:center;justify-content:center;margin:0 auto 0.5rem">
-          <i class="fas \${k.icon}" style="color:\${k.color};font-size:1rem"></i>
-        </div>
-        <p class="text-2xl font-bold" style="color:\${k.color}">\${k.value}</p>
-        <p class="text-xs font-semibold mt-1" style="color:#a5d6a7">\${k.label}</p>
-        <p class="text-xs mt-0.5" style="color:#66bb6a">\${k.sub}</p>
-      </div>
-    \`).join('');
-    document.getElementById('last-update').innerHTML = '<i class="fas fa-check-circle mr-1" style="color:#4CAF50"></i>Atualizado agora';
-  } catch(e) { console.error('KPIs error:', e); }
-}
-
-async function loadAlertas() {
-  try {
-    const r = await fetch(BASE + '/api/alertas');
-    const data = await r.json();
-    const container = document.getElementById('alertas-container');
-    const alertas = (data || []).slice(0,3);
-    container.innerHTML = alertas.map(a => {
-      const cls = a.severidade === 'critico' ? 'alert-critico' : a.severidade === 'aviso' ? 'alert-aviso' : 'alert-info';
-      const color = a.severidade === 'critico' ? '#f44336' : a.severidade === 'aviso' ? '#ff9800' : '#2196F3';
-      const icon = a.severidade === 'critico' ? 'exclamation-triangle' : a.severidade === 'aviso' ? 'exclamation-circle' : 'info-circle';
-      return \`<div class="card \${cls} flex items-start gap-3 py-3" style="background:#0d2d0d">
-        <i class="fas fa-\${icon} mt-0.5" style="color:\${color}"></i>
-        <div class="flex-1">
-          <p class="font-semibold text-sm" style="color:\${color}">\${a.titulo}</p>
-          <p class="text-xs mt-0.5" style="color:#81c784">\${a.descricao || ''} \${a.regiao_nome ? '| '+a.regiao_nome : ''}</p>
-        </div>
-        <span class="badge \${a.severidade==='critico'?'badge-red':a.severidade==='aviso'?'badge-yellow':'badge-blue'}">\${a.severidade}</span>
-      </div>\`;
-    }).join('');
-  } catch(e) {}
-}
-
-async function loadVisaoGeral() {
-  try {
-    const [residuos, frota, evolucao, denuncias] = await Promise.all([
-      fetch(BASE + '/api/reciclagem/por-tipo').then(r => r.json()),
-      fetch(BASE + '/api/veiculos-eletricos').then(r => r.json()),
-      fetch(BASE + '/api/veiculos-eletricos/evolucao').then(r => r.json()),
-      fetch(BASE + '/api/bi/ranking-denuncias').then(r => r.json()),
-    ]);
-    // Gráfico reciclagem
-    makeChart('chartResiduos', {
-      type: 'bar',
-      data: {
-        labels: residuos.map(r => r.tipo),
-        datasets: [{
-          label: 'kg',
-          data: residuos.map(r => r.total_kg),
-          backgroundColor: GREEN_PALETTE,
-          borderRadius: 6
-        }]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-    });
-    // Gráfico frota (último ano disponível - SP)
-    const sp2024 = (frota || []).find(f => f.data_referencia === '2024-12-31' && f.estado === 'SP');
-    if (sp2024) {
-      makeChart('chartFrota', {
-        type: 'doughnut',
-        data: {
-          labels: ['Elétricos', 'Híbridos', 'Combustão'],
-          datasets: [{ data: [sp2024.total_veiculos_eletricos, sp2024.total_hibridos, sp2024.total_combustao], backgroundColor: ['#4CAF50','#FF9800','#607D8B'], borderWidth: 0 }]
-        },
-        options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom' } } }
-      });
-    }
-    // Evolução frota
-    makeChart('chartEvolucaoFrota', {
-      type: 'line',
-      data: {
-        labels: evolucao.map(e => e.ano),
-        datasets: [
-          { label: 'Elétricos', data: evolucao.map(e => e.total_eletricos), borderColor: '#4CAF50', backgroundColor: '#4CAF5033', fill: true, tension: 0.4 },
-          { label: 'Eletropostos', data: evolucao.map(e => e.total_eletropostos), borderColor: '#FF9800', backgroundColor: '#FF980033', fill: false, tension: 0.4, yAxisID: 'y1' }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, scales: { y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false } } } }
-    });
-    // Denúncias
-    makeChart('chartDenuncias', {
-      type: 'bar',
-      data: {
-        labels: denuncias.map(d => d.estado || d.regiao),
-        datasets: [
-          { label: 'Total', data: denuncias.map(d => d.total_denuncias), backgroundColor: '#FF5722aa' },
-          { label: 'Resolvidas', data: denuncias.map(d => d.resolvidas), backgroundColor: '#4CAF50aa' }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
-    });
-  } catch(e) { console.error('Visão geral:', e); }
-}
-
-async function loadEnergia() {
-  try {
-    const [porFonte, evolucao] = await Promise.all([
-      fetch(BASE + '/api/energia/por-fonte').then(r => r.json()),
-      fetch(BASE + '/api/energia/evolucao').then(r => r.json()),
-    ]);
-    makeChart('chartEnergiaPorFonte', {
-      type: 'bar',
-      data: {
-        labels: porFonte.map(f => f.fonte || 'N/D'),
-        datasets: [
-          { label: 'kWh', data: porFonte.map(f => f.total_kwh), backgroundColor: porFonte.map(f => f.renovavel ? '#4CAF50' : '#607D8B'), borderRadius: 6 }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-    });
-    makeChart('chartEnergiaEvolucao', {
-      type: 'line',
-      data: {
-        labels: evolucao.map(e => e.mes),
-        datasets: [
-          { label: 'Consumo (kWh)', data: evolucao.map(e => e.total_kwh), borderColor: '#FF9800', fill: true, backgroundColor: '#FF980022', tension: 0.4 },
-          { label: 'CO₂ (kg)', data: evolucao.map(e => e.total_co2_kg), borderColor: '#f44336', fill: false, tension: 0.4, yAxisID: 'y1' }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, scales: { y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false } } } }
-    });
-    const t = document.getElementById('tabela-energia');
-    t.innerHTML = \`<thead><tr><th>Fonte</th><th>Tipo</th><th>Renovável</th><th>Total kWh</th><th>CO₂ (kg)</th><th>Custo R$</th></tr></thead><tbody>\${
-      porFonte.map(f => \`<tr><td>\${f.fonte||'N/D'}</td><td>\${f.tipo||'N/D'}</td><td>\${f.renovavel?'✅':'❌'}</td><td>\${(f.total_kwh||0).toLocaleString('pt-BR')}</td><td>\${(f.total_co2_kg||0).toLocaleString('pt-BR')}</td><td>R$ \${(f.total_custo||0).toLocaleString('pt-BR')}</td></tr>\`).join('')
-    }</tbody>\`;
-  } catch(e) { console.error('Energia:', e); }
-}
-
-async function loadReciclagem() {
-  try {
-    const data = await fetch(BASE + '/api/reciclagem/por-tipo').then(r => r.json());
-    makeChart('chartReciclagemTipo', {
-      type: 'bar', data: { labels: data.map(d => d.tipo), datasets: [{ label: 'kg', data: data.map(d => d.total_kg), backgroundColor: GREEN_PALETTE, borderRadius: 6 }] },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-    });
-    makeChart('chartCO2Evitado', {
-      type: 'bar', data: { labels: data.map(d => d.tipo), datasets: [{ label: 'CO₂ evitado (kg)', data: data.map(d => d.co2_evitado), backgroundColor: '#4CAF5088', borderRadius: 6 }] },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-    });
-    const t = document.getElementById('tabela-reciclagem');
-    t.innerHTML = \`<thead><tr><th>Tipo</th><th>Classificação</th><th>Total (kg)</th><th>CO₂ Evitado (kg)</th><th>Valor (R$)</th><th>Coletas</th></tr></thead><tbody>\${
-      data.map(d => \`<tr><td>\${d.tipo||'N/D'}</td><td><span class="badge badge-green">\${d.classificacao||'N/D'}</span></td><td>\${(d.total_kg||0).toLocaleString('pt-BR')}</td><td>\${(d.co2_evitado||0).toLocaleString('pt-BR')}</td><td>R$ \${(d.valor_total||0).toLocaleString('pt-BR')}</td><td>\${d.coletas}</td></tr>\`).join('')
-    }</tbody>\`;
-  } catch(e) { console.error('Reciclagem:', e); }
-}
-
-async function loadVeiculos() {
-  try {
-    const [evolucao, todos] = await Promise.all([
-      fetch(BASE + '/api/veiculos-eletricos/evolucao').then(r => r.json()),
-      fetch(BASE + '/api/veiculos-eletricos').then(r => r.json()),
-    ]);
-    makeChart('chartVeiculosAnual', {
-      type: 'bar', data: {
-        labels: evolucao.map(e => e.ano),
-        datasets: [
-          { label: 'Elétricos', data: evolucao.map(e => e.total_eletricos), backgroundColor: '#4CAF50', borderRadius: 4 },
-          { label: 'Novos Emplacamentos', data: evolucao.map(e => e.novos_emplacamentos), backgroundColor: '#8BC34A', borderRadius: 4 }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
-    });
-    makeChart('chartEletropostos', {
-      type: 'line', data: {
-        labels: evolucao.map(e => e.ano),
-        datasets: [{ label: 'Eletropostos Ativos', data: evolucao.map(e => e.total_eletropostos), borderColor: '#FF9800', backgroundColor: '#FF980033', fill: true, tension: 0.4 }]
-      },
-      options: { responsive: true, maintainAspectRatio: false }
-    });
-    const recentes = (todos || []).filter(v => v.data_referencia === '2024-12-31');
-    const t = document.getElementById('tabela-veiculos');
-    t.innerHTML = \`<thead><tr><th>Região</th><th>Estado</th><th>Elétricos</th><th>Híbridos</th><th>Eletropostos</th><th>CO₂ Evitado (t)</th><th>Modelo +Vendido</th></tr></thead><tbody>\${
-      recentes.map(v => \`<tr><td>\${v.regiao_nome||'N/D'}</td><td>\${v.estado||'N/D'}</td><td>\${(v.total_veiculos_eletricos||0).toLocaleString('pt-BR')}</td><td>\${(v.total_hibridos||0).toLocaleString('pt-BR')}</td><td>\${(v.eletropostos_ativos||0).toLocaleString('pt-BR')}</td><td>\${((v.co2_evitado_kg||0)/1000).toLocaleString('pt-BR')}</td><td>\${v.modelo_mais_vendido||'N/D'}</td></tr>\`).join('')
-    }</tbody>\`;
-  } catch(e) { console.error('Veículos:', e); }
-}
-
-async function loadQualidade() {
-  try {
-    const [ar, agua] = await Promise.all([
-      fetch(BASE + '/api/qualidade-ar').then(r => r.json()),
-      fetch(BASE + '/api/qualidade-agua').then(r => r.json()),
-    ]);
-    const arByRegiao = {};
-    ar.forEach(a => { if (!arByRegiao[a.regiao_nome]) arByRegiao[a.regiao_nome] = []; arByRegiao[a.regiao_nome].push(a.indice_qualidade_ar); });
-    const arLabels = Object.keys(arByRegiao);
-    const arValues = arLabels.map(r => { const vals = arByRegiao[r]; return Math.round(vals.reduce((a,b)=>a+b,0)/vals.length); });
-    makeChart('chartIQA', {
-      type: 'bar', data: { labels: arLabels, datasets: [{ label: 'IQA Médio', data: arValues, backgroundColor: arValues.map(v => v < 50 ? '#4CAF50' : v < 100 ? '#FF9800' : '#f44336'), borderRadius: 6 }] },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-    });
-    const aguaByRegiao = {};
-    agua.forEach(a => { if (!aguaByRegiao[a.regiao_nome]) aguaByRegiao[a.regiao_nome] = []; aguaByRegiao[a.regiao_nome].push(a.indice_qualidade_agua); });
-    const aguaLabels = Object.keys(aguaByRegiao);
-    const aguaValues = aguaLabels.map(r => { const vals = aguaByRegiao[r]; return Math.round(vals.reduce((a,b)=>a+b,0)/vals.length); });
-    makeChart('chartIQAAgua', {
-      type: 'bar', data: { labels: aguaLabels, datasets: [{ label: 'IQA Água', data: aguaValues, backgroundColor: aguaValues.map(v => v >= 80 ? '#4CAF50' : v >= 50 ? '#FF9800' : '#f44336'), borderRadius: 6 }] },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-    });
-  } catch(e) { console.error('Qualidade:', e); }
-}
-
-async function loadMetas() {
-  try {
-    const data = await fetch(BASE + '/api/metas').then(r => r.json());
-    const container = document.getElementById('metas-container');
-    container.innerHTML = (data || []).map(m => {
-      const pct = Math.min(100, m.percentual_atingimento || 0);
-      const cor = pct >= 80 ? '#4CAF50' : pct >= 50 ? '#FF9800' : '#f44336';
-      const badge = m.status_meta === 'atingida' ? 'badge-green' : m.status_meta === 'em_andamento' ? 'badge-blue' : 'badge-red';
-      return \`<div style="border:1px solid #2a5c2a;border-radius:8px;padding:1rem;background:#0d2d0d">
-        <div class="flex items-center justify-between mb-2">
-          <div>
-            <p class="font-semibold text-sm" style="color:#a5d6a7">\${m.nome_kpi}</p>
-            <p class="text-xs mt-0.5" style="color:#66bb6a">\${m.descricao || ''} | ODS: \${m.ods_relacionado || 'N/D'}</p>
-          </div>
-          <div class="text-right">
-            <p class="font-bold text-lg" style="color:\${cor}">\${pct.toFixed(1)}%</p>
-            <span class="badge \${badge}">\${m.status_meta}</span>
-          </div>
-        </div>
-        <div class="progress-bar"><div class="progress-fill" style="width:\${pct}%;background:linear-gradient(90deg,\${cor}88,\${cor})"></div></div>
-        <div class="flex justify-between text-xs mt-1" style="color:#66bb6a">
-          <span>Atual: \${(m.valor_atual||0).toLocaleString('pt-BR')} \${m.unidade_medida}</span>
-          <span>Meta: \${(m.valor_meta||0).toLocaleString('pt-BR')} \${m.unidade_medida}</span>
-        </div>
-      </div>\`;
-    }).join('');
-  } catch(e) { console.error('Metas:', e); }
-}
-
-async function loadPowerBI() {
-  const endpoints = [
-    { label: 'KPIs Gerais', url: '/api/kpis', desc: 'JSON - indicadores sumarizados' },
-    { label: 'Qualidade do Ar (CSV)', url: '/api/qualidade-ar?format=csv', desc: 'CSV - dados PM2.5, PM10, CO2, IQA' },
-    { label: 'Qualidade da Água (CSV)', url: '/api/qualidade-agua?format=csv', desc: 'CSV - pH, turbidez, oxigênio, IQA' },
-    { label: 'Energia por Fonte', url: '/api/energia/por-fonte', desc: 'JSON - consumo e emissões agrupados' },
-    { label: 'Energia - Evolução (CSV)', url: '/api/energia?format=csv', desc: 'CSV - série temporal de consumo' },
-    { label: 'Reciclagem por Tipo', url: '/api/reciclagem/por-tipo', desc: 'JSON - volume e CO2 evitado' },
-    { label: 'Reciclagem (CSV)', url: '/api/reciclagem?format=csv', desc: 'CSV - todas as coletas detalhadas' },
-    { label: 'Frota Elétrica - Evolução', url: '/api/veiculos-eletricos/evolucao', desc: 'JSON - crescimento anual da frota' },
-    { label: 'Veículos Elétricos (CSV)', url: '/api/veiculos-eletricos?format=csv', desc: 'CSV - dados por região e ano' },
-    { label: 'Clima (CSV)', url: '/api/clima?format=csv', desc: 'CSV - temperatura, chuvas, anomalias' },
-    { label: 'Cobertura Vegetal (CSV)', url: '/api/cobertura-vegetal?format=csv', desc: 'CSV - desmatamento e reflorestamento' },
-    { label: 'Denúncias (CSV)', url: '/api/denuncias?format=csv', desc: 'CSV - tipos, status e impacto' },
-    { label: 'Ecopontos (CSV)', url: '/api/ecopontos?format=csv', desc: 'CSV - localização e capacidade' },
-    { label: 'KPIs e Metas (CSV)', url: '/api/metas?format=csv', desc: 'CSV - percentual de atingimento' },
-    { label: 'Resumo Regional', url: '/api/bi/resumo-regional?format=csv', desc: 'CSV - visão consolidada por cidade' },
-    { label: 'Tendências Reciclagem', url: '/api/bi/tendencias', desc: 'JSON - série mensal de reciclagem' },
-    { label: 'Emissões CO₂', url: '/api/bi/emissoes-co2', desc: 'JSON - CO2 por fonte e região' },
-    { label: 'Ranking Denúncias', url: '/api/bi/ranking-denuncias', desc: 'JSON - taxa de resolução por região' },
-    { label: 'Educação Ambiental (CSV)', url: '/api/educacao?format=csv', desc: 'CSV - atividades e pontuações' },
-  ];
-  document.getElementById('powerbi-endpoints').innerHTML = endpoints.map(e => \`
-    <div style="border:1px solid #2a5c2a;border-radius:8px;padding:0.75rem;background:#0d2d0d;display:flex;align-items:center;justify-content:space-between;gap:0.5rem">
-      <div>
-        <p class="text-sm font-semibold" style="color:#a5d6a7">\${e.label}</p>
-        <p class="text-xs mt-0.5" style="color:#66bb6a">\${e.desc}</p>
-        <span class="api-tag mt-1">\${BASE}\${e.url}</span>
-      </div>
-      <div class="flex gap-2 shrink-0">
-        <a href="\${e.url}" target="_blank" class="text-xs px-3 py-1 rounded font-semibold" style="background:#1b5e20;color:#a5d6a7;text-decoration:none">Ver</a>
-        <button onclick="navigator.clipboard.writeText('\${BASE}\${e.url}')" class="text-xs px-3 py-1 rounded font-semibold" style="background:#0d47a1;color:#bbdefb"><i class="fas fa-copy"></i></button>
-      </div>
-    </div>
-  \`).join('');
-}
-
-let tabLoaded = { 'visao-geral': false, energia: false, reciclagem: false, veiculos: false, qualidade: false, metas: false, powerbi: false };
-
-async function loadTabData(name) {
-  if (tabLoaded[name]) return;
-  tabLoaded[name] = true;
-  if (name === 'visao-geral') await loadVisaoGeral();
-  else if (name === 'energia') await loadEnergia();
-  else if (name === 'reciclagem') await loadReciclagem();
-  else if (name === 'veiculos') await loadVeiculos();
-  else if (name === 'qualidade') await loadQualidade();
-  else if (name === 'metas') await loadMetas();
-  else if (name === 'powerbi') await loadPowerBI();
-}
-
-// Init
-document.addEventListener('DOMContentLoaded', () => {
-  loadKPIs();
-  loadAlertas();
-  loadVisaoGeral();
-});
 </script>
+<script src="/static/dashboard.js"></script>
 </body>
 </html>`
-}
+  return c.html(html)
+})
 
 // ============================================================
-// HTML: MAPA MENTAL
+// GET /mapa
 // ============================================================
-function htmlMindMap(): string {
-  return `<!DOCTYPE html>
+app.get('/mapa', (c) => {
+  const html = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SustAmbiTech - Mapa Mental & Análise</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mapa de Eletropostos</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
-  :root { --bg: #0f2010; --card: #162516; --border: #2a5c2a; --text: #e8f5e9; --green: #4CAF50; --pale: #8BC34A; --muted: #a5d6a7; }
-  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
-  svg text { font-family: 'Segoe UI', sans-serif; }
-  .mindmap-node { cursor: pointer; transition: all 0.2s; }
-  .mindmap-node:hover circle { filter: brightness(1.3); }
-  .node-center circle { fill: #2d6a2d; stroke: #4CAF50; stroke-width: 3; }
-  .tip-card { background: #0d2d0d; border: 1px solid #2a5c2a; border-radius: 8px; padding: 1rem; margin-top: 0.5rem; }
+body{margin:0;background:#0a0f1e;color:#e2e8f0;font-family:'Segoe UI',system-ui,sans-serif;}
+#map{height:calc(100vh - 56px);width:100%;}
+.leaflet-popup-content-wrapper{background:#1a2340;color:#e2e8f0;border:1px solid #2d3748;}
+.leaflet-popup-tip{background:#1a2340;}
+.filter-bar{background:#0f1629;border-bottom:1px solid #2d3748;padding:8px 16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;height:56px;}
+.filter-bar select{background:#1a2340;border:1px solid #374151;border-radius:8px;padding:5px 10px;color:#e2e8f0;font-size:.85rem;}
+.stat-pill{background:#1a2340;border:1px solid #374151;padding:3px 10px;border-radius:99px;font-size:.8rem;}
 </style>
 </head>
 <body>
-
-<nav style="background: #0d1f0d; border-bottom: 1px solid #2a5c2a;" class="sticky top-0 z-50">
-  <div class="max-w-screen-xl mx-auto px-4 py-3 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #4CAF50, #2d6a2d)">
-        <i class="fas fa-leaf text-white text-sm"></i>
-      </div>
-      <div>
-        <h1 class="font-bold text-base" style="color: #8BC34A">SustAmbiTech BI</h1>
-        <p class="text-xs" style="color: #66bb6a">Mapa Mental & Sugestões de Melhoria</p>
-      </div>
-    </div>
-    <div class="flex items-center gap-2">
-      <a href="/" style="color:#a5d6a7;padding:0.5rem 1rem;background:#1a3d1a;border-radius:8px;text-decoration:none;font-size:0.875rem"><i class="fas fa-arrow-left mr-1"></i>Dashboard</a>
-    </div>
-  </div>
-</nav>
-
-<main class="max-w-screen-xl mx-auto px-4 py-6">
-
-  <div class="text-center mb-8">
-    <h2 class="text-3xl font-bold mb-2" style="color: #a5d6a7">Mapa Mental - SustAmbiTech</h2>
-    <p style="color: #66bb6a">Análise completa do projeto com módulos, dados para BI e sugestões de melhoria</p>
-  </div>
-
-  <!-- MAPA MENTAL SVG -->
-  <div class="card mb-8 overflow-x-auto">
-    <h3 class="font-semibold mb-4" style="color: #a5d6a7"><i class="fas fa-project-diagram mr-2"></i>Mapa Mental Interativo</h3>
-    <svg id="mindmap" viewBox="0 0 1200 800" width="100%" style="min-width:800px; min-height:500px">
-      <!-- Linhas de conexão -->
-      <!-- Centro para nós principais -->
-      <g id="lines" stroke="#2a5c2a" stroke-width="2" fill="none">
-        <line x1="600" y1="400" x2="200" y2="150"/>
-        <line x1="600" y1="400" x2="500" y2="100"/>
-        <line x1="600" y1="400" x2="800" y2="100"/>
-        <line x1="600" y1="400" x2="1000" y2="150"/>
-        <line x1="600" y1="400" x2="1050" y2="400"/>
-        <line x1="600" y1="400" x2="1000" y2="650"/>
-        <line x1="600" y1="400" x2="800" y2="700"/>
-        <line x1="600" y1="400" x2="500" y2="700"/>
-        <line x1="600" y1="400" x2="200" y2="650"/>
-        <line x1="600" y1="400" x2="150" y2="400"/>
-        <!-- Sub-nós -->
-        <line x1="200" y1="150" x2="100" y2="80" stroke="#1a5c1a" stroke-width="1.5"/>
-        <line x1="200" y1="150" x2="180" y2="50" stroke="#1a5c1a" stroke-width="1.5"/>
-        <line x1="500" y1="100" x2="430" y2="35" stroke="#1a5c1a" stroke-width="1.5"/>
-        <line x1="500" y1="100" x2="540" y2="30" stroke="#1a5c1a" stroke-width="1.5"/>
-        <line x1="800" y1="100" x2="720" y2="40" stroke="#1a5c1a" stroke-width="1.5"/>
-        <line x1="800" y1="100" x2="870" y2="35" stroke="#1a5c1a" stroke-width="1.5"/>
-        <line x1="1050" y1="400" x2="1130" y2="330" stroke="#1a5c1a" stroke-width="1.5"/>
-        <line x1="1050" y1="400" x2="1140" y2="460" stroke="#1a5c1a" stroke-width="1.5"/>
-      </g>
-
-      <!-- NÓ CENTRAL -->
-      <g class="mindmap-node node-center" transform="translate(600,400)">
-        <circle r="65" fill="#1a5c1a" stroke="#4CAF50" stroke-width="3"/>
-        <text text-anchor="middle" dy="-8" fill="#8BC34A" font-size="13" font-weight="bold">🌱</text>
-        <text text-anchor="middle" dy="8" fill="#a5d6a7" font-size="11" font-weight="bold">SUSTAMBITECH</text>
-        <text text-anchor="middle" dy="22" fill="#66bb6a" font-size="9">BI & ANÁLISE</text>
-      </g>
-
-      <!-- NÓ 1: MONITORAMENTO AMBIENTAL -->
-      <g class="mindmap-node" transform="translate(200,150)" onclick="showInfo('monitoramento')">
-        <circle r="48" fill="#0d3d0d" stroke="#4CAF50" stroke-width="2"/>
-        <text text-anchor="middle" dy="-6" fill="#4CAF50" font-size="16">🌬️</text>
-        <text text-anchor="middle" dy="8" fill="#a5d6a7" font-size="10" font-weight="bold">Monitoramento</text>
-        <text text-anchor="middle" dy="20" fill="#66bb6a" font-size="9">Ambiental</text>
-      </g>
-      <!-- Sub-nós monitoramento -->
-      <g transform="translate(100,80)"><circle r="25" fill="#0a2d0a" stroke="#2a5c2a" stroke-width="1.5"/><text text-anchor="middle" dy="-3" fill="#81c784" font-size="9">Qualidade</text><text text-anchor="middle" dy="8" fill="#66bb6a" font-size="8">do Ar</text></g>
-      <g transform="translate(180,50)"><circle r="25" fill="#0a2d0a" stroke="#2a5c2a" stroke-width="1.5"/><text text-anchor="middle" dy="-3" fill="#81c784" font-size="9">Qualidade</text><text text-anchor="middle" dy="8" fill="#66bb6a" font-size="8">da Água</text></g>
-
-      <!-- NÓ 2: ENERGIA -->
-      <g class="mindmap-node" transform="translate(500,100)" onclick="showInfo('energia')">
-        <circle r="48" fill="#1a3d00" stroke="#8BC34A" stroke-width="2"/>
-        <text text-anchor="middle" dy="-6" fill="#8BC34A" font-size="16">⚡</text>
-        <text text-anchor="middle" dy="8" fill="#a5d6a7" font-size="10" font-weight="bold">Energia</text>
-        <text text-anchor="middle" dy="20" fill="#66bb6a" font-size="9">Renovável</text>
-      </g>
-      <g transform="translate(430,35)"><circle r="25" fill="#0a2d0a" stroke="#2a5c2a" stroke-width="1.5"/><text text-anchor="middle" dy="-3" fill="#81c784" font-size="9">Solar /</text><text text-anchor="middle" dy="8" fill="#66bb6a" font-size="8">Eólica</text></g>
-      <g transform="translate(540,30)"><circle r="25" fill="#0a2d0a" stroke="#2a5c2a" stroke-width="1.5"/><text text-anchor="middle" dy="-3" fill="#81c784" font-size="9">Consumo</text><text text-anchor="middle" dy="8" fill="#66bb6a" font-size="8">Eficiente</text></g>
-
-      <!-- NÓ 3: RECICLAGEM -->
-      <g class="mindmap-node" transform="translate(800,100)" onclick="showInfo('reciclagem')">
-        <circle r="48" fill="#0d3d1a" stroke="#00BCD4" stroke-width="2"/>
-        <text text-anchor="middle" dy="-6" fill="#00BCD4" font-size="16">♻️</text>
-        <text text-anchor="middle" dy="8" fill="#a5d6a7" font-size="10" font-weight="bold">Reciclagem</text>
-        <text text-anchor="middle" dy="20" fill="#66bb6a" font-size="9">Inteligente</text>
-      </g>
-      <g transform="translate(720,40)"><circle r="25" fill="#0a2d0a" stroke="#2a5c2a" stroke-width="1.5"/><text text-anchor="middle" dy="-3" fill="#81c784" font-size="9">Resíduos</text><text text-anchor="middle" dy="8" fill="#66bb6a" font-size="8">Sólidos</text></g>
-      <g transform="translate(870,35)"><circle r="25" fill="#0a2d0a" stroke="#2a5c2a" stroke-width="1.5"/><text text-anchor="middle" dy="-3" fill="#81c784" font-size="9">Ecopontos</text><text text-anchor="middle" dy="8" fill="#66bb6a" font-size="8">Mapa</text></g>
-
-      <!-- NÓ 4: MOBILIDADE -->
-      <g class="mindmap-node" transform="translate(1000,150)" onclick="showInfo('mobilidade')">
-        <circle r="48" fill="#0d2d3d" stroke="#FF9800" stroke-width="2"/>
-        <text text-anchor="middle" dy="-6" fill="#FF9800" font-size="16">🚗</text>
-        <text text-anchor="middle" dy="8" fill="#a5d6a7" font-size="10" font-weight="bold">Mobilidade</text>
-        <text text-anchor="middle" dy="20" fill="#66bb6a" font-size="9">Sustentável</text>
-      </g>
-
-      <!-- NÓ 5: BI / DADOS -->
-      <g class="mindmap-node" transform="translate(1050,400)" onclick="showInfo('bi')">
-        <circle r="48" fill="#3d0d3d" stroke="#9C27B0" stroke-width="2"/>
-        <text text-anchor="middle" dy="-6" fill="#9C27B0" font-size="16">📊</text>
-        <text text-anchor="middle" dy="8" fill="#a5d6a7" font-size="10" font-weight="bold">Power BI</text>
-        <text text-anchor="middle" dy="20" fill="#66bb6a" font-size="9">Dados & APIs</text>
-      </g>
-      <g transform="translate(1130,330)"><circle r="25" fill="#0a2d0a" stroke="#2a5c2a" stroke-width="1.5"/><text text-anchor="middle" dy="-3" fill="#81c784" font-size="9">REST</text><text text-anchor="middle" dy="8" fill="#66bb6a" font-size="8">APIs</text></g>
-      <g transform="translate(1140,460)"><circle r="25" fill="#0a2d0a" stroke="#2a5c2a" stroke-width="1.5"/><text text-anchor="middle" dy="-3" fill="#81c784" font-size="9">CSV</text><text text-anchor="middle" dy="8" fill="#66bb6a" font-size="8">Export</text></g>
-
-      <!-- NÓ 6: DENÚNCIAS -->
-      <g class="mindmap-node" transform="translate(1000,650)" onclick="showInfo('denuncias')">
-        <circle r="48" fill="#3d0d0d" stroke="#F44336" stroke-width="2"/>
-        <text text-anchor="middle" dy="-6" fill="#F44336" font-size="16">🚨</text>
-        <text text-anchor="middle" dy="8" fill="#a5d6a7" font-size="10" font-weight="bold">Denúncias</text>
-        <text text-anchor="middle" dy="20" fill="#66bb6a" font-size="9">Ambientais</text>
-      </g>
-
-      <!-- NÓ 7: CLIMA -->
-      <g class="mindmap-node" transform="translate(800,700)" onclick="showInfo('clima')">
-        <circle r="48" fill="#1a1a3d" stroke="#2196F3" stroke-width="2"/>
-        <text text-anchor="middle" dy="-6" fill="#2196F3" font-size="16">🌡️</text>
-        <text text-anchor="middle" dy="8" fill="#a5d6a7" font-size="10" font-weight="bold">Clima</text>
-        <text text-anchor="middle" dy="20" fill="#66bb6a" font-size="9">Indicadores</text>
-      </g>
-
-      <!-- NÓ 8: BIODIVERSIDADE -->
-      <g class="mindmap-node" transform="translate(500,700)" onclick="showInfo('biodiversidade')">
-        <circle r="48" fill="#0d3d1a" stroke="#388E3C" stroke-width="2"/>
-        <text text-anchor="middle" dy="-6" fill="#388E3C" font-size="16">🌿</text>
-        <text text-anchor="middle" dy="8" fill="#a5d6a7" font-size="10" font-weight="bold">Biodiversidade</text>
-        <text text-anchor="middle" dy="20" fill="#66bb6a" font-size="9">Cobertura Veg.</text>
-      </g>
-
-      <!-- NÓ 9: POLÍTICAS -->
-      <g class="mindmap-node" transform="translate(200,650)" onclick="showInfo('politicas')">
-        <circle r="48" fill="#2d2d0d" stroke="#FF5722" stroke-width="2"/>
-        <text text-anchor="middle" dy="-6" fill="#FF5722" font-size="16">⚖️</text>
-        <text text-anchor="middle" dy="8" fill="#a5d6a7" font-size="10" font-weight="bold">Políticas</text>
-        <text text-anchor="middle" dy="20" fill="#66bb6a" font-size="9">Legislação</text>
-      </g>
-
-      <!-- NÓ 10: EDUCAÇÃO -->
-      <g class="mindmap-node" transform="translate(150,400)" onclick="showInfo('educacao')">
-        <circle r="48" fill="#3d2d0d" stroke="#607D8B" stroke-width="2"/>
-        <text text-anchor="middle" dy="-6" fill="#607D8B" font-size="16">📚</text>
-        <text text-anchor="middle" dy="8" fill="#a5d6a7" font-size="10" font-weight="bold">Educação</text>
-        <text text-anchor="middle" dy="20" fill="#66bb6a" font-size="9">Ambiental</text>
-      </g>
-    </svg>
-    <p class="text-xs text-center mt-2" style="color:#66bb6a">Clique nos nós para ver detalhes de cada módulo</p>
-  </div>
-
-  <!-- INFO BOX -->
-  <div id="info-box" class="card mb-8" style="display:none">
-    <div id="info-content"></div>
-  </div>
-
-  <!-- SUGESTÕES DE MELHORIA -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-    
-    <div class="card">
-      <h3 class="font-bold text-lg mb-4" style="color: #8BC34A"><i class="fas fa-lightbulb mr-2"></i>Sugestões de Melhoria</h3>
-      <div class="space-y-3">
-        ${[
-          { icon: '🤖', title: 'IA para Detecção de Desmatamento', desc: 'Integrar modelo de ML com imagens de satélite (Sentinel/Landsat) para detecção automática de desmatamento em tempo real via API Planet Labs ou MapBiomas.' },
-          { icon: '📱', title: 'App Móvel com Gamificação', desc: 'Desenvolver PWA com sistema de conquistas, ranking de usuários sustentáveis e notificações push para alertas ambientais próximos.' },
-          { icon: '🔗', title: 'Blockchain para Rastreabilidade', desc: 'Usar blockchain para certificar créditos de carbono e rastrear cadeia de reciclagem, dando transparência ao destino dos resíduos.' },
-          { icon: '🌐', title: 'Open Data API Pública', desc: 'Publicar todos os dados como Open Data governamental, permitindo integração com prefeituras, universidades e ONGs.' },
-          { icon: '🔮', title: 'Dashboard Preditivo', desc: 'Usar modelos de séries temporais (Prophet/ARIMA) para prever qualidade do ar, temperaturas extremas e tendências de desmatamento.' },
-          { icon: '💰', title: 'Marketplace de Créditos Verdes', desc: 'Criar marketplace onde empresas possam comprar/vender créditos de carbono gerados por ações de usuários e cooperativas.' },
-        ].map(s => `<div class="tip-card flex gap-3">
-          <span class="text-2xl">${s.icon}</span>
-          <div><p class="font-semibold text-sm" style="color:#a5d6a7">${s.title}</p><p class="text-xs mt-1" style="color:#66bb6a">${s.desc}</p></div>
-        </div>`).join('')}
-      </div>
-    </div>
-
-    <div class="card">
-      <h3 class="font-bold text-lg mb-4" style="color: #8BC34A"><i class="fas fa-database mr-2"></i>Dados Extras para Power BI</h3>
-      <div class="space-y-3">
-        ${[
-          { icon: '🛰️', title: 'Dados de Satélite (INPE/NASA)', desc: 'PRODES/DETER (desmatamento), MODIS (temperatura superfície), Sentinel (cobertura vegetal NDVI).' },
-          { icon: '🌊', title: 'Hidrologia e Recursos Hídricos', desc: 'Nível de reservatórios (ANA), vazão de rios, qualidade de corpos hídricos por microbacia.' },
-          { icon: '🏭', title: 'Inventário de Emissões GEE', desc: 'Emissões por setor (energia, agro, indústria, resíduos) em toneladas de CO2e para análise de descarbonização.' },
-          { icon: '📍', title: 'Dados Socioeconômicos', desc: 'IDH municipal, renda per capita, grau de instrução para correlacionar com indicadores ambientais.' },
-          { icon: '🌱', title: 'Mercado de Carbono Voluntário', desc: 'Preços históricos de créditos de carbono (VCMI, Gold Standard), projetos registrados e verificados.' },
-          { icon: '🦁', title: 'Lista de Espécies Ameaçadas', desc: 'IUCN Red List, IBAMA listas, dados de avistamentos e status de conservação para análise de biodiversidade.' },
-        ].map(s => `<div class="tip-card flex gap-3">
-          <span class="text-2xl">${s.icon}</span>
-          <div><p class="font-semibold text-sm" style="color:#a5d6a7">${s.title}</p><p class="text-xs mt-1" style="color:#66bb6a">${s.desc}</p></div>
-        </div>`).join('')}
-      </div>
-    </div>
-  </div>
-
-  <!-- TABELA DE FONTES DE DADOS PARA BI -->
-  <div class="card mb-8">
-    <h3 class="font-bold text-lg mb-4" style="color: #8BC34A"><i class="fas fa-link mr-2"></i>Fontes de Dados Reais para Enriquecer o BI</h3>
-    <div style="overflow-x:auto">
-      <table style="width:100%;border-collapse:collapse;font-size:0.875rem">
-        <thead>
-          <tr>
-            ${['Fonte','Dados Disponíveis','Frequência','Formato','Link','Gratuito'].map(h => `<th style="background:#0d2d0d;color:#8BC34A;padding:0.75rem;text-align:left;font-size:0.8rem;text-transform:uppercase">${h}</th>`).join('')}
-          </tr>
-        </thead>
-        <tbody>
-          ${[
-            ['INPE - PRODES', 'Desmatamento anual Amazônia', 'Anual', 'CSV/SHP', 'terrabrasilis.dpi.inpe.br', '✅'],
-            ['INPE - DETER', 'Alertas de desmatamento', 'Diário', 'API/CSV', 'terrabrasilis.dpi.inpe.br', '✅'],
-            ['IBGE', 'Dados socioeconômicos municipais', 'Anual', 'API/CSV', 'ibge.gov.br/api', '✅'],
-            ['ANA - HidroWeb', 'Hidrologia e qualidade da água', 'Diário', 'API/CSV', 'snirh.gov.br', '✅'],
-            ['ANEEL', 'Geração de energia por fonte', 'Mensal', 'CSV', 'aneel.gov.br', '✅'],
-            ['CETESB / SEMAs', 'Qualidade do ar por estado', 'Horário', 'API', 'cetesb.sp.gov.br', '✅'],
-            ['DENATRAN/SENATRAN', 'Frota de veículos por município', 'Mensal', 'CSV', 'gov.br/infraestrutura', '✅'],
-            ['Observatório do Clima', 'Emissões de GEE no Brasil', 'Anual', 'CSV', 'observatoriodoclima.eco.br', '✅'],
-            ['MapBiomas', 'Cobertura e uso da terra', 'Anual', 'API/GEE', 'mapbiomas.org', '✅'],
-            ['IUCN Red List', 'Status de espécies ameaçadas', 'Semestral', 'API', 'iucnredlist.org', '✅ (API)'],
-          ].map(r => `<tr>${r.map((c,i) => `<td style="padding:0.6rem 0.75rem;border-bottom:1px solid #2a5c2a;color:${i===5?'#4CAF50':'#e8f5e9'}">${i===4?`<a href="https://${c}" target="_blank" style="color:#64b5f6;text-decoration:none">${c}</a>`:c}</td>`).join('')}</tr>`).join('')}
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- MODELO ESTRELA VISUAL -->
-  <div class="card">
-    <h3 class="font-bold text-lg mb-4" style="color: #8BC34A"><i class="fas fa-star mr-2"></i>Modelo Estrela para Power BI</h3>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div style="background:#0d2d0d;border:1px solid #1b5e20;border-radius:8px;padding:1rem">
-        <p class="font-bold text-sm mb-3" style="color:#4CAF50">🗂️ DIMENSÕES (5 tabelas)</p>
-        ${['dim_regioes - Localidades geográficas','dim_categorias - Áreas temáticas','dim_usuarios - Perfis de usuários','dim_tipos_residuos - Classificação','dim_fontes_energia - Tipos de energia'].map(t => `<p class="text-xs mb-1" style="color:#81c784">▸ ${t}</p>`).join('')}
-      </div>
-      <div style="background:#0d2d0d;border:2px solid #4CAF50;border-radius:8px;padding:1rem">
-        <p class="font-bold text-sm mb-3" style="color:#8BC34A">📊 TABELAS FATO (12 tabelas)</p>
-        ${['fato_qualidade_ar','fato_qualidade_agua','fato_consumo_energia','fato_reciclagem','fato_veiculos_eletricos','fato_indicadores_climaticos','fato_cobertura_vegetal','fato_educacao_ambiental','fato_denuncias','fato_consumo_consciente','fato_politicas_ambientais','fato_ecopontos'].map(t => `<p class="text-xs mb-1" style="color:#66bb6a">▸ ${t}</p>`).join('')}
-      </div>
-      <div style="background:#0d2d0d;border:1px solid #1b5e20;border-radius:8px;padding:1rem">
-        <p class="font-bold text-sm mb-3" style="color:#4CAF50">⚙️ SUPORTE (3 tabelas)</p>
-        ${['tb_kpis_metas - Metas e ODS','tb_alertas - Notificações','tb_logs_atividade - Auditoria'].map(t => `<p class="text-xs mb-1" style="color:#81c784">▸ ${t}</p>`).join('')}
-        <hr style="border-color:#2a5c2a;margin:1rem 0">
-        <p class="font-bold text-sm mb-2" style="color:#4CAF50">🔗 CHAVES DE LIGAÇÃO</p>
-        ${['regiao_id → dim_regioes','usuario_id → dim_usuarios','fonte_energia_id → dim_fontes_energia','tipo_residuo_id → dim_tipos_residuos','categoria_id → dim_categorias'].map(t => `<p class="text-xs mb-1" style="color:#66bb6a">▸ ${t}</p>`).join('')}
-      </div>
-    </div>
-  </div>
-
-</main>
-
-<script>
-const infoData = {
-  monitoramento: {
-    title: '🌬️ Monitoramento Ambiental',
-    color: '#4CAF50',
-    desc: 'Módulo core de coleta de dados ambientais em tempo real. Utiliza sensores virtuais e APIs de serviços meteorológicos.',
-    dados_bi: ['PM2.5, PM10, CO2, O3, NO2, SO2', 'Índice de Qualidade do Ar (IQA 0-500)', 'pH, turbidez, oxigênio dissolvido', 'Índice de Qualidade da Água (IQA 0-100)', 'Temperaturas, umidade, vento'],
-    tabelas: ['fato_qualidade_ar', 'fato_qualidade_agua'],
-    metricas: ['Média diária/mensal de IQA por cidade', 'Mapa de calor de poluição', 'Correlação clima/qualidade do ar', 'Alertas por threshold']
-  },
-  energia: {
-    title: '⚡ Energia Renovável',
-    color: '#8BC34A',
-    desc: 'Controle inteligente do consumo de energia por fonte, setor e região. Mede o percentual de energia limpa e o CO2 evitado.',
-    dados_bi: ['kWh consumido por fonte', 'Custo em reais', 'Emissão de CO2 por kWh', 'Setor (residencial, industrial)', 'Percentual de energia renovável'],
-    tabelas: ['fato_consumo_energia', 'dim_fontes_energia'],
-    metricas: ['% de energia renovável por região', 'Evolução mensal do consumo', 'CO2 evitado por adoção de solar/eólica', 'Custo médio por kWh por fonte']
-  },
-  reciclagem: {
-    title: '♻️ Reciclagem Inteligente',
-    color: '#00BCD4',
-    desc: 'Sistema de gestão de resíduos com rastreamento de ecopontos, tipos de resíduos coletados e impacto ambiental.',
-    dados_bi: ['Quantidade em kg por tipo de resíduo', 'CO2 evitado por reciclagem', 'Valor arrecadado por cooperativas', 'Mapa de ecopontos', 'Taxa de desvio de aterro'],
-    tabelas: ['fato_reciclagem', 'fato_ecopontos', 'dim_tipos_residuos'],
-    metricas: ['Taxa de reciclagem municipal (%)', 'Ranking de tipos de resíduo', 'CO2 evitado acumulado', 'Receita gerada por cooperativas']
-  },
-  mobilidade: {
-    title: '🚗 Mobilidade Sustentável',
-    color: '#FF9800',
-    desc: 'Acompanhamento da eletrificação da frota, expansão de eletropostos e impacto ambiental da mobilidade elétrica.',
-    dados_bi: ['Total de veículos elétricos/híbridos', 'Novos emplacamentos mensais', 'Eletropostos ativos', 'CO2 evitado em km rodados', 'Economia de combustível em litros'],
-    tabelas: ['fato_veiculos_eletricos'],
-    metricas: ['% de frota elétrica por cidade', 'Crescimento YoY da frota', 'CO2 evitado por região', 'Projeção de expansão até 2030']
-  },
-  bi: {
-    title: '📊 Power BI & Dados',
-    color: '#9C27B0',
-    desc: 'Infraestrutura de dados para análise no Power BI. 19 endpoints REST com suporte a JSON e CSV para importação direta.',
-    dados_bi: ['19 endpoints REST disponíveis', 'Exportação CSV/JSON', 'Modelo estrela com 20 tabelas', 'Dados históricos e tempo real', 'APIs de agregação para KPIs'],
-    tabelas: ['Todas (20 tabelas)'],
-    metricas: ['Score de Sustentabilidade Municipal', 'Ranking por ODS da ONU', 'Índice composto ambiental', 'Análise preditiva de tendências']
-  },
-  denuncias: {
-    title: '🚨 Denúncias Ambientais',
-    color: '#F44336',
-    desc: 'Canal de denúncias com geolocalização, categorização e acompanhamento de status de resolução.',
-    dados_bi: ['Tipo de denúncia (desmatamento, poluição)', 'Status (pendente, resolvido)', 'Impacto estimado (baixo a crítico)', 'Órgão responsável', 'Coordenadas GPS'],
-    tabelas: ['fato_denuncias'],
-    metricas: ['Taxa de resolução por órgão', 'Mapa de hotspots ambientais', 'Tempo médio de resolução', 'Ranking de impacto por tipo']
-  },
-  clima: {
-    title: '🌡️ Indicadores Climáticos',
-    color: '#2196F3',
-    desc: 'Série histórica de dados climáticos para análise de mudanças climáticas e eventos extremos.',
-    dados_bi: ['Temperatura média/máx/mín', 'Precipitação mensal', 'Eventos extremos', 'Nível de reservatórios', 'Anomalia térmica vs histórico'],
-    tabelas: ['fato_indicadores_climaticos'],
-    metricas: ['Anomalia climática por região', 'Tendência de temperatura (°C/década)', 'Meses com eventos extremos', 'Correlação chuva x qualidade ar']
-  },
-  biodiversidade: {
-    title: '🌿 Biodiversidade & Cobertura Vegetal',
-    color: '#388E3C',
-    desc: 'Monitoramento de desmatamento, reflorestamento e estoque de carbono em diferentes biomas.',
-    dados_bi: ['Área de vegetação nativa (ha)', 'Taxa de desmatamento anual', 'Área reflorestada', 'Carbono estocado (ton)', 'NDVI (índice de vegetação)'],
-    tabelas: ['fato_cobertura_vegetal', 'dim_especies'],
-    metricas: ['Taxa de desmatamento por bioma', 'Evolução do reflorestamento', 'Carbono sequestrado por ação', 'Alerta de perda acima da meta']
-  },
-  politicas: {
-    title: '⚖️ Políticas & Legislação',
-    color: '#FF5722',
-    desc: 'Base de dados de leis, decretos e políticas ambientais com acompanhamento de vigência e impacto.',
-    dados_bi: ['Tipo (lei, decreto, resolução)', 'Esfera (federal, estadual, municipal)', 'Status (vigente, revogada)', 'Impacto ambiental', 'ODS relacionado'],
-    tabelas: ['fato_politicas_ambientais'],
-    metricas: ['Cobertura legislativa por tema', 'Conformidade com ODS ONU', 'Análise de lacunas regulatórias', 'Timeline de políticas aprovadas']
-  },
-  educacao: {
-    title: '📚 Educação Ambiental',
-    color: '#607D8B',
-    desc: 'Plataforma de engajamento com quizzes, workshops, vídeos e sistema de pontuação e certificação.',
-    dados_bi: ['Tipo de atividade', 'Pontuação e engajamento', 'Taxa de conclusão', 'Certificados emitidos', 'Pontos de sustentabilidade por usuário'],
-    tabelas: ['fato_educacao_ambiental', 'dim_usuarios'],
-    metricas: ['NPS de engajamento ambiental', 'Horas de educação por região', 'Correlação educação x ações práticas', 'Ranking de usuários por engajamento']
-  },
-};
-
-function showInfo(key) {
-  const box = document.getElementById('info-box');
-  const content = document.getElementById('info-content');
-  const d = infoData[key];
-  if (!d) return;
-  content.innerHTML = \`
-    <div class="flex items-start justify-between mb-4">
-      <h3 class="text-xl font-bold" style="color:\${d.color}">\${d.title}</h3>
-      <button onclick="document.getElementById('info-box').style.display='none'" style="color:#66bb6a;font-size:1.5rem;background:none;border:none;cursor:pointer">✕</button>
-    </div>
-    <p class="text-sm mb-4" style="color:#a5d6a7">\${d.desc}</p>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div>
-        <p class="text-xs font-bold mb-2" style="color:\${d.color}">📈 DADOS PARA POWER BI</p>
-        \${d.dados_bi.map(d => \`<p class="text-xs mb-1" style="color:#81c784">▸ \${d}</p>\`).join('')}
-      </div>
-      <div>
-        <p class="text-xs font-bold mb-2" style="color:\${d.color}">🗄️ TABELAS DO BANCO</p>
-        \${d.tabelas.map(t => \`<p class="text-xs mb-1" style="color:#66bb6a;font-family:monospace;background:#0d2d0d;padding:2px 6px;border-radius:4px;display:inline-block;margin:1px">\${t}</p>\`).join('')}
-      </div>
-      <div>
-        <p class="text-xs font-bold mb-2" style="color:\${d.color}">🎯 MÉTRICAS RECOMENDADAS</p>
-        \${d.metricas.map(m => \`<p class="text-xs mb-1" style="color:#81c784">▸ \${m}</p>\`).join('')}
-      </div>
-    </div>
-  \`;
-  box.style.display = 'block';
-  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-</script>
+${NAV}
+<div class="filter-bar">
+  <select id="filterTipo" onchange="applyFilters()">
+    <option value="">Todos os tipos</option>
+    <option value="Posto Eletro">Posto Eletro</option>
+    <option value="Reciclagem">Reciclagem</option>
+  </select>
+  <select id="filterCidade" onchange="applyFilters()"><option value="">Todas as cidades</option></select>
+  <select id="filterConector" onchange="applyFilters()">
+    <option value="">Todos os conectores</option>
+    <option>CCS2</option><option>CHADEMO</option><option>TYPE2</option><option>AC_L2</option>
+  </select>
+  <span class="stat-pill" id="statsText">Carregando...</span>
+  <span style="margin-left:auto;font-size:.75rem;color:#4b5563">&#11044; Verde=Eletroposto &nbsp; &#11044; Azul=Reciclagem</span>
+</div>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/static/mapa.js"></script>
 </body>
 </html>`
-}
+  return c.html(html)
+})
+
+// ============================================================
+// GET /admin/upload
+// ============================================================
+app.get('/admin/upload', (c) => {
+  const html = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Importar Dados</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+body{background:#0a0f1e;color:#e2e8f0;font-family:'Segoe UI',system-ui,sans-serif;}
+.card{background:#0f1629;border:1px solid #2d3748;border-radius:12px;}
+.drop-zone{border:2px dashed #374151;border-radius:12px;padding:2rem;text-align:center;cursor:pointer;transition:all .2s;}
+.drop-zone:hover,.drop-zone.drag{border-color:#3b82f6;background:rgba(59,130,246,.07);}
+.btn{padding:8px 20px;border-radius:8px;font-weight:600;cursor:pointer;transition:all .2s;border:none;}
+.btn-primary{background:#3b82f6;color:white;}.btn-primary:hover{background:#2563eb;}
+.btn-success{background:#22c55e;color:white;}.btn-success:hover{background:#16a34a;}
+.tag{padding:2px 8px;border-radius:99px;font-size:.75rem;font-weight:600;}
+.tag-green{background:#14532d;color:#4ade80;}.tag-red{background:#450a0a;color:#f87171;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;}
+th{background:#1a2340;padding:8px 12px;text-align:left;color:#94a3b8;}
+td{padding:8px 12px;border-bottom:1px solid #1e293b;}
+</style>
+</head>
+<body>
+${NAV}
+<main class="max-w-4xl mx-auto px-4 py-8">
+  <div class="card p-6 mb-6">
+    <h2 class="text-xl font-bold text-white mb-2"><i class="fas fa-file-excel text-green-400 mr-2"></i>Upload de Arquivo .xlsx</h2>
+    <p class="text-gray-400 text-sm mb-4">Importe novos eletropostos em lote. Colunas obrigat&#243;rias: <strong>nome, cidade, latitude, longitude</strong></p>
+    <div class="drop-zone mb-4" id="dropZone"><div class="text-4xl mb-2">&#128202;</div><div class="text-gray-300 font-medium">Arraste o arquivo Excel aqui</div><div class="text-gray-500 text-sm">ou clique para selecionar</div></div>
+    <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" class="hidden">
+    <div id="preview" style="display:none">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="font-semibold text-white">Pr&#233;via (<span id="rowCount">0</span> registros)</h3>
+        <div class="flex gap-2">
+          <button class="btn btn-primary" onclick="baixarTemplate()"><i class="fas fa-download mr-1"></i>Template</button>
+          <button class="btn btn-success" onclick="importar()" id="btnImportar"><i class="fas fa-cloud-upload-alt mr-1"></i>Importar</button>
+        </div>
+      </div>
+      <div class="overflow-auto max-h-60 rounded-lg"><table><thead id="previewHead"></thead><tbody id="previewBody"></tbody></table></div>
+    </div>
+    <div id="template-info" class="mt-4 bg-gray-900 rounded-lg p-4 border border-gray-700">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-semibold text-white">Baixar template Excel</span>
+        <button class="btn btn-primary text-sm" onclick="baixarTemplate()"><i class="fas fa-download mr-1"></i>Baixar</button>
+      </div>
+      <div class="mt-2 flex flex-wrap gap-1">
+        <span class="tag tag-red">nome*</span><span class="tag tag-red">cidade*</span><span class="tag tag-red">latitude*</span><span class="tag tag-red">longitude*</span>
+        <span class="tag tag-green">rua</span><span class="tag tag-green">numero</span><span class="tag tag-green">bairro</span><span class="tag tag-green">tipo_ponto</span>
+      </div>
+    </div>
+    <div id="resultado" style="display:none" class="mt-4 card p-4"></div>
+  </div>
+  <div class="card p-6">
+    <h3 class="text-lg font-semibold text-white mb-3"><i class="fas fa-history text-blue-400 mr-2"></i>Hist&#243;rico de Importa&#231;&#245;es</h3>
+    <div id="logList" class="text-gray-400 text-sm">Carregando...</div>
+  </div>
+</main>
+<script src="/static/upload.js"></script>
+</body>
+</html>`
+  return c.html(html)
+})
+
+// ============================================================
+// GET /mindmap
+// ============================================================
+app.get('/mindmap', (c) => {
+  const html = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mapa Mental BI</title>
+<style>
+body{margin:0;background:#0a0f1e;color:#e2e8f0;font-family:'Segoe UI',system-ui,sans-serif;}
+svg text{font-family:'Segoe UI',system-ui,sans-serif;}
+.legend-item{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;margin:0 8px;}
+</style>
+</head>
+<body>
+${NAV}
+<div style="padding:8px 16px;border-bottom:1px solid #1e293b;background:#0f1629;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+  <strong style="color:white;font-size:.9rem">Legenda:</strong>
+  <span class="legend-item"><div style="width:14px;height:8px;background:#ef4444;border-radius:2px"></div>Tabelas de Dados (BI)</span>
+  <span class="legend-item"><div style="width:14px;height:14px;background:#0a1628;border:2px solid #3b82f6;border-radius:50%"></div>Conte&#250;do do Site</span>
+  <span class="legend-item"><div style="width:24px;height:10px;background:#0a1628;border:2px solid #a855f7;border-radius:8px"></div>Integra&#231;&#245;es/Features</span>
+</div>
+<div style="overflow:auto;padding:16px;min-height:calc(100vh - 120px)">
+<svg viewBox="0 0 1200 900" width="100%" style="min-width:900px;max-width:1400px;margin:auto;display:block">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4b5563"/>
+    </marker>
+  </defs>
+  <line x1="600" y1="450" x2="320" y2="200" stroke="#374151" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="600" y1="450" x2="600" y2="160" stroke="#374151" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="600" y1="450" x2="880" y2="200" stroke="#374151" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="600" y1="450" x2="200" y2="450" stroke="#374151" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="600" y1="450" x2="1000" y2="450" stroke="#374151" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="600" y1="450" x2="320" y2="700" stroke="#374151" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="600" y1="450" x2="600" y2="730" stroke="#374151" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="600" y1="450" x2="880" y2="700" stroke="#374151" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="320" y1="200" x2="130" y2="90" stroke="#1f2937" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="320" y1="200" x2="155" y2="248" stroke="#1f2937" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="880" y1="200" x2="1060" y2="90" stroke="#1f2937" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="880" y1="200" x2="1042" y2="258" stroke="#1f2937" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="600" y1="160" x2="475" y2="55" stroke="#1f2937" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="600" y1="160" x2="725" y2="55" stroke="#1f2937" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- CENTRO -->
+  <rect x="478" y="408" width="244" height="84" rx="12" fill="#0f1f0f" stroke="#22c55e" stroke-width="2.5"/>
+  <text x="600" y="440" text-anchor="middle" fill="#22c55e" font-size="15" font-weight="700">&#9889; SustAmbiTech</text>
+  <text x="600" y="460" text-anchor="middle" fill="#4ade80" font-size="12">Eletropostos &#8212; Grande SP</text>
+  <text x="600" y="478" text-anchor="middle" fill="#86efac" font-size="10">57 postos reais | Firebase &#8594; D1</text>
+
+  <!-- postos_recarga -->
+  <rect x="178" y="138" width="284" height="122" rx="6" fill="#1a0505" stroke="#ef4444" stroke-width="2"/>
+  <text x="320" y="163" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="700">&#128203; postos_recarga</text>
+  <text x="320" y="181" text-anchor="middle" fill="#fca5a5" font-size="10">id &#183; firebase_uid &#183; nome &#183; tipo_ponto</text>
+  <text x="320" y="197" text-anchor="middle" fill="#fca5a5" font-size="10">rua &#183; bairro &#183; cidade &#183; cep &#183; lat/lon</text>
+  <text x="320" y="213" text-anchor="middle" fill="#fca5a5" font-size="10">ativo &#183; acesso &#183; horario &#183; operador_id</text>
+  <text x="320" y="229" text-anchor="middle" fill="#f87171" font-size="9" font-style="italic">Tabela principal &#8212; 57 postos reais</text>
+  <text x="320" y="247" text-anchor="middle" fill="#374151" font-size="9">BI: contagem, filtros, KPI por cidade</text>
+
+  <!-- dim_conectores -->
+  <rect x="458" y="78" width="284" height="104" rx="6" fill="#1a0505" stroke="#ef4444" stroke-width="2"/>
+  <text x="600" y="103" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="700">&#128268; dim_conectores</text>
+  <text x="600" y="121" text-anchor="middle" fill="#fca5a5" font-size="10">CCS2 &#183; CHAdeMO &#183; Type2 &#183; AC_L1/L2</text>
+  <text x="600" y="137" text-anchor="middle" fill="#fca5a5" font-size="10">corrente &#183; n&#237;vel &#183; potencia_max_kw</text>
+  <text x="600" y="153" text-anchor="middle" fill="#f87171" font-size="9" font-style="italic">Padr&#245;es internacionais de tomada EV</text>
+  <text x="600" y="169" text-anchor="middle" fill="#374151" font-size="9">BI: distribui&#231;&#227;o de padr&#245;es</text>
+
+  <!-- postos_conectores -->
+  <rect x="738" y="138" width="284" height="104" rx="6" fill="#1a0505" stroke="#ef4444" stroke-width="2"/>
+  <text x="880" y="163" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="700">&#128279; postos_conectores</text>
+  <text x="880" y="181" text-anchor="middle" fill="#fca5a5" font-size="10">posto_id &#183; conector_id &#183; quantidade</text>
+  <text x="880" y="197" text-anchor="middle" fill="#fca5a5" font-size="10">potencia_kw &#183; status</text>
+  <text x="880" y="213" text-anchor="middle" fill="#f87171" font-size="9" font-style="italic">Rela&#231;&#227;o N:N postos &#215; tomadas</text>
+  <text x="880" y="229" text-anchor="middle" fill="#374151" font-size="9">BI: total tomadas, disponibilidade</text>
+
+  <!-- usuarios -->
+  <rect x="48" y="378" width="224" height="104" rx="6" fill="#1a0505" stroke="#ef4444" stroke-width="2"/>
+  <text x="160" y="403" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="700">&#128100; usuarios</text>
+  <text x="160" y="421" text-anchor="middle" fill="#fca5a5" font-size="10">firebase_uid &#183; email &#183; nome</text>
+  <text x="160" y="437" text-anchor="middle" fill="#fca5a5" font-size="10">nivel &#183; newsletter_opt_in</text>
+  <text x="160" y="453" text-anchor="middle" fill="#f87171" font-size="9" font-style="italic">5 usu&#225;rios migrados do Firebase</text>
+  <text x="160" y="469" text-anchor="middle" fill="#374151" font-size="9">BI: engajamento, cadastros</text>
+
+  <!-- avaliacoes_postos -->
+  <rect x="878" y="378" width="264" height="104" rx="6" fill="#1a0505" stroke="#ef4444" stroke-width="2"/>
+  <text x="1010" y="403" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="700">&#11088; avaliacoes_postos</text>
+  <text x="1010" y="421" text-anchor="middle" fill="#fca5a5" font-size="10">posto_id &#183; usuario_id &#183; nota (1-5)</text>
+  <text x="1010" y="437" text-anchor="middle" fill="#fca5a5" font-size="10">comentario &#183; data_avaliacao</text>
+  <text x="1010" y="453" text-anchor="middle" fill="#f87171" font-size="9" font-style="italic">Migrado do Firebase + novas</text>
+  <text x="1010" y="469" text-anchor="middle" fill="#374151" font-size="9">BI: NPS, m&#233;dia por posto/cidade</text>
+
+  <!-- kpis_ev -->
+  <rect x="738" y="638" width="284" height="104" rx="6" fill="#1a0505" stroke="#ef4444" stroke-width="2"/>
+  <text x="880" y="663" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="700">&#128202; kpis_ev</text>
+  <text x="880" y="681" text-anchor="middle" fill="#fca5a5" font-size="10">indicador &#183; valor_atual &#183; meta_2025</text>
+  <text x="880" y="697" text-anchor="middle" fill="#fca5a5" font-size="10">meta_2030 &#183; unidade &#183; categoria</text>
+  <text x="880" y="713" text-anchor="middle" fill="#f87171" font-size="9" font-style="italic">Metas de infraestrutura el&#233;trica</text>
+  <text x="880" y="729" text-anchor="middle" fill="#374151" font-size="9">BI: scorecards, gauge charts</text>
+
+  <!-- log_importacoes -->
+  <rect x="458" y="748" width="284" height="92" rx="6" fill="#1a0505" stroke="#ef4444" stroke-width="2"/>
+  <text x="600" y="773" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="700">&#128229; log_importacoes</text>
+  <text x="600" y="791" text-anchor="middle" fill="#fca5a5" font-size="10">tipo &#183; arquivo &#183; importados &#183; erros</text>
+  <text x="600" y="807" text-anchor="middle" fill="#fca5a5" font-size="10">detalhes_erros &#183; importado_em</text>
+  <text x="600" y="823" text-anchor="middle" fill="#374151" font-size="9">Auditoria de uploads Excel</text>
+
+  <!-- feedbacks -->
+  <rect x="178" y="638" width="264" height="104" rx="6" fill="#1a0505" stroke="#ef4444" stroke-width="2"/>
+  <text x="310" y="663" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="700">&#128172; feedbacks</text>
+  <text x="310" y="681" text-anchor="middle" fill="#fca5a5" font-size="10">usuario_id &#183; nota &#183; observacoes</text>
+  <text x="310" y="697" text-anchor="middle" fill="#fca5a5" font-size="10">data_feedback &#183; firebase_id</text>
+  <text x="310" y="713" text-anchor="middle" fill="#f87171" font-size="9" font-style="italic">2 feedbacks do Firebase migrados</text>
+  <text x="310" y="729" text-anchor="middle" fill="#374151" font-size="9">BI: satisfa&#231;&#227;o do app</text>
+
+  <!-- C&#237;rculos Azuis (Conte&#250;do) -->
+  <circle cx="130" cy="80" r="52" fill="#0a1628" stroke="#3b82f6" stroke-width="2"/>
+  <text x="130" y="73" text-anchor="middle" fill="#3b82f6" font-size="11" font-weight="700">Dashboard</text>
+  <text x="130" y="89" text-anchor="middle" fill="#93c5fd" font-size="9">KPIs &#183; gr&#225;ficos</text>
+  <text x="130" y="104" text-anchor="middle" fill="#93c5fd" font-size="9">Chart.js</text>
+
+  <circle cx="155" cy="248" r="52" fill="#0a1628" stroke="#3b82f6" stroke-width="2"/>
+  <text x="155" y="241" text-anchor="middle" fill="#3b82f6" font-size="11" font-weight="700">Mapa</text>
+  <text x="155" y="257" text-anchor="middle" fill="#93c5fd" font-size="9">Leaflet.js</text>
+  <text x="155" y="272" text-anchor="middle" fill="#93c5fd" font-size="9">57+ pins</text>
+
+  <circle cx="1060" cy="80" r="52" fill="#0a1628" stroke="#3b82f6" stroke-width="2"/>
+  <text x="1060" y="73" text-anchor="middle" fill="#3b82f6" font-size="11" font-weight="700">Clima</text>
+  <text x="1060" y="89" text-anchor="middle" fill="#93c5fd" font-size="9">OpenMeteo</text>
+  <text x="1060" y="104" text-anchor="middle" fill="#93c5fd" font-size="9">Previs&#227;o 7d</text>
+
+  <circle cx="1042" cy="258" r="50" fill="#0a1628" stroke="#3b82f6" stroke-width="2"/>
+  <text x="1042" y="251" text-anchor="middle" fill="#3b82f6" font-size="11" font-weight="700">Upload</text>
+  <text x="1042" y="267" text-anchor="middle" fill="#93c5fd" font-size="9">Excel .xlsx</text>
+  <text x="1042" y="282" text-anchor="middle" fill="#93c5fd" font-size="9">SheetJS</text>
+
+  <circle cx="475" cy="42" r="35" fill="#0a1628" stroke="#3b82f6" stroke-width="2"/>
+  <text x="475" y="36" text-anchor="middle" fill="#3b82f6" font-size="9" font-weight="700">Ve&#237;culos</text>
+  <text x="475" y="51" text-anchor="middle" fill="#93c5fd" font-size="8">BEV PHEV HEV</text>
+
+  <circle cx="725" cy="42" r="35" fill="#0a1628" stroke="#3b82f6" stroke-width="2"/>
+  <text x="725" y="36" text-anchor="middle" fill="#3b82f6" font-size="9" font-weight="700">Compat.</text>
+  <text x="725" y="51" text-anchor="middle" fill="#93c5fd" font-size="8">Ve&#237;culo&#215;Conector</text>
+
+  <!-- C&#225;psulas Roxas (Integra&#231;&#245;es) -->
+  <rect x="48" y="510" width="184" height="54" rx="27" fill="#0a1628" stroke="#a855f7" stroke-width="2"/>
+  <text x="140" y="532" text-anchor="middle" fill="#a855f7" font-size="10" font-weight="700">Power BI</text>
+  <text x="140" y="549" text-anchor="middle" fill="#c4b5fd" font-size="9">CSV/JSON endpoints</text>
+
+  <rect x="878" y="510" width="184" height="54" rx="27" fill="#0a1628" stroke="#a855f7" stroke-width="2"/>
+  <text x="970" y="532" text-anchor="middle" fill="#a855f7" font-size="10" font-weight="700">Tutorial Deploy</text>
+  <text x="970" y="549" text-anchor="middle" fill="#c4b5fd" font-size="9">CF Pages + D1 gr&#225;tis</text>
+
+  <text x="600" y="870" text-anchor="middle" fill="#374151" font-size="10">Tabelas: dim_regioes &#183; dim_tipos_veiculos &#183; dim_operadores &#183; veiculos_conectores &#183; clima_historico</text>
+</svg>
+</div>
+<div style="text-align:center;padding:12px;font-size:.85rem;color:#4b5563;border-top:1px solid #1e293b;">
+  <strong style="color:#ef4444">Ret&#226;ngulos vermelhos</strong> = Tabelas de dados para BI &nbsp;|&nbsp;
+  <strong style="color:#3b82f6">C&#237;rculos azuis</strong> = Funcionalidades do site &nbsp;|&nbsp;
+  <strong style="color:#a855f7">C&#225;psulas roxas</strong> = Integra&#231;&#245;es extras
+</div>
+</body>
+</html>`
+  return c.html(html)
+})
+
+// ============================================================
+// GET /tutorial
+// ============================================================
+app.get('/tutorial', (c) => {
+  const html = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tutorial Deploy Gratuito</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<style>
+body{background:#0a0f1e;color:#e2e8f0;font-family:'Segoe UI',system-ui,sans-serif;}
+.card{background:#0f1629;border:1px solid #2d3748;border-radius:12px;}
+.step{border-left:3px solid #3b82f6;padding-left:16px;margin-bottom:24px;}
+.step-num{background:#3b82f6;color:white;border-radius:50%;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;margin-right:8px;}
+pre{background:#020b14;border:1px solid #1e3a5f;border-radius:8px;padding:16px;overflow-x:auto;font-size:.85rem;color:#7dd3fc;line-height:1.6;}
+.badge{padding:3px 10px;border-radius:99px;font-size:.75rem;font-weight:600;}
+.badge-free{background:#052e16;color:#4ade80;border:1px solid #166534;}
+code{background:#1a2340;padding:1px 6px;border-radius:4px;font-size:.85rem;}
+</style>
+</head>
+<body>
+${NAV}
+<main class="max-w-4xl mx-auto px-4 py-8 space-y-8">
+  <div class="card p-6">
+    <h1 class="text-2xl font-bold text-white mb-2">&#128640; Deploy 100% Gratuito</h1>
+    <p class="text-gray-400 mb-4">Tudo do zero: GitHub &#8594; Cloudflare Pages + D1 &#8212; sem cartão de crédito.</p>
+    <div class="flex flex-wrap gap-2">
+      <span class="badge badge-free"><i class="fab fa-github mr-1"></i>GitHub</span>
+      <span class="badge badge-free"><i class="fas fa-cloud mr-1"></i>Cloudflare Pages</span>
+      <span class="badge badge-free"><i class="fas fa-database mr-1"></i>D1 SQLite (5GB)</span>
+      <span class="badge badge-free"><i class="fas fa-bolt mr-1"></i>Workers (100k req/dia)</span>
+    </div>
+  </div>
+
+  <div class="card p-6">
+    <h2 class="text-xl font-bold text-white mb-4"><i class="fas fa-gift text-green-400 mr-2"></i>Limites Gratuitos</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="bg-gray-900 p-4 rounded-lg border border-gray-700">
+        <div class="text-green-400 font-bold mb-2">Cloudflare Pages</div>
+        <ul class="text-sm text-gray-300 space-y-1">
+          <li>&#10003; Hospedagem ilimitada</li>
+          <li>&#10003; HTTPS autom&#225;tico</li>
+          <li>&#10003; Deploy via GitHub</li>
+          <li>&#10003; 500 deploys/m&#234;s</li>
+          <li>&#10003; CDN global</li>
+        </ul>
+      </div>
+      <div class="bg-gray-900 p-4 rounded-lg border border-gray-700">
+        <div class="text-blue-400 font-bold mb-2">Cloudflare D1</div>
+        <ul class="text-sm text-gray-300 space-y-1">
+          <li>&#10003; 5 GB armazenamento</li>
+          <li>&#10003; 5M leituras/dia</li>
+          <li>&#10003; 100K escritas/dia</li>
+          <li>&#10003; SQLite completo</li>
+          <li>&#10003; Backup autom&#225;tico</li>
+        </ul>
+      </div>
+      <div class="bg-gray-900 p-4 rounded-lg border border-gray-700">
+        <div class="text-yellow-400 font-bold mb-2">Workers (Hono)</div>
+        <ul class="text-sm text-gray-300 space-y-1">
+          <li>&#10003; 100k req/dia</li>
+          <li>&#10003; Edge global</li>
+          <li>&#10003; Sem cold start</li>
+          <li>&#10003; Logs integrados</li>
+          <li>&#10003; HTTPS incluso</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card p-6">
+    <h2 class="text-xl font-bold text-white mb-4"><i class="fas fa-laptop-code text-blue-400 mr-2"></i>Parte 1 &#8212; Setup Local</h2>
+    <div class="step">
+      <div class="flex items-center mb-2"><span class="step-num">1</span><span class="font-semibold">Instalar Node.js 18+</span></div>
+      <p class="text-gray-400 text-sm mb-2">Baixe em <a href="https://nodejs.org" class="text-blue-400" target="_blank">nodejs.org</a> (vers&#227;o LTS)</p>
+      <pre>node --version   # v18.x ou superior
+npm --version    # 9.x ou superior</pre>
+    </div>
+    <div class="step">
+      <div class="flex items-center mb-2"><span class="step-num">2</span><span class="font-semibold">Clonar e instalar</span></div>
+      <pre>git clone https://github.com/KayhamCristoffer/SustAmbiTechBI.io.git
+cd SustAmbiTechBI.io
+npm install</pre>
+    </div>
+    <div class="step">
+      <div class="flex items-center mb-2"><span class="step-num">3</span><span class="font-semibold">Testar localmente</span></div>
+      <pre>npm run build
+npx wrangler d1 execute sustambitech-production --local --file=./migrations/0001_initial_schema.sql
+npx wrangler d1 execute sustambitech-production --local --file=./seed.sql
+npx wrangler pages dev dist --d1=sustambitech-production --local --port 3000</pre>
+      <p class="text-gray-400 text-sm mt-2">Abra <a href="http://localhost:3000" class="text-blue-400">http://localhost:3000</a></p>
+    </div>
+  </div>
+
+  <div class="card p-6">
+    <h2 class="text-xl font-bold text-white mb-4"><i class="fab fa-cloudflare text-orange-400 mr-2"></i>Parte 2 &#8212; Cloudflare</h2>
+    <div class="step">
+      <div class="flex items-center mb-2"><span class="step-num">4</span><span class="font-semibold">Criar conta gratuita</span></div>
+      <p class="text-gray-400 text-sm">Acesse <a href="https://dash.cloudflare.com/sign-up" class="text-orange-400" target="_blank">dash.cloudflare.com/sign-up</a> &#8212; confirme o email.</p>
+    </div>
+    <div class="step">
+      <div class="flex items-center mb-2"><span class="step-num">5</span><span class="font-semibold">Login via Wrangler</span></div>
+      <pre>npx wrangler login
+# Abre browser &#8594; autorize &#8594; volte ao terminal</pre>
+    </div>
+    <div class="step">
+      <div class="flex items-center mb-2"><span class="step-num">6</span><span class="font-semibold">Criar banco D1</span></div>
+      <pre>npx wrangler d1 create sustambitech-production
+# Copie o database_id gerado e cole no wrangler.jsonc</pre>
+    </div>
+    <div class="step">
+      <div class="flex items-center mb-2"><span class="step-num">7</span><span class="font-semibold">Popular banco de produ&#231;&#227;o</span></div>
+      <pre>npx wrangler d1 execute sustambitech-production --file=./migrations/0001_initial_schema.sql
+npx wrangler d1 execute sustambitech-production --file=./seed.sql</pre>
+    </div>
+  </div>
+
+  <div class="card p-6">
+    <h2 class="text-xl font-bold text-white mb-4"><i class="fas fa-rocket text-green-400 mr-2"></i>Parte 3 &#8212; Deploy</h2>
+    <div class="step">
+      <div class="flex items-center mb-2"><span class="step-num">8</span><span class="font-semibold">Deploy via Wrangler (linha de comando)</span></div>
+      <pre>npm run build
+npx wrangler pages deploy dist --project-name sustambitech</pre>
+    </div>
+    <div class="step">
+      <div class="flex items-center mb-2"><span class="step-num">9</span><span class="font-semibold">Ou: Deploy autom&#225;tico via GitHub</span></div>
+      <ol class="text-sm text-gray-300 space-y-1 ml-4 list-decimal mt-2">
+        <li>Dashboard Cloudflare &#8594; Workers &amp; Pages &#8594; Create</li>
+        <li>Connect to Git &#8594; selecione <code>SustAmbiTechBI.io</code></li>
+        <li>Build: <code>npm run build</code> | Output: <code>dist</code></li>
+        <li>Save and Deploy</li>
+      </ol>
+    </div>
+    <div class="step">
+      <div class="flex items-center mb-2"><span class="step-num">10</span><span class="font-semibold">Vincular D1 ao Pages</span></div>
+      <ol class="text-sm text-gray-300 space-y-1 ml-4 list-decimal mt-2">
+        <li>Pages &#8594; Settings &#8594; Functions &#8594; D1 bindings</li>
+        <li>Variable name: <code>DB</code></li>
+        <li>Database: <code>sustambitech-production</code></li>
+        <li>Save &#8594; Redeploy</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card p-6">
+    <h2 class="text-xl font-bold text-white mb-4"><i class="fas fa-chart-pie text-yellow-400 mr-2"></i>Parte 4 &#8212; Power BI</h2>
+    <div class="step">
+      <div class="flex items-center mb-2"><span class="step-num">11</span><span class="font-semibold">Conectar Power BI Desktop</span></div>
+      <ol class="text-sm text-gray-300 space-y-1 ml-4 list-decimal mt-2">
+        <li>Obter Dados &#8594; Web</li>
+        <li>Cole: <code>https://seu-projeto.pages.dev/api/bi/resumo-regional?format=csv</code></li>
+        <li>Repita para: <code>/api/bi/conectores-distribuicao</code> e <code>/api/bi/postos-full</code></li>
+        <li>Carregue e crie seus dashboards!</li>
+      </ol>
+    </div>
+  </div>
+</main>
+<footer class="text-center py-4 text-gray-600 text-sm border-t border-gray-800">
+  &#9889; SustAmbiTech Eletropostos &#8212; Tutorial por <strong class="text-green-400">Kayham</strong>
+</footer>
+</body>
+</html>`
+  return c.html(html)
+})
 
 export default app
