@@ -4,56 +4,95 @@
   // ============================================================
   // SustAmbiTech Eletropostos — Configuração Cloudflare Pages
   // ============================================================
-  // PLANO GRATUITO (Free):
-  //   - Pages: hospedagem ilimitada, 500 deploys/mês, CDN global
-  //   - D1: 5 GB storage, 5M leituras/dia, 100K escritas/dia
-  //   - Workers: 100k req/dia, 10ms CPU por request
   //
-  // PLANO PAGO (Workers Paid - US$5/mês):
-  //   - Workers: 10M req/mês inclusos + US$0.30/1M extras
-  //   - D1: 25 GB storage, 25M leituras/dia, 500K escritas/dia
-  //   - CPU time: 30ms por request (vs 10ms no free)
-  //   - Habilita: Workers Analytics Engine, Durable Objects, etc.
-  //
-  // PARA ATIVAR PLANO PAGO: adicione `"usage_model": "bundled"` abaixo
-  // ============================================================
+  // ┌─────────────────────────────────────────────────────────────┐
+  // │              PLANO GRATUITO (Free Tier)                     │
+  // ├─────────────────────────────────────────────────────────────┤
+  // │  Pages    │ Hosting ilimitado, CDN global, 500 deploys/mês  │
+  // │  D1       │ 5 GB storage, 5M leituras/dia, 100K escritas/dia│
+  // │  Workers  │ 100.000 req/dia, 10ms CPU por request           │
+  // │  R2       │ 10 GB storage, 1M operações/mês                 │
+  // ├─────────────────────────────────────────────────────────────┤
+  // │              PLANO PAGO (Workers Paid — US$5/mês)           │
+  // ├─────────────────────────────────────────────────────────────┤
+  // │  Workers  │ 10M req/mês inclusos + US$0.30/1M extras        │
+  // │  D1       │ 25 GB storage, 25M leituras/dia, 500K escritas  │
+  // │  CPU      │ 30ms por request (3x mais que no free)          │
+  // │  Extras   │ Analytics Engine, Durable Objects, Tail Workers │
+  // ├─────────────────────────────────────────────────────────────┤
+  // │  COMO ATIVAR O PLANO PAGO:                                  │
+  // │  1. Acesse: dash.cloudflare.com → Workers & Pages → Plans   │
+  // │  2. Ative "Workers Paid" (US$5/mês)                         │
+  // │  3. Descomente a linha `"usage_model": "bundled"` abaixo    │
+  // │  4. Execute: npx wrangler deploy                            │
+  // └─────────────────────────────────────────────────────────────┘
 
   "name": "sustambitech-bi",
   "compatibility_date": "2024-01-01",
   "compatibility_flags": ["nodejs_compat"],
   "pages_build_output_dir": "./dist",
 
-  // D1 Database — Banco de dados SQLite serverless gratuito
-  // SETUP INICIAL (execute UMA vez no terminal):
+  // PLANO PAGO: descomente a linha abaixo após ativar Workers Paid
+  // "usage_model": "bundled",
+
+  // ============================================================
+  // D1 DATABASE — SQLite Serverless
+  // ============================================================
   //
-  //   PASSO 1 — Criar o banco de produção:
+  // SETUP INICIAL (execute UMA única vez):
+  //
+  //   PASSO 1 — Autenticar no Cloudflare:
+  //     npx wrangler login
+  //
+  //   PASSO 2 — Criar o banco de produção:
   //     npx wrangler d1 create sustambitech-production
   //     → Copie o "database_id" gerado e cole no campo abaixo
   //
-  //   PASSO 2 — Aplicar schema e seed em PRODUÇÃO:
-  //     npx wrangler d1 execute sustambitech-production --file=./migrations/0001_initial_schema.sql
-  //     npx wrangler d1 execute sustambitech-production --file=./seed.sql
+  //   PASSO 3 — Aplicar schema e seed em PRODUÇÃO:
+  //     npx wrangler d1 execute sustambitech-production \
+  //       --file=./migrations/0001_initial_schema.sql
+  //     npx wrangler d1 execute sustambitech-production \
+  //       --file=./seed.sql
   //
-  //   PASSO 3 — Vincular no Pages Dashboard:
-  //     Pages → Settings → Functions → D1 bindings
-  //     Variable name: DB | Database: sustambitech-production
+  //   PASSO 4 — Vincular no Pages Dashboard:
+  //     Pages → [seu projeto] → Settings → Functions → D1 bindings
+  //     Variable name: DB  |  Database: sustambitech-production
   //
-  // DESENVOLVIMENTO LOCAL (sem conta Cloudflare necessária):
-  //   npx wrangler d1 execute sustambitech-production --local --file=./migrations/0001_initial_schema.sql
-  //   npx wrangler d1 execute sustambitech-production --local --file=./seed.sql
-  //   npx wrangler pages dev dist --d1=sustambitech-production --local --port 3000
+  // ──────────────────────────────────────────────────────────
+  // DESENVOLVIMENTO LOCAL (SQLite local, sem conta necessária):
   //
-  // CONSULTAS LOCAIS:
-  //   npx wrangler d1 execute sustambitech-production --local --command="SELECT COUNT(*) FROM postos_recarga"
+  //   Aplicar schema:
+  //     npx wrangler d1 execute sustambitech-production \
+  //       --local --file=./migrations/0001_initial_schema.sql
   //
-  // CONSULTAS EM PRODUÇÃO:
-  //   npx wrangler d1 execute sustambitech-production --command="SELECT COUNT(*) FROM postos_recarga"
+  //   Aplicar seed (57 postos reais):
+  //     npx wrangler d1 execute sustambitech-production \
+  //       --local --file=./seed.sql
+  //
+  //   Iniciar servidor local:
+  //     npx wrangler pages dev dist \
+  //       --d1=sustambitech-production --local --port 3000
+  //
+  //   Consultar dados locais:
+  //     npx wrangler d1 execute sustambitech-production \
+  //       --local --command="SELECT COUNT(*) FROM postos_recarga"
+  //
+  // ──────────────────────────────────────────────────────────
+  // LIMITES D1 (monitorar em dash.cloudflare.com/analytics):
+  //
+  //   Free:  5 GB   | 5M leituras/dia  | 100K escritas/dia
+  //   Pago: 25 GB   | 25M leituras/dia | 500K escritas/dia
+  //
+  //   Dica: Use `?format=csv` nos endpoints /api/bi/* para
+  //   exportar dados sem looping de consultas (1 leitura = 1 req)
+  //
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "sustambitech-production",
-      // SUBSTITUA pelo database_id gerado pelo comando `wrangler d1 create`
+      // ⚠️  SUBSTITUA pelo database_id gerado pelo `wrangler d1 create`
       // Formato: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      // Exemplo: "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
       "database_id": "local-sustambitech-db"
     }
   ]
@@ -62,22 +101,31 @@
   // SERVIÇOS ADICIONAIS (descomente quando necessário)
   // ============================================================
 
-  // KV Storage — Armazenamento chave-valor (somente BYOK/conta própria)
-  // NOTA: KV NÃO é suportado no hosted deploy do Genspark
-  // Use tabela D1 como alternativa: CREATE TABLE kv (key TEXT PRIMARY KEY, value TEXT)
-  // Para ativar com conta própria:
+  // ── KV Storage ───────────────────────────────────────────────
+  // Armazenamento chave-valor (cache, sessões, configurações)
+  // ⚠️  NOTA: KV NÃO é suportado no hosted deploy do Genspark.
+  //     Use tabela D1 como alternativa:
+  //     CREATE TABLE kv_store (key TEXT PRIMARY KEY, value TEXT, ttl INTEGER)
+  //
+  // Para usar com CONTA PRÓPRIA (BYOK):
   //   npx wrangler kv:namespace create sustambitech_KV
   //   npx wrangler kv:namespace create sustambitech_KV --preview
+  //
   // "kv_namespaces": [
   //   {
   //     "binding": "KV",
-  //     "id": "seu-kv-id",
-  //     "preview_id": "seu-kv-preview-id"
+  //     "id": "seu-kv-namespace-id-aqui",
+  //     "preview_id": "seu-kv-preview-id-aqui"
   //   }
   // ],
 
-  // R2 Storage — Object storage (fotos dos postos, documentos)
+  // ── R2 Storage ───────────────────────────────────────────────
+  // Object storage para fotos dos postos, documentos, backups
+  // Free: 10 GB, 1M operações Class A/mês, 10M Class B/mês
+  // Pago: US$0.015/GB + US$4.50/1M Class A
+  //
   //   npx wrangler r2 bucket create sustambitech-bucket
+  //
   // "r2_buckets": [
   //   {
   //     "binding": "R2",

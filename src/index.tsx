@@ -683,38 +683,80 @@ ${NAV}
   </div>
 
   <div class="card p-6">
-    <h2 class="text-xl font-bold text-white mb-4"><i class="fas fa-gift text-green-400 mr-2"></i>Limites Gratuitos</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div class="bg-gray-900 p-4 rounded-lg border border-gray-700">
-        <div class="text-green-400 font-bold mb-2">Cloudflare Pages</div>
-        <ul class="text-sm text-gray-300 space-y-1">
-          <li>&#10003; Hospedagem ilimitada</li>
-          <li>&#10003; HTTPS autom&#225;tico</li>
-          <li>&#10003; Deploy via GitHub</li>
-          <li>&#10003; 500 deploys/m&#234;s</li>
-          <li>&#10003; CDN global</li>
-        </ul>
-      </div>
-      <div class="bg-gray-900 p-4 rounded-lg border border-gray-700">
-        <div class="text-blue-400 font-bold mb-2">Cloudflare D1</div>
-        <ul class="text-sm text-gray-300 space-y-1">
-          <li>&#10003; 5 GB armazenamento</li>
-          <li>&#10003; 5M leituras/dia</li>
-          <li>&#10003; 100K escritas/dia</li>
-          <li>&#10003; SQLite completo</li>
-          <li>&#10003; Backup autom&#225;tico</li>
-        </ul>
-      </div>
-      <div class="bg-gray-900 p-4 rounded-lg border border-gray-700">
-        <div class="text-yellow-400 font-bold mb-2">Workers (Hono)</div>
-        <ul class="text-sm text-gray-300 space-y-1">
-          <li>&#10003; 100k req/dia</li>
-          <li>&#10003; Edge global</li>
-          <li>&#10003; Sem cold start</li>
-          <li>&#10003; Logs integrados</li>
-          <li>&#10003; HTTPS incluso</li>
-        </ul>
-      </div>
+    <h2 class="text-xl font-bold text-white mb-4"><i class="fas fa-balance-scale text-blue-400 mr-2"></i>Free vs Pago &#8212; Compara&#231;&#227;o Completa</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm border-collapse">
+        <thead>
+          <tr>
+            <th class="text-left py-3 px-4 text-gray-400 border-b border-gray-700">Recurso</th>
+            <th class="text-center py-3 px-4 border-b border-gray-700">
+              <span class="inline-flex items-center gap-1 text-green-400 font-bold">
+                <i class="fas fa-gift"></i> Gratuito (Free)
+              </span>
+            </th>
+            <th class="text-center py-3 px-4 border-b border-gray-700">
+              <span class="inline-flex items-center gap-1 text-yellow-400 font-bold">
+                <i class="fas fa-star"></i> Pago (US$5/m&#234;s)
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-gray-800">
+            <td class="py-3 px-4 text-gray-300 font-medium"><i class="fas fa-database text-blue-400 mr-2"></i>D1 Storage</td>
+            <td class="py-3 px-4 text-center text-green-400">5 GB</td>
+            <td class="py-3 px-4 text-center text-yellow-400 font-bold">25 GB</td>
+          </tr>
+          <tr class="border-b border-gray-800 bg-gray-900/30">
+            <td class="py-3 px-4 text-gray-300 font-medium"><i class="fas fa-eye text-blue-400 mr-2"></i>D1 Leituras/dia</td>
+            <td class="py-3 px-4 text-center text-green-400">5 milh&#245;es</td>
+            <td class="py-3 px-4 text-center text-yellow-400 font-bold">25 milh&#245;es</td>
+          </tr>
+          <tr class="border-b border-gray-800">
+            <td class="py-3 px-4 text-gray-300 font-medium"><i class="fas fa-pen text-blue-400 mr-2"></i>D1 Escritas/dia</td>
+            <td class="py-3 px-4 text-center text-green-400">100.000</td>
+            <td class="py-3 px-4 text-center text-yellow-400 font-bold">500.000</td>
+          </tr>
+          <tr class="border-b border-gray-800 bg-gray-900/30">
+            <td class="py-3 px-4 text-gray-300 font-medium"><i class="fas fa-microchip text-blue-400 mr-2"></i>CPU por request</td>
+            <td class="py-3 px-4 text-center text-green-400">10ms</td>
+            <td class="py-3 px-4 text-center text-yellow-400 font-bold">30ms (3&#215; mais!)</td>
+          </tr>
+          <tr class="border-b border-gray-800">
+            <td class="py-3 px-4 text-gray-300 font-medium"><i class="fas fa-server text-blue-400 mr-2"></i>Workers Requests</td>
+            <td class="py-3 px-4 text-center text-green-400">100k req/dia</td>
+            <td class="py-3 px-4 text-center text-yellow-400 font-bold">10M req/m&#234;s</td>
+          </tr>
+          <tr class="border-b border-gray-800 bg-gray-900/30">
+            <td class="py-3 px-4 text-gray-300 font-medium"><i class="fas fa-hdd text-blue-400 mr-2"></i>R2 Storage</td>
+            <td class="py-3 px-4 text-center text-green-400">10 GB</td>
+            <td class="py-3 px-4 text-center text-yellow-400 font-bold">+ US$0.015/GB</td>
+          </tr>
+          <tr class="border-b border-gray-800">
+            <td class="py-3 px-4 text-gray-300 font-medium"><i class="fas fa-tools text-blue-400 mr-2"></i>Analytics Engine</td>
+            <td class="py-3 px-4 text-center text-red-400">&#10008; N&#227;o</td>
+            <td class="py-3 px-4 text-center text-yellow-400 font-bold">&#10003; Sim</td>
+          </tr>
+          <tr class="bg-gray-900/30">
+            <td class="py-3 px-4 text-gray-300 font-medium"><i class="fas fa-puzzle-piece text-blue-400 mr-2"></i>Durable Objects</td>
+            <td class="py-3 px-4 text-center text-red-400">&#10008; N&#227;o</td>
+            <td class="py-3 px-4 text-center text-yellow-400 font-bold">&#10003; Sim</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-4 p-4 bg-yellow-900/20 border border-yellow-700/40 rounded-lg">
+      <p class="text-yellow-300 text-sm font-semibold mb-1"><i class="fas fa-lightbulb mr-1"></i>Como ativar o Plano Pago:</p>
+      <ol class="text-gray-300 text-sm space-y-1 list-decimal ml-4">
+        <li>Acesse <a href="https://dash.cloudflare.com" class="text-orange-400" target="_blank">dash.cloudflare.com</a> &#8594; Workers &amp; Pages &#8594; Plans</li>
+        <li>Ative <strong class="text-yellow-400">"Workers Paid"</strong> (US$5/m&#234;s, cancele quando quiser)</li>
+        <li>No <code>wrangler.jsonc</code>, descomente: <code>"usage_model": "bundled"</code></li>
+        <li>Execute: <code>npx wrangler deploy</code> ou <code>npm run deploy</code></li>
+      </ol>
+    </div>
+    <div class="mt-3 p-4 bg-green-900/20 border border-green-700/40 rounded-lg">
+      <p class="text-green-300 text-sm font-semibold mb-1"><i class="fas fa-check-circle mr-1"></i>Para este projeto (57 postos, uso m&#233;dio):</p>
+      <p class="text-gray-300 text-sm">O <strong class="text-green-400">plano gratuito &#233; suficiente</strong>. Com 57 postos e consultas ocasionais, voc&#234; fica bem abaixo de 5M leituras/dia. S&#243; considere o pago se tiver muitos usu&#225;rios simult&#226;neos ou consultas pesadas.</p>
     </div>
   </div>
 
