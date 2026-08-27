@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SustAmbiTech BI — Eletropostos</title>
+  <meta name="description" content="Plataforma de Inteligência Ambiental para Mobilidade Elétrica na Grande São Paulo — 57+ postos de recarga, mapa interativo, dados BI e análise de custo por região.">
+  <meta name="author" content="Kayham">
+  <!-- Open Graph -->
+  <meta property="og:title" content="SustAmbiTech BI — Eletropostos EV">
+  <meta property="og:description" content="Mapa interativo de postos de recarga elétrica na Grande SP com análise de custo, conectores e integração Power BI.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kayhamcristoffer.github.io/SustAmbiTechBI.io/">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --green:  #22c55e;
+      --blue:   #3b82f6;
+      --orange: #f97316;
+      --dark:   #0a0f1e;
+      --card:   #0f1629;
+      --border: #1e2d4a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--dark);
+      color: #e2e8f0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+    }
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, #0a0f1e 0%, #0d1f3c 50%, #0a1929 100%);
+      padding: 80px 24px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(34,197,94,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.3);
+      color: var(--green); padding: 6px 16px; border-radius: 99px;
+      font-size: .8rem; font-weight: 600; margin-bottom: 20px;
+      text-transform: uppercase; letter-spacing: .08em;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 800; line-height: 1.1;
+      background: linear-gradient(135deg, #fff 30%, var(--green) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 16px;
+    }
+    .hero p {
+      font-size: clamp(.95rem, 2vw, 1.2rem);
+      color: #94a3b8; max-width: 640px; margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px; border-radius: 10px; font-size: .95rem;
+      font-weight: 600; text-decoration: none; transition: all .2s;
+      cursor: pointer; border: none;
+    }
+    .btn-primary { background: var(--green); color: #0a0f1e; }
+    .btn-primary:hover { background: #16a34a; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(34,197,94,.3); }
+    .btn-outline { background: transparent; color: #e2e8f0; border: 1px solid var(--border); }
+    .btn-outline:hover { background: rgba(255,255,255,.05); border-color: #4b6a9b; }
+    /* ── Stats ── */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .stat-item { background: var(--card); padding: 28px 20px; text-align: center; }
+    .stat-num { font-size: 2rem; font-weight: 800; color: var(--green); line-height: 1; }
+    .stat-label { font-size: .8rem; color: #64748b; margin-top: 4px; text-transform: uppercase; letter-spacing: .06em; }
+    /* ── Cards ── */
+    .section { padding: 60px 24px; max-width: 1100px; margin: 0 auto; }
+    .section-title { font-size: 1.5rem; font-weight: 700; color: #f1f5f9; margin-bottom: 8px; }
+    .section-sub { color: #64748b; font-size: .95rem; margin-bottom: 32px; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 20px; }
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px; transition: border-color .2s, transform .2s;
+    }
+    .card:hover { border-color: #2d4a7a; transform: translateY(-2px); }
+    .card-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 16px; }
+    .card h3 { font-size: 1.05rem; font-weight: 700; color: #f1f5f9; margin-bottom: 8px; }
+    .card p { font-size: .875rem; color: #94a3b8; line-height: 1.6; }
+    /* ── Nav ── */
+    nav {
+      background: rgba(10,15,30,.95); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-brand { font-weight: 800; font-size: 1.1rem; color: var(--green); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+    .nav-links a {
+      padding: 6px 14px; border-radius: 8px; color: #94a3b8;
+      text-decoration: none; font-size: .875rem; transition: color .2s, background .2s;
+    }
+    .nav-links a:hover { color: #f1f5f9; background: rgba(255,255,255,.06); }
+    /* ── Links table ── */
+    .link-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+      gap: 12px; flex-wrap: wrap;
+    }
+    .link-row:last-child { border-bottom: none; }
+    .link-label { font-size: .9rem; color: #cbd5e1; font-weight: 500; }
+    .link-url {
+      font-size: .8rem; color: var(--blue); text-decoration: none;
+      background: rgba(59,130,246,.08); padding: 4px 10px; border-radius: 6px;
+      border: 1px solid rgba(59,130,246,.2); word-break: break-all; transition: background .2s;
+    }
+    .link-url:hover { background: rgba(59,130,246,.15); }
+    /* ── Schema table ── */
+    .schema-table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+    .schema-table th { background: rgba(255,255,255,.04); color: #94a3b8; font-weight: 600; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); text-transform: uppercase; font-size: .75rem; letter-spacing: .06em; }
+    .schema-table td { padding: 10px 14px; border-bottom: 1px solid rgba(30,45,74,.5); color: #cbd5e1; vertical-align: top; }
+    .schema-table tr:hover td { background: rgba(255,255,255,.02); }
+    .badge { padding: 2px 8px; border-radius: 99px; font-size: .72rem; font-weight: 600; }
+    .badge-green { background: rgba(34,197,94,.1); color: #4ade80; border: 1px solid rgba(34,197,94,.2); }
+    .badge-blue  { background: rgba(59,130,246,.1); color: #60a5fa; border: 1px solid rgba(59,130,246,.2); }
+    .badge-orange{ background: rgba(249,115,22,.1); color: #fb923c; border: 1px solid rgba(249,115,22,.2); }
+    /* ── Footer ── */
+    footer { background: var(--card); border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    /* ── Responsive ── */
+    @media(max-width:640px){
+      .nav-links a { font-size: .78rem; padding: 5px 8px; }
+      .hero { padding: 60px 16px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav>
+  <a class="nav-brand" href="#"><i class="fas fa-bolt"></i> SustAmbiTech BI</a>
+  <div class="nav-links">
+    <a href="#features"><i class="fas fa-star mr-1"></i>Features</a>
+    <a href="#endpoints"><i class="fas fa-plug mr-1"></i>APIs</a>
+    <a href="#schema"><i class="fas fa-database mr-1"></i>Schema</a>
+    <a href="#deploy"><i class="fas fa-rocket mr-1"></i>Deploy</a>
+    <a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io" target="_blank"><i class="fab fa-github mr-1"></i>GitHub</a>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<header class="hero">
+  <div class="hero-badge"><i class="fas fa-bolt"></i> Plataforma BI para Mobilidade Elétrica</div>
+  <h1>SustAmbiTech<br>Eletropostos</h1>
+  <p>
+    Inteligência de dados para 57+ postos de recarga elétrica na Grande São Paulo.
+    Mapa interativo, APIs REST, análise de custo por região e integração Power BI.
+  </p>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+    <a class="btn btn-primary" href="https://sustambitech-bi.pages.dev" target="_blank">
+      <i class="fas fa-external-link-alt"></i> Acessar Plataforma
+    </a>
+    <a class="btn btn-outline" href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io" target="_blank">
+      <i class="fab fa-github"></i> Ver no GitHub
+    </a>
+  </div>
+</header>
+
+<!-- ── Stats ── -->
+<div style="max-width:1100px;margin:0 auto;padding:0 24px;">
+  <div class="stats" style="border-radius:14px;overflow:hidden;margin-top:-20px;position:relative;z-index:1;">
+    <div class="stat-item">
+      <div class="stat-num">57+</div>
+      <div class="stat-label">Eletropostos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:#3b82f6;">5</div>
+      <div class="stat-label">Cidades</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:#f97316;">6</div>
+      <div class="stat-label">Tipos de Conector</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:#a78bfa;">15</div>
+      <div class="stat-label">APIs REST</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:#34d399;">7</div>
+      <div class="stat-label">Views Power BI</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:#fbbf24;">100%</div>
+      <div class="stat-label">Gratuito</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Features ── -->
+<section class="section" id="features">
+  <div class="section-title"><i class="fas fa-star text-yellow-400 mr-2"></i>Funcionalidades</div>
+  <div class="section-sub">Tudo que você precisa para analisar a infraestrutura de recarga elétrica</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(34,197,94,.1);"><i class="fas fa-map-marked-alt" style="color:#22c55e;"></i></div>
+      <h3>Mapa Interativo</h3>
+      <p>Visualize os 57+ postos com Leaflet.js. Filtros por tipo (elétrico/híbrido), cidade e conector. Tiles OpenStreetMap/CartoDB gratuitos.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(59,130,246,.1);"><i class="fas fa-chart-bar" style="color:#3b82f6;"></i></div>
+      <h3>Dashboard BI</h3>
+      <p>KPIs em tempo real: postos ativos, cobertura por cidade, distribuição de conectores e histórico climático com Chart.js.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(249,115,22,.1);"><i class="fas fa-database" style="color:#f97316;"></i></div>
+      <h3>Cloudflare D1 + Supabase</h3>
+      <p>Banco SQLite serverless na edge com D1. Supabase PostgreSQL com triggers de auditoria, backup automático e 7 views Power BI.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(167,139,250,.1);"><i class="fas fa-file-excel" style="color:#a78bfa;"></i></div>
+      <h3>Importação Excel</h3>
+      <p>Upload drag-and-drop de planilhas .xlsx com SheetJS. Preview dos dados antes de importar. Log de todas as importações.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(251,191,36,.1);"><i class="fas fa-cloud-sun" style="color:#fbbf24;"></i></div>
+      <h3>Clima Open-Meteo</h3>
+      <p>Integração gratuita com Open-Meteo API. Dados atuais + previsão de 7 dias. Histórico salvo no banco para análise temporal no Power BI.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(52,211,153,.1);"><i class="fas fa-brain" style="color:#34d399;"></i></div>
+      <h3>Mapa Mental BI</h3>
+      <p>Diagrama visual do modelo estrela (Star Schema): tabelas fato, dimensões, views e fluxo de dados para Power BI.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── API Endpoints ── -->
+<section class="section" id="endpoints" style="border-top:1px solid var(--border);">
+  <div class="section-title"><i class="fas fa-plug text-blue-400 mr-2"></i>Endpoints REST</div>
+  <div class="section-sub">Todos os endpoints suportam <code style="background:#1e2d4a;padding:2px 6px;border-radius:4px;font-size:.8rem;">?format=csv</code> para conexão direta com Power BI</div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
+    <div class="link-row" style="padding:14px 20px;">
+      <span class="link-label"><span class="badge badge-green">GET</span> Dashboard KPIs</span>
+      <a class="link-url" href="https://sustambitech-bi.pages.dev/api/resumo">/api/resumo</a>
+    </div>
+    <div class="link-row" style="padding:14px 20px;">
+      <span class="link-label"><span class="badge badge-green">GET</span> Lista de Postos</span>
+      <a class="link-url" href="https://sustambitech-bi.pages.dev/api/postos">/api/postos?cidade=&tipo=&conector=&limit=</a>
+    </div>
+    <div class="link-row" style="padding:14px 20px;">
+      <span class="link-label"><span class="badge badge-green">GET</span> Mapa (Leaflet)</span>
+      <a class="link-url" href="https://sustambitech-bi.pages.dev/api/mapa">/api/mapa</a>
+    </div>
+    <div class="link-row" style="padding:14px 20px;">
+      <span class="link-label"><span class="badge badge-green">GET</span> Clima Atual + Previsão</span>
+      <a class="link-url" href="https://sustambitech-bi.pages.dev/api/clima">/api/clima</a>
+    </div>
+    <div class="link-row" style="padding:14px 20px;">
+      <span class="link-label"><span class="badge badge-green">GET</span> BI — Resumo Regional</span>
+      <a class="link-url" href="https://sustambitech-bi.pages.dev/api/bi/resumo-regional?format=csv">/api/bi/resumo-regional?format=csv</a>
+    </div>
+    <div class="link-row" style="padding:14px 20px;">
+      <span class="link-label"><span class="badge badge-green">GET</span> BI — Conectores</span>
+      <a class="link-url" href="https://sustambitech-bi.pages.dev/api/bi/conectores-distribuicao?format=csv">/api/bi/conectores-distribuicao?format=csv</a>
+    </div>
+    <div class="link-row" style="padding:14px 20px;">
+      <span class="link-label"><span class="badge badge-green">GET</span> BI — Postos Full</span>
+      <a class="link-url" href="https://sustambitech-bi.pages.dev/api/bi/postos-full?format=csv">/api/bi/postos-full?format=csv</a>
+    </div>
+    <div class="link-row" style="padding:14px 20px;">
+      <span class="link-label"><span class="badge badge-blue">POST</span> Importar Excel</span>
+      <a class="link-url" href="#">/api/upload/postos</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Schema ── -->
+<section class="section" id="schema" style="border-top:1px solid var(--border);">
+  <div class="section-title"><i class="fas fa-database text-orange-400 mr-2"></i>Schema do Banco de Dados</div>
+  <div class="section-sub">PostgreSQL (Supabase) + SQLite (Cloudflare D1) — Star Schema com auditoria completa</div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
+    <table class="schema-table">
+      <thead>
+        <tr>
+          <th>Tabela</th>
+          <th>Tipo</th>
+          <th>Descrição</th>
+          <th>Linhas Seed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>postos</code></td><td><span class="badge badge-orange">FATO</span></td><td>Postos de recarga com geolocalização, tipo e metadados</td><td>57+</td></tr>
+        <tr><td><code>enderecos</code></td><td><span class="badge badge-orange">FATO</span></td><td>Endereços normalizados com lat/lon para uso no mapa</td><td>57+</td></tr>
+        <tr><td><code>tomadas</code></td><td><span class="badge badge-orange">FATO</span></td><td>Conectores por posto: tipo, potência, custo/min, tempo recarga</td><td>80+</td></tr>
+        <tr><td><code>avaliacoes</code></td><td><span class="badge badge-orange">FATO</span></td><td>Avaliações 1-5 estrelas dos usuários por posto</td><td>3+</td></tr>
+        <tr><td><code>feedbacks</code></td><td><span class="badge badge-orange">FATO</span></td><td>Feedbacks gerais sobre a plataforma (migrados Firebase)</td><td>2</td></tr>
+        <tr><td><code>clima_historico</code></td><td><span class="badge badge-orange">FATO</span></td><td>Snapshots climáticos Open-Meteo com previsão JSONB</td><td>–</td></tr>
+        <tr><td><code>usuarios</code></td><td><span class="badge badge-blue">DIM</span></td><td>Usuários com firebase_uid para rastreabilidade de migração</td><td>5</td></tr>
+        <tr><td><code>veiculos</code></td><td><span class="badge badge-blue">DIM</span></td><td>Catálogo de EVs e PHEVs com preço, autonomia e conectores</td><td>20</td></tr>
+        <tr><td><code>log_importacoes</code></td><td><span class="badge badge-blue">DIM</span></td><td>Histórico de importações Excel/CSV com detalhes de erros</td><td>–</td></tr>
+        <tr><td><code>auditoria_log</code></td><td><span class="badge badge-green">AUDIT</span></td><td>Log imutável de todas as operações CRUD (JSON snapshot)</td><td>auto</td></tr>
+        <tr><td><code>*_bkp</code></td><td><span class="badge badge-green">BACKUP</span></td><td>8 tabelas espelho sem constraints para restauração parcial</td><td>auto</td></tr>
+        <tr><td><code>vw_postos_completo</code></td><td><span class="badge" style="background:rgba(167,139,250,.1);color:#c084fc;border:1px solid rgba(167,139,250,.2);">VIEW</span></td><td>Postos desnormalizados com endereço, tomadas e avaliações</td><td>–</td></tr>
+        <tr><td><code>vw_custo_por_regiao</code></td><td><span class="badge" style="background:rgba(167,139,250,.1);color:#c084fc;border:1px solid rgba(167,139,250,.2);">VIEW</span></td><td>Ranking de custo por tomada/cidade — filtro "custo menor"</td><td>–</td></tr>
+        <tr><td><code>vw_resumo_por_cidade</code></td><td><span class="badge" style="background:rgba(167,139,250,.1);color:#c084fc;border:1px solid rgba(167,139,250,.2);">VIEW</span></td><td>KPIs por cidade para mapa coroplético no Power BI</td><td>–</td></tr>
+        <tr><td><code>vw_veiculos_compatibilidade</code></td><td><span class="badge" style="background:rgba(167,139,250,.1);color:#c084fc;border:1px solid rgba(167,139,250,.2);">VIEW</span></td><td>Cruzamento veículo ↔ postos compatíveis por cidade</td><td>–</td></tr>
+        <tr><td><code>vw_clima_powerbi</code></td><td><span class="badge" style="background:rgba(167,139,250,.1);color:#c084fc;border:1px solid rgba(167,139,250,.2);">VIEW</span></td><td>Clima normalizado com previsão em colunas para Power BI</td><td>–</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── Deploy ── -->
+<section class="section" id="deploy" style="border-top:1px solid var(--border);">
+  <div class="section-title"><i class="fas fa-rocket text-green-400 mr-2"></i>Deploy &amp; Configuração</div>
+  <div class="section-sub">100% gratuito com Cloudflare Pages + D1. Banco PostgreSQL via Supabase.</div>
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(34,197,94,.3);">
+      <div class="card-icon" style="background:rgba(34,197,94,.1);"><i class="fab fa-cloudflare" style="color:#22c55e;"></i></div>
+      <h3>Cloudflare Pages (Free)</h3>
+      <p>Hospedagem edge global. D1 SQLite: 5GB, 5M leituras/dia. Workers: 100k req/dia, 10ms CPU.</p>
+      <div style="margin-top:12px;font-size:.8rem;color:#94a3b8;">
+        <code style="background:#0a0f1e;padding:4px 8px;border-radius:4px;display:block;margin-top:6px;">npm run build &amp;&amp; wrangler pages deploy dist</code>
+      </div>
+    </div>
+    <div class="card" style="border-color:rgba(59,130,246,.3);">
+      <div class="card-icon" style="background:rgba(59,130,246,.1);"><i class="fas fa-database" style="color:#3b82f6;"></i></div>
+      <h3>Supabase (PostgreSQL)</h3>
+      <p>Banco relacional com triggers, auditoria e backup. Execute <code>full_schema.sql</code> no SQL Editor do Supabase.</p>
+      <div style="margin-top:12px;font-size:.8rem;color:#94a3b8;">
+        <code style="background:#0a0f1e;padding:4px 8px;border-radius:4px;display:block;margin-top:6px;">supabase link --project-ref qqlggpgsidfhqjgzbwhp</code>
+      </div>
+    </div>
+    <div class="card" style="border-color:rgba(249,115,22,.3);">
+      <div class="card-icon" style="background:rgba(249,115,22,.1);"><i class="fas fa-chart-pie" style="color:#f97316;"></i></div>
+      <h3>Power BI DirectQuery</h3>
+      <p>Conecte o Power BI via "Obter Dados → Web" usando as URLs <code>?format=csv</code> dos endpoints BI.</p>
+      <div style="margin-top:12px;font-size:.8rem;color:#94a3b8;">
+        <code style="background:#0a0f1e;padding:4px 8px;border-radius:4px;display:block;margin-top:6px;">/api/bi/resumo-regional?format=csv</code>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="footer-inner">
+    <div style="font-size:1.5rem;color:#22c55e;margin-bottom:8px;">&#9889;</div>
+    <p style="font-size:.95rem;color:#94a3b8;margin-bottom:8px;">
+      SustAmbiTech BI — Plataforma de Inteligência Ambiental para Mobilidade Elétrica
+    </p>
+    <p style="font-size:.85rem;color:#475569;">
+      Desenvolvido por <strong style="color:#22c55e;">Kayham</strong> &mdash;
+      <a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io" style="color:#3b82f6;text-decoration:none;">GitHub</a> &nbsp;|&nbsp;
+      <a href="https://sustambitech-bi.pages.dev/tutorial" style="color:#3b82f6;text-decoration:none;">Tutorial Deploy</a> &nbsp;|&nbsp;
+      <a href="https://sustambitech-bi.pages.dev/mindmap" style="color:#3b82f6;text-decoration:none;">Mapa Mental BI</a>
+    </p>
+    <p style="font-size:.75rem;color:#334155;margin-top:12px;">
+      Stack: Hono &bull; TypeScript &bull; Cloudflare Pages &bull; D1 SQLite &bull; Supabase PostgreSQL &bull; Leaflet.js &bull; Chart.js &bull; Open-Meteo API
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
