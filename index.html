@@ -5,72 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SustAmbiTech BI — Mobilidade Elétrica no Brasil</title>
   <meta name="description" content="Plataforma de inteligência de dados sobre veículos elétricos, postos de recarga e emplacamentos no Brasil. Dados ABVE + Carregados.com.br." />
-
-  <!-- Favicon inline -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
 
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
-  <!-- Font: Inter + Orbitron -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet" />
-
-  <!-- Font Awesome -->
+  <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
-    /* =====================================================
-       RESET & TOKENS
-    ===================================================== */
+    /* =====================================================  RESET & TOKENS  */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --green:       #00e676;
-      --green-dim:   #00c853;
-      --green-dark:  #00701e;
-      --cyan:        #00e5ff;
-      --blue:        #2979ff;
-      --purple:      #7c4dff;
-      --bg:          #050a0e;
-      --bg2:         #0b1219;
-      --bg3:         #101c26;
-      --bg4:         #132030;
-      --card:        #0e1923;
-      --card-hover:  #132332;
-      --border:      rgba(0,230,118,.15);
-      --border2:     rgba(0,229,255,.12);
-      --text:        #e0f2f1;
-      --text-muted:  #78909c;
-      --text-dim:    #b0bec5;
-      --radius:      12px;
-      --radius-lg:   20px;
-      --shadow:      0 4px 24px rgba(0,0,0,.6);
-      --glow-green:  0 0 24px rgba(0,230,118,.25);
-      --glow-cyan:   0 0 24px rgba(0,229,255,.2);
+      --green:      #00e676;
+      --green-dim:  #00c853;
+      --cyan:       #00e5ff;
+      --blue:       #2979ff;
+      --purple:     #7c4dff;
+      --bg:         #050a0e;
+      --bg2:        #0b1219;
+      --bg3:        #101c26;
+      --bg4:        #132030;
+      --card:       #0e1923;
+      --border:     rgba(0,230,118,.15);
+      --border2:    rgba(0,229,255,.12);
+      --text:       #e0f2f1;
+      --muted:      #78909c;
+      --dim:        #b0bec5;
+      --radius:     12px;
+      --radius-lg:  20px;
+      --shadow:     0 4px 24px rgba(0,0,0,.6);
+      --glow:       0 0 24px rgba(0,230,118,.25);
+      --glow-c:     0 0 24px rgba(0,229,255,.2);
     }
 
     html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    /* =====================================================
-       SCROLLBAR
-    ===================================================== */
-    ::-webkit-scrollbar { width: 6px; }
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: var(--bg2); }
-    ::-webkit-scrollbar-thumb { background: var(--green-dark); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb { background: #00701e; border-radius: 3px; }
 
-    /* =====================================================
-       GRID BG PATTERN
-    ===================================================== */
+    /* grid pattern */
     .grid-bg {
       background-image:
         linear-gradient(rgba(0,230,118,.04) 1px, transparent 1px),
@@ -78,1779 +57,1478 @@
       background-size: 40px 40px;
     }
 
-    /* =====================================================
-       NAV
-    ===================================================== */
+    /* =====================================================  NAV  */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      background: rgba(5,10,14,.92);
-      backdrop-filter: blur(16px);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 2000;
+      background: rgba(5,10,14,.95);
+      backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
-      height: 64px;
-      display: flex;
-      align-items: center;
-      padding: 0 2rem;
-      gap: 2rem;
+      height: 60px;
+      display: flex; align-items: center;
+      padding: 0 1.5rem; gap: 0;
     }
-
     .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: .6rem;
-      text-decoration: none;
+      display: flex; align-items: center; gap: .55rem;
+      text-decoration: none; flex-shrink: 0;
     }
-    .nav-brand .bolt {
-      width: 32px; height: 32px;
+    .nav-bolt {
+      width: 30px; height: 30px;
       background: linear-gradient(135deg, var(--green), var(--cyan));
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      font-size: 16px;
+      border-radius: 7px;
+      display: grid; place-items: center; font-size: 15px;
     }
-    .nav-brand span {
+    .nav-brand-name {
       font-family: 'Orbitron', sans-serif;
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--green);
-      letter-spacing: .04em;
+      font-size: .95rem; font-weight: 800;
+      color: var(--green); letter-spacing: .04em;
     }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: .25rem;
+    /* primary nav links */
+    .nav-primary {
+      display: flex; align-items: center; gap: .1rem;
+      margin-left: 1.8rem;
+    }
+    .nav-primary a {
+      color: var(--dim); text-decoration: none;
+      font-size: .8rem; font-weight: 500;
+      padding: .38rem .75rem; border-radius: 7px;
+      transition: all .2s; white-space: nowrap;
+      display: flex; align-items: center; gap: .3rem;
+    }
+    .nav-primary a:hover,
+    .nav-primary a.active { color: var(--green); background: rgba(0,230,118,.08); }
+
+    /* page tabs — right side */
+    .nav-pages {
+      display: flex; align-items: center; gap: .1rem;
       margin-left: auto;
     }
-    .nav-links a {
-      color: var(--text-dim);
-      text-decoration: none;
-      font-size: .83rem;
-      font-weight: 500;
-      padding: .4rem .85rem;
-      border-radius: 8px;
-      transition: all .2s;
-      white-space: nowrap;
+    .nav-pages a {
+      color: var(--muted); text-decoration: none;
+      font-size: .78rem; font-weight: 600;
+      padding: .35rem .75rem; border-radius: 7px;
+      transition: all .2s; white-space: nowrap;
     }
-    .nav-links a:hover {
-      color: var(--green);
-      background: rgba(0,230,118,.08);
-    }
+    .nav-pages a:hover { color: var(--green); background: rgba(0,230,118,.07); }
 
-    .nav-badge {
+    .nav-gh {
       background: linear-gradient(135deg, var(--green), var(--cyan));
-      color: var(--bg);
-      font-size: .72rem;
-      font-weight: 700;
-      padding: .3rem .8rem;
-      border-radius: 20px;
-      margin-left: .5rem;
+      color: var(--bg) !important; font-weight: 700 !important;
+      border-radius: 20px !important;
+      padding: .32rem .9rem !important;
+      margin-left: .6rem;
+    }
+    .nav-gh:hover { opacity: .85; background: linear-gradient(135deg, var(--green), var(--cyan)) !important; }
+
+    /* mobile hamburger */
+    .nav-toggle {
+      display: none; margin-left: auto;
+      background: none; border: none; cursor: pointer;
+      color: var(--dim); font-size: 1.2rem; padding: .4rem;
     }
 
-    /* =====================================================
-       HERO
-    ===================================================== */
-    #hero {
-      min-height: 100vh;
-      padding-top: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
+    /* mobile menu */
+    .nav-mobile {
+      display: none; position: fixed;
+      top: 60px; left: 0; right: 0;
+      background: rgba(5,10,14,.98);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem; flex-direction: column; gap: .4rem;
+      z-index: 1999;
     }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      color: var(--dim); text-decoration: none;
+      font-size: .85rem; font-weight: 500;
+      padding: .6rem .9rem; border-radius: 8px;
+      transition: all .2s;
+    }
+    .nav-mobile a:hover { color: var(--green); background: rgba(0,230,118,.08); }
 
+    /* =====================================================  PAGE SYSTEM  */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* =====================================================  HERO  */
+    #hero-section {
+      min-height: 100vh; padding-top: 60px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
     .hero-glow {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      pointer-events: none;
+      position: absolute; border-radius: 50%;
+      filter: blur(80px); pointer-events: none;
     }
-    .hero-glow-1 {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(0,230,118,.12) 0%, transparent 70%);
-      top: -100px; left: -100px;
-    }
-    .hero-glow-2 {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(0,229,255,.08) 0%, transparent 70%);
-      bottom: 0; right: -50px;
-    }
-    .hero-glow-3 {
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(41,121,255,.1) 0%, transparent 70%);
-      top: 40%; left: 50%;
-    }
+    .g1 { width:600px; height:600px; background: radial-gradient(circle,rgba(0,230,118,.12) 0%,transparent 70%); top:-100px; left:-100px; }
+    .g2 { width:500px; height:500px; background: radial-gradient(circle,rgba(0,229,255,.08) 0%,transparent 70%); bottom:0; right:-50px; }
+    .g3 { width:300px; height:300px; background: radial-gradient(circle,rgba(41,121,255,.1) 0%,transparent 70%); top:40%; left:50%; }
 
     .hero-inner {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      max-width: 860px;
-      padding: 4rem 2rem;
+      position: relative; z-index: 1;
+      text-align: center; max-width: 860px; padding: 4rem 2rem;
     }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      background: rgba(0,230,118,.08);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: .35rem 1rem;
-      font-size: .78rem;
-      font-weight: 600;
-      color: var(--green);
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      margin-bottom: 1.75rem;
+    .hero-pill {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(0,230,118,.08); border: 1px solid var(--border);
+      border-radius: 20px; padding: .35rem 1rem;
+      font-size: .75rem; font-weight: 600; color: var(--green);
+      letter-spacing: .06em; text-transform: uppercase; margin-bottom: 1.75rem;
     }
-    .hero-eyebrow .dot {
-      width: 6px; height: 6px;
-      background: var(--green);
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
+    .hero-pill .dot {
+      width: 6px; height: 6px; background: var(--green); border-radius: 50%;
+      animation: blink 2s ease-in-out infinite;
     }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: .4; transform: scale(.7); }
-    }
+    @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.6)} }
 
     .hero-title {
       font-family: 'Orbitron', sans-serif;
       font-size: clamp(2.2rem, 6vw, 4rem);
-      font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: -.01em;
-      margin-bottom: 1.5rem;
+      font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem;
     }
-    .hero-title .line-green {
+    .line-green {
       background: linear-gradient(90deg, var(--green), var(--cyan));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      display: block;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; display: block;
     }
-    .hero-title .line-white {
-      color: #fff;
-      display: block;
-    }
+    .line-white { color: #fff; display: block; }
 
     .hero-sub {
-      font-size: 1.1rem;
-      color: var(--text-dim);
-      max-width: 580px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.7;
+      font-size: 1.05rem; color: var(--dim);
+      max-width: 580px; margin: 0 auto 2.5rem; line-height: 1.7;
     }
-
-    .hero-ctas {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+    .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
     .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
+      display: inline-flex; align-items: center; gap: .5rem;
       background: linear-gradient(135deg, var(--green), #00c853);
-      color: var(--bg);
-      font-weight: 700;
-      font-size: .9rem;
-      padding: .8rem 1.8rem;
-      border-radius: 10px;
-      text-decoration: none;
-      transition: all .25s;
-      box-shadow: var(--glow-green);
+      color: var(--bg); font-weight: 700; font-size: .9rem;
+      padding: .8rem 1.8rem; border-radius: 10px; text-decoration: none;
+      transition: all .25s; box-shadow: var(--glow); border: none; cursor: pointer;
     }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 36px rgba(0,230,118,.4);
-    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 36px rgba(0,230,118,.4); }
 
     .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-      font-weight: 600;
-      font-size: .9rem;
-      padding: .8rem 1.8rem;
-      border-radius: 10px;
-      text-decoration: none;
-      transition: all .25s;
-      background: rgba(255,255,255,.03);
+      display: inline-flex; align-items: center; gap: .5rem;
+      border: 1px solid var(--border); color: var(--dim); font-weight: 600;
+      font-size: .9rem; padding: .8rem 1.8rem; border-radius: 10px;
+      text-decoration: none; transition: all .25s;
+      background: rgba(255,255,255,.03); cursor: pointer;
     }
-    .btn-outline:hover {
-      border-color: var(--green);
-      color: var(--green);
-      background: rgba(0,230,118,.06);
-    }
+    .btn-outline:hover { border-color: var(--green); color: var(--green); background: rgba(0,230,118,.06); }
 
-    /* =====================================================
-       KPI STRIP
-    ===================================================== */
+    /* =====================================================  KPI STRIP  */
     #kpis {
       background: var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 2rem 0;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 1.8rem 0;
     }
-
     .kpi-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0;
-      max-width: 1200px;
-      margin: 0 auto;
+      display: flex; flex-wrap: wrap; justify-content: center;
+      max-width: 1200px; margin: 0 auto;
     }
-
     .kpi-item {
-      flex: 1 1 160px;
-      max-width: 200px;
-      padding: 1.2rem 1.5rem;
-      text-align: center;
+      flex: 1 1 160px; max-width: 200px;
+      padding: 1.1rem 1.4rem; text-align: center;
       border-right: 1px solid var(--border);
     }
     .kpi-item:last-child { border-right: none; }
-
-    .kpi-number {
+    .kpi-num {
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.9rem;
-      font-weight: 800;
-      line-height: 1;
-      margin-bottom: .3rem;
+      font-size: 1.8rem; font-weight: 800; line-height: 1; margin-bottom: .28rem;
     }
-    .kpi-number.green { color: var(--green); }
-    .kpi-number.cyan  { color: var(--cyan); }
-    .kpi-number.blue  { color: var(--blue); }
-    .kpi-number.purple{ color: #b388ff; }
+    .kpi-num.g { color: var(--green); }
+    .kpi-num.c { color: var(--cyan); }
+    .kpi-num.b { color: var(--blue); }
+    .kpi-num.p { color: #b388ff; }
+    .kpi-lbl { font-size: .72rem; color: var(--muted); font-weight: 500; letter-spacing: .04em; text-transform: uppercase; }
 
-    .kpi-label {
-      font-size: .75rem;
-      color: var(--text-muted);
-      font-weight: 500;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
-
-    /* =====================================================
-       SECTION WRAPPER
-    ===================================================== */
-    .section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 5rem 2rem;
-    }
-
-    .section-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: .45rem;
-      font-size: .72rem;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: .75rem;
-    }
-    .section-tag::before {
-      content: '';
-      display: block;
-      width: 24px; height: 2px;
-      background: var(--green);
-      border-radius: 1px;
-    }
-
-    .section-title {
-      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-      font-weight: 800;
-      color: #fff;
-      line-height: 1.2;
-      margin-bottom: .75rem;
-    }
-
-    .section-sub {
-      font-size: 1rem;
-      color: var(--text-muted);
-      max-width: 560px;
-      line-height: 1.7;
-      margin-bottom: 3rem;
-    }
-
-    /* =====================================================
-       POWER BI SECTION
-    ===================================================== */
-    #powerbi {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .pbi-frame-wrap {
-      position: relative;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow), var(--glow-green);
-    }
-
-    .pbi-topbar {
+    /* =====================================================  ABVE STRIP  */
+    #abve-strip {
       background: var(--bg3);
-      border-bottom: 1px solid var(--border);
-      padding: .75rem 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: .75rem;
+      border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border2);
+      padding: 1.2rem 0;
     }
-    .pbi-dots { display: flex; gap: 6px; }
-    .pbi-dots span {
-      width: 12px; height: 12px;
-      border-radius: 50%;
+    .abve-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; justify-content: center;
     }
+    .abve-chip {
+      display: flex; align-items: center; gap: .65rem;
+      padding: .55rem 1.1rem;
+      background: var(--card); border: 1px solid var(--border2); border-radius: 10px;
+    }
+    .abve-chip-val {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .95rem; font-weight: 800; color: var(--cyan);
+    }
+    .abve-chip-lbl { font-size: .7rem; color: var(--muted); }
+
+    /* =====================================================  SECTION BASE  */
+    .section { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
+
+    .sec-tag {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-size: .7rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--green); margin-bottom: .7rem;
+    }
+    .sec-tag::before {
+      content: ''; display: block; width: 22px; height: 2px;
+      background: var(--green); border-radius: 1px;
+    }
+    .sec-title {
+      font-size: clamp(1.5rem, 3.5vw, 2.3rem);
+      font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: .7rem;
+    }
+    .sec-sub {
+      font-size: .95rem; color: var(--muted);
+      max-width: 560px; line-height: 1.7; margin-bottom: 2.8rem;
+    }
+
+    /* =====================================================  POWER BI  */
+    #powerbi-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    /* tab row */
+    .pbi-tabs {
+      display: flex; gap: .4rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+    }
+    .pbi-tab {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .42rem 1.05rem; border-radius: 8px;
+      font-size: .78rem; font-weight: 600;
+      border: 1px solid var(--border);
+      background: transparent; color: var(--muted);
+      cursor: pointer; transition: all .2s;
+      text-decoration: none;
+    }
+    .pbi-tab:hover,
+    .pbi-tab.active {
+      background: rgba(0,230,118,.1);
+      border-color: var(--green); color: var(--green);
+    }
+
+    /* frame chrome */
+    .pbi-chrome {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); overflow: hidden;
+      box-shadow: var(--shadow), var(--glow);
+    }
+    .pbi-topbar {
+      background: var(--bg3); border-bottom: 1px solid var(--border);
+      padding: .65rem 1.1rem;
+      display: flex; align-items: center; gap: .7rem;
+    }
+    .pbi-dots { display: flex; gap: 5px; }
+    .pbi-dots span { width: 11px; height: 11px; border-radius: 50%; }
     .pbi-dots span:nth-child(1) { background: #ff5f57; }
     .pbi-dots span:nth-child(2) { background: #febc2e; }
     .pbi-dots span:nth-child(3) { background: var(--green); }
-
-    .pbi-url {
-      flex: 1;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: .3rem .75rem;
-      font-size: .75rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-      overflow: hidden;
+    .pbi-url-bar {
+      flex: 1; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 5px; padding: .28rem .7rem;
+      font-size: .72rem; color: var(--muted);
+      display: flex; align-items: center; gap: .45rem; overflow: hidden;
     }
-    .pbi-url i { color: var(--green); flex-shrink: 0; }
-
-    .pbi-iframe {
-      width: 100%;
-      height: 700px;
-      border: none;
-      display: block;
-    }
-
-    .pbi-tabs {
-      display: flex;
-      gap: .5rem;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .pbi-tab {
-      padding: .45rem 1.1rem;
-      border-radius: 8px;
-      font-size: .8rem;
-      font-weight: 600;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all .2s;
-      text-decoration: none;
-    }
-    .pbi-tab:hover, .pbi-tab.active {
-      background: rgba(0,230,118,.1);
-      border-color: var(--green);
-      color: var(--green);
-    }
-
-    /* =====================================================
-       MAP SECTION
-    ===================================================== */
-    #mapa-section {
-      background: var(--bg);
-    }
-
-    .map-layout {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 1.5rem;
-      align-items: start;
-    }
-
-    @media (max-width: 900px) {
-      .map-layout { grid-template-columns: 1fr; }
-    }
-
-    #map {
-      height: 520px;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      position: relative;
-      z-index: 1;
-    }
-
-    .map-sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .map-stat-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.25rem;
+    .pbi-url-bar i { color: var(--green); flex-shrink: 0; }
+    #pbi-url-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pbi-open-btn {
+      background: rgba(0,230,118,.1); border: 1px solid var(--border);
+      color: var(--green); padding: .28rem .65rem; border-radius: 5px;
+      font-size: .7rem; font-weight: 600; text-decoration: none; flex-shrink: 0;
       transition: all .2s;
     }
-    .map-stat-card:hover {
-      border-color: rgba(0,230,118,.3);
-      box-shadow: var(--glow-green);
+    .pbi-open-btn:hover { background: rgba(0,230,118,.2); border-color: var(--green); }
+
+    #pbi-frame {
+      width: 100%; height: 720px; border: none; display: block;
     }
 
-    .map-stat-label {
-      font-size: .72rem;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: .4rem;
+    /* =====================================================  MAPA  */
+    #mapa-section { background: var(--bg); }
+
+    /* mapa state selector row */
+    .map-filter-row {
+      display: flex; align-items: center; gap: .5rem;
+      margin-bottom: 1.2rem; flex-wrap: wrap;
     }
-    .map-stat-value {
+    .map-filter-btn {
+      padding: .35rem .85rem; border-radius: 8px;
+      font-size: .78rem; font-weight: 600;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--muted); cursor: pointer; transition: all .2s;
+    }
+    .map-filter-btn:hover, .map-filter-btn.active {
+      background: rgba(0,230,118,.1); border-color: var(--green); color: var(--green);
+    }
+
+    /* iframe wrapper */
+    .map-iframe-wrap {
+      position: relative; border-radius: var(--radius-lg);
+      border: 1px solid var(--border); overflow: hidden;
+      box-shadow: var(--shadow); background: var(--card);
+    }
+    .map-iframe-topbar {
+      background: var(--bg3); border-bottom: 1px solid var(--border);
+      padding: .6rem 1rem;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .map-iframe-url {
+      flex: 1; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 5px; padding: .25rem .65rem;
+      font-size: .7rem; color: var(--muted);
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .map-iframe-url i { color: var(--green); flex-shrink: 0; }
+    #map-url-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .map-open-btn {
+      background: rgba(0,230,118,.1); border: 1px solid var(--border);
+      color: var(--green); padding: .25rem .6rem; border-radius: 5px;
+      font-size: .7rem; font-weight: 600; text-decoration: none; flex-shrink: 0;
+      transition: all .2s;
+    }
+    .map-open-btn:hover { background: rgba(0,230,118,.2); border-color: var(--green); }
+
+    #map-frame {
+      width: 100%; height: 680px; border: none; display: block;
+    }
+
+    .map-layout { display: grid; grid-template-columns: 1fr 300px; gap: 1.4rem; align-items: start; }
+    @media (max-width: 880px) { .map-layout { grid-template-columns: 1fr; } }
+
+    .map-sidebar { display: flex; flex-direction: column; gap: .9rem; }
+    .map-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.15rem;
+      transition: all .2s;
+    }
+    .map-card:hover { border-color: rgba(0,230,118,.3); box-shadow: var(--glow); }
+    .map-card-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: .4rem;
+    }
+    .map-card-value {
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: var(--green);
+      font-size: 1.5rem; font-weight: 800; color: var(--green);
     }
-    .map-stat-sub {
-      font-size: .78rem;
-      color: var(--text-muted);
-      margin-top: .25rem;
-    }
+    .map-card-sub { font-size: .74rem; color: var(--muted); margin-top: .2rem; }
 
-    .connector-list {
-      display: flex;
-      flex-direction: column;
-      gap: .5rem;
-      margin-top: .75rem;
+    .connector-row {
+      display: flex; align-items: center; gap: .65rem;
+      padding: .42rem .6rem; background: var(--bg2); border-radius: 7px;
+      font-size: .76rem; margin-top: .45rem;
     }
-    .connector-item {
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-      padding: .5rem .75rem;
-      background: var(--bg2);
-      border-radius: 8px;
-      font-size: .8rem;
+    .c-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .c-name { color: var(--dim); flex: 1; }
+    .c-badge {
+      font-size: .65rem; font-weight: 700; padding: .13rem .45rem; border-radius: 3px;
     }
-    .connector-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .connector-name { color: var(--text-dim); flex: 1; }
-    .connector-type {
-      font-size: .7rem;
-      font-weight: 600;
-      padding: .15rem .5rem;
-      border-radius: 4px;
-    }
-    .type-dc { background: rgba(0,229,255,.12); color: var(--cyan); }
-    .type-ac { background: rgba(0,230,118,.12); color: var(--green); }
+    .c-dc { background: rgba(0,229,255,.12); color: var(--cyan); }
+    .c-ac { background: rgba(0,230,118,.12); color: var(--green); }
 
-    .map-external-link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: .5rem;
-      padding: .7rem;
-      background: rgba(0,230,118,.06);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--green);
-      font-size: .82rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all .2s;
+    .map-ext-btn {
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      padding: .65rem; background: rgba(0,230,118,.06);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      color: var(--green); font-size: .8rem; font-weight: 600;
+      text-decoration: none; transition: all .2s;
     }
-    .map-external-link:hover {
-      background: rgba(0,230,118,.12);
-      border-color: var(--green);
-    }
+    .map-ext-btn:hover { background: rgba(0,230,118,.12); border-color: var(--green); }
 
-    /* =====================================================
-       DATA SOURCES / ABVE
-    ===================================================== */
-    #dados {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
+    /* =====================================================  SOURCES (Fontes page)  */
+    .sources-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 1.2rem; }
+    .src-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.65rem;
+      transition: all .25s; position: relative; overflow: hidden;
     }
-
-    .sources-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.25rem;
+    .src-card::before { content: ''; position: absolute; top:0; left:0; right:0; height: 3px; }
+    .src-card.sg::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+    .src-card.sc::before { background: linear-gradient(90deg, var(--cyan), var(--blue)); }
+    .src-card.sb::before { background: linear-gradient(90deg, var(--blue), var(--purple)); }
+    .src-card.sp::before { background: linear-gradient(90deg, var(--purple), #e040fb); }
+    .src-card:hover { transform: translateY(-4px); border-color: rgba(0,230,118,.25); box-shadow: var(--shadow), var(--glow); }
+    .src-icon {
+      width: 42px; height: 42px; border-radius: 10px;
+      display: grid; place-items: center; font-size: 1.1rem; margin-bottom: .9rem;
     }
+    .si-g { background: rgba(0,230,118,.12); color: var(--green); }
+    .si-c { background: rgba(0,229,255,.12); color: var(--cyan); }
+    .si-b { background: rgba(41,121,255,.12); color: var(--blue); }
+    .si-p { background: rgba(124,77,255,.12); color: #b388ff; }
+    .src-name { font-weight: 700; font-size: .95rem; color: #fff; margin-bottom: .3rem; }
+    .src-desc { font-size: .79rem; color: var(--muted); line-height: 1.6; margin-bottom: .9rem; }
+    .src-tags { display: flex; gap: .35rem; flex-wrap: wrap; }
+    .src-tag {
+      font-size: .66rem; font-weight: 600; padding: .18rem .55rem;
+      border-radius: 4px; background: rgba(255,255,255,.05); color: var(--muted);
+    }
+    .src-link {
+      display: inline-flex; align-items: center; gap: .35rem;
+      margin-top: .75rem; font-size: .76rem; font-weight: 600;
+      color: var(--green); text-decoration: none; transition: opacity .2s;
+    }
+    .src-link:hover { opacity: .75; }
 
-    .source-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.75rem;
+    /* =====================================================  SOBRE page  */
+    #sobre-section { background: var(--bg2); border-top: 1px solid var(--border); }
+
+    .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+    @media (max-width: 768px) { .sobre-grid { grid-template-columns: 1fr; } }
+
+    .sobre-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.75rem;
       transition: all .25s;
-      position: relative;
-      overflow: hidden;
     }
-    .source-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
+    .sobre-card:hover { border-color: rgba(0,230,118,.25); transform: translateY(-3px); }
+    .sobre-card.full { grid-column: 1 / -1; }
+    .sobre-card-icon {
+      width: 40px; height: 40px; border-radius: 9px;
+      display: grid; place-items: center; font-size: 1.1rem;
+      margin-bottom: .9rem; background: rgba(0,230,118,.1); color: var(--green);
     }
-    .source-card.green::before  { background: linear-gradient(90deg, var(--green), var(--cyan)); }
-    .source-card.cyan::before   { background: linear-gradient(90deg, var(--cyan), var(--blue)); }
-    .source-card.blue::before   { background: linear-gradient(90deg, var(--blue), var(--purple)); }
-    .source-card.purple::before { background: linear-gradient(90deg, var(--purple), #e040fb); }
+    .sobre-card-icon.cyan { background: rgba(0,229,255,.1); color: var(--cyan); }
+    .sobre-card-icon.blue { background: rgba(41,121,255,.1); color: var(--blue); }
+    .sobre-card-icon.purple { background: rgba(124,77,255,.1); color: #b388ff; }
+    .sobre-card-title { font-weight: 700; font-size: 1rem; color: #fff; margin-bottom: .5rem; }
+    .sobre-card-text { font-size: .83rem; color: var(--muted); line-height: 1.75; }
+    .sobre-card-text strong { color: var(--dim); }
 
-    .source-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(0,230,118,.25);
-      box-shadow: var(--shadow), var(--glow-green);
+    .badge-row { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .9rem; }
+    .badge {
+      font-size: .7rem; font-weight: 600; padding: .25rem .65rem;
+      border-radius: 5px; border: 1px solid var(--border); color: var(--muted);
     }
+    .badge.green { background: rgba(0,230,118,.08); border-color: rgba(0,230,118,.25); color: var(--green); }
+    .badge.cyan  { background: rgba(0,229,255,.08); border-color: rgba(0,229,255,.2);  color: var(--cyan); }
+    .badge.blue  { background: rgba(41,121,255,.08);border-color: rgba(41,121,255,.2); color: var(--blue); }
 
-    .source-icon {
-      width: 44px; height: 44px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      font-size: 1.2rem;
+    .process-steps { display: flex; flex-direction: column; gap: .9rem; margin-top: .5rem; }
+    .step {
+      display: flex; align-items: flex-start; gap: .9rem;
+      padding: .85rem 1rem; background: var(--bg3);
+      border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--green), var(--cyan));
+      display: grid; place-items: center;
+      font-size: .72rem; font-weight: 800; color: var(--bg);
+    }
+    .step-text { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+    .step-text strong { color: var(--dim); }
+
+    /* mission values */
+    .mv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; }
+    @media (max-width: 600px) { .mv-grid { grid-template-columns: 1fr; } }
+    .mv-item {
+      text-align: center; padding: 1.25rem .9rem;
+      background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    .mv-icon { font-size: 1.6rem; margin-bottom: .55rem; }
+    .mv-label { font-size: .78rem; font-weight: 700; color: var(--dim); margin-bottom: .35rem; }
+    .mv-text { font-size: .75rem; color: var(--muted); line-height: 1.6; }
+
+    /* =====================================================  SERVIÇOS page  */
+    #servicos-section { background: var(--bg); }
+
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+    .svc-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.75rem;
+      transition: all .25s; position: relative; overflow: hidden;
+    }
+    .svc-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      opacity: 0; transition: opacity .3s;
+    }
+    .svc-card:hover { transform: translateY(-4px); border-color: rgba(0,230,118,.25); box-shadow: var(--shadow), var(--glow); }
+    .svc-card:hover::after { opacity: 1; }
+    .svc-icon {
+      width: 46px; height: 46px; border-radius: 11px;
+      display: grid; place-items: center; font-size: 1.3rem;
       margin-bottom: 1rem;
+      background: rgba(0,230,118,.1); color: var(--green);
     }
-    .source-icon.green  { background: rgba(0,230,118,.12); color: var(--green); }
-    .source-icon.cyan   { background: rgba(0,229,255,.12); color: var(--cyan); }
-    .source-icon.blue   { background: rgba(41,121,255,.12); color: var(--blue); }
-    .source-icon.purple { background: rgba(124,77,255,.12); color: #b388ff; }
+    .svc-icon.c { background: rgba(0,229,255,.1); color: var(--cyan); }
+    .svc-icon.b { background: rgba(41,121,255,.1); color: var(--blue); }
+    .svc-icon.p { background: rgba(124,77,255,.1); color: #b388ff; }
+    .svc-icon.y { background: rgba(255,215,64,.1); color: #ffd740; }
+    .svc-title { font-weight: 700; font-size: 1rem; color: #fff; margin-bottom: .4rem; }
+    .svc-desc { font-size: .81rem; color: var(--muted); line-height: 1.65; }
 
-    .source-name {
-      font-weight: 700;
-      font-size: 1rem;
-      color: #fff;
-      margin-bottom: .35rem;
+    /* =====================================================  POLÍTICAS page  */
+    #politicas-section { background: var(--bg2); border-top: 1px solid var(--border); }
+
+    .pol-nav {
+      display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 2rem;
     }
-    .source-desc {
-      font-size: .82rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 1rem;
+    .pol-tab {
+      padding: .38rem .95rem; border-radius: 8px;
+      font-size: .79rem; font-weight: 600;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--muted); cursor: pointer; transition: all .2s;
     }
-    .source-tags {
-      display: flex;
-      gap: .4rem;
-      flex-wrap: wrap;
-    }
-    .source-tag {
-      font-size: .68rem;
-      font-weight: 600;
-      padding: .2rem .6rem;
-      border-radius: 4px;
-      background: rgba(255,255,255,.05);
-      color: var(--text-muted);
+    .pol-tab:hover, .pol-tab.active {
+      background: rgba(0,230,118,.1); border-color: var(--green); color: var(--green);
     }
 
-    /* =====================================================
-       SCHEMA / DB
-    ===================================================== */
-    #schema {
-      background: var(--bg);
+    .pol-content { display: none; }
+    .pol-content.active { display: block; }
+
+    .pol-block {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 1.2rem;
+    }
+    .pol-block-title {
+      font-weight: 700; font-size: 1.05rem; color: #fff; margin-bottom: 1rem;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .pol-block-title i { color: var(--green); }
+    .pol-text { font-size: .84rem; color: var(--muted); line-height: 1.8; }
+    .pol-text + .pol-text { margin-top: .75rem; }
+    .pol-list {
+      list-style: none; margin-top: .75rem;
+      display: flex; flex-direction: column; gap: .45rem;
+    }
+    .pol-list li {
+      display: flex; align-items: flex-start; gap: .6rem;
+      font-size: .82rem; color: var(--muted); line-height: 1.6;
+    }
+    .pol-list li::before {
+      content: '⚡'; font-size: .7rem; color: var(--green);
+      flex-shrink: 0; margin-top: .18rem;
     }
 
-    .schema-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-    @media (max-width: 768px) {
-      .schema-layout { grid-template-columns: 1fr; }
-    }
+    /* =====================================================  TEAM  */
+    #team-section { background: var(--bg); }
 
-    .schema-group {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-    .schema-group-header {
-      padding: .9rem 1.25rem;
-      background: var(--bg3);
-      border-bottom: 1px solid var(--border);
-      font-size: .8rem;
-      font-weight: 700;
-      letter-spacing: .07em;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-    }
-    .schema-group-header.green { color: var(--green); }
-    .schema-group-header.cyan  { color: var(--cyan); }
-    .schema-group-header.blue  { color: var(--blue); }
-    .schema-group-header.yellow{ color: #ffd740; }
-
-    .schema-table-list {
-      list-style: none;
-    }
-    .schema-table-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: .65rem 1.25rem;
-      border-bottom: 1px solid rgba(255,255,255,.04);
-      font-size: .83rem;
-      transition: background .2s;
-    }
-    .schema-table-item:last-child { border-bottom: none; }
-    .schema-table-item:hover { background: rgba(255,255,255,.03); }
-
-    .schema-table-name {
-      font-family: 'Courier New', monospace;
-      color: var(--text-dim);
-      font-weight: 600;
-    }
-    .schema-table-desc {
-      font-size: .75rem;
-      color: var(--text-muted);
-      text-align: right;
-      max-width: 160px;
-    }
-
-    /* =====================================================
-       TECH STACK
-    ===================================================== */
-    #stack {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-    }
-
-    .stack-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 1rem;
-    }
-
-    .stack-item {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.25rem 1rem;
-      text-align: center;
-      transition: all .2s;
-    }
-    .stack-item:hover {
-      border-color: rgba(0,230,118,.3);
-      transform: translateY(-3px);
-      box-shadow: var(--glow-green);
-    }
-    .stack-item i {
-      font-size: 1.5rem;
-      margin-bottom: .6rem;
-      display: block;
-    }
-    .stack-item-name {
-      font-size: .78rem;
-      font-weight: 700;
-      color: var(--text-dim);
-    }
-    .stack-item-role {
-      font-size: .68rem;
-      color: var(--text-muted);
-      margin-top: .2rem;
-    }
-
-    /* =====================================================
-       TEAM
-    ===================================================== */
-    #time {
-      background: var(--bg);
-    }
-
-    .team-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.25rem;
-      justify-content: center;
-    }
-
+    .team-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: center; }
     .team-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 2rem 1.75rem;
-      text-align: center;
-      width: 200px;
-      transition: all .25s;
-      position: relative;
-      overflow: hidden;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.9rem 1.65rem;
+      text-align: center; width: 190px;
+      transition: all .25s; position: relative; overflow: hidden;
     }
-    .team-card.lead {
-      border-color: rgba(0,230,118,.3);
-      box-shadow: var(--glow-green);
-    }
+    .team-card.lead { border-color: rgba(0,230,118,.3); box-shadow: var(--glow); }
     .team-card.lead::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
       background: linear-gradient(90deg, var(--green), var(--cyan));
     }
-    .team-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(0,230,118,.25);
-    }
-
+    .team-card:hover { transform: translateY(-5px); border-color: rgba(0,230,118,.25); }
     .team-avatar {
-      width: 72px; height: 72px;
-      border-radius: 50%;
+      width: 68px; height: 68px; border-radius: 50%;
       background: linear-gradient(135deg, var(--bg3), var(--bg4));
       border: 2px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1rem;
-      font-size: 1.5rem;
-      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto .9rem; font-size: 1.4rem;
     }
-    .team-card.lead .team-avatar {
-      border-color: var(--green);
-      box-shadow: 0 0 16px rgba(0,230,118,.3);
-    }
-
-    .team-name {
-      font-weight: 700;
-      font-size: .95rem;
-      color: #fff;
-      margin-bottom: .25rem;
-    }
-    .team-role {
-      font-size: .75rem;
-      color: var(--text-muted);
-    }
+    .team-card.lead .team-avatar { border-color: var(--green); box-shadow: 0 0 14px rgba(0,230,118,.3); }
+    .team-name { font-weight: 700; font-size: .9rem; color: #fff; margin-bottom: .22rem; }
+    .team-role { font-size: .72rem; color: var(--muted); }
     .team-badge {
-      display: inline-block;
-      margin-top: .6rem;
-      font-size: .65rem;
-      font-weight: 700;
-      padding: .2rem .6rem;
-      border-radius: 4px;
-      background: rgba(0,230,118,.1);
-      color: var(--green);
-      letter-spacing: .04em;
-      text-transform: uppercase;
+      display: inline-block; margin-top: .55rem;
+      font-size: .62rem; font-weight: 700; padding: .18rem .55rem;
+      border-radius: 4px; background: rgba(0,230,118,.1); color: var(--green);
+      letter-spacing: .04em; text-transform: uppercase;
     }
 
-    /* =====================================================
-       FOOTER
-    ===================================================== */
+    /* =====================================================  FOOTER  */
     footer {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      padding: 3rem 2rem 2rem;
+      background: var(--bg2); border-top: 1px solid var(--border);
+      padding: 2.8rem 2rem 1.8rem;
     }
-
-    .footer-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
     .footer-top {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 3rem;
-      margin-bottom: 2.5rem;
+      display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr;
+      gap: 2.5rem; margin-bottom: 2.2rem;
     }
-    @media (max-width: 700px) {
-      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
-    }
+    @media (max-width: 768px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 1.5rem; } }
+    @media (max-width: 480px) { .footer-top { grid-template-columns: 1fr; } }
 
-    .footer-brand-name {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--green);
-      margin-bottom: .5rem;
-    }
-    .footer-brand-desc {
-      font-size: .82rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-    }
-
-    .footer-col-title {
-      font-size: .75rem;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: .9rem;
-    }
-
-    .footer-links {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: .5rem;
-    }
+    .footer-brand { font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 800; color: var(--green); margin-bottom: .45rem; }
+    .footer-brand-desc { font-size: .79rem; color: var(--muted); line-height: 1.7; }
+    .footer-col-title { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin-bottom: .85rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: .45rem; }
     .footer-links a {
-      font-size: .82rem;
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color .2s;
-      display: flex;
-      align-items: center;
-      gap: .4rem;
+      font-size: .79rem; color: var(--muted); text-decoration: none;
+      transition: color .2s; display: flex; align-items: center; gap: .38rem;
     }
     .footer-links a:hover { color: var(--green); }
+    .footer-links button {
+      background: none; border: none; cursor: pointer;
+      font-size: .79rem; color: var(--muted); text-align: left;
+      display: flex; align-items: center; gap: .38rem;
+      transition: color .2s; font-family: inherit; padding: 0;
+    }
+    .footer-links button:hover { color: var(--green); }
 
     .footer-bottom {
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
+      padding-top: 1.4rem; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
     }
-    .footer-copy {
-      font-size: .78rem;
-      color: var(--text-muted);
-    }
+    .footer-copy { font-size: .75rem; color: var(--muted); }
     .footer-copy span { color: var(--green); }
-
-    .footer-badges {
-      display: flex;
-      gap: .5rem;
+    .footer-badges { display: flex; gap: .45rem; flex-wrap: wrap; }
+    .f-badge {
+      font-size: .65rem; font-weight: 600; padding: .22rem .6rem;
+      border-radius: 4px; border: 1px solid var(--border); color: var(--muted);
     }
-    .footer-badge {
-      font-size: .68rem;
-      font-weight: 600;
-      padding: .25rem .65rem;
-      border-radius: 5px;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
+    .f-badge.live {
+      background: rgba(0,230,118,.08); border-color: rgba(0,230,118,.25); color: var(--green);
+      display: flex; align-items: center; gap: .3rem;
     }
-    .footer-badge.live {
-      background: rgba(0,230,118,.08);
-      border-color: rgba(0,230,118,.25);
-      color: var(--green);
-      display: flex;
-      align-items: center;
-      gap: .35rem;
-    }
-    .footer-badge.live::before {
-      content: '';
-      width: 6px; height: 6px;
-      background: var(--green);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
+    .f-badge.live::before {
+      content: ''; width: 5px; height: 5px; background: var(--green);
+      border-radius: 50%; animation: blink 2s infinite;
     }
 
-    /* =====================================================
-       ABVE METRICS STRIP
-    ===================================================== */
-    #abve-strip {
-      background: var(--bg3);
-      border-top: 1px solid var(--border2);
-      border-bottom: 1px solid var(--border2);
-      padding: 1.5rem 0;
-      overflow: hidden;
-      position: relative;
+    /* =====================================================  RESPONSIVE  */
+    @media (max-width: 860px) {
+      .nav-primary { display: none; }
+      .nav-pages { display: none; }
+      .nav-toggle { display: block; }
     }
-
-    .abve-strip-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-      justify-content: center;
+    @media (max-width: 500px) {
+      .kpi-item { flex: 1 1 130px; }
+      .pbi-tabs { gap: .3rem; }
     }
-
-    .abve-metric {
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-      padding: .6rem 1.2rem;
-      background: var(--card);
-      border: 1px solid var(--border2);
-      border-radius: 10px;
-    }
-    .abve-metric-icon { font-size: 1.1rem; }
-    .abve-metric-val {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--cyan);
-    }
-    .abve-metric-lbl {
-      font-size: .72rem;
-      color: var(--text-muted);
-    }
-
-    /* =====================================================
-       RESPONSIVE
-    ===================================================== */
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .kpi-item { flex: 1 1 140px; }
-    }
-
-    /* Leaflet overrides for dark theme */
-    .leaflet-popup-content-wrapper {
-      background: var(--card) !important;
-      border: 1px solid var(--border) !important;
-      color: var(--text) !important;
-      border-radius: var(--radius) !important;
-      box-shadow: var(--shadow) !important;
-    }
-    .leaflet-popup-tip { background: var(--card) !important; }
-    .leaflet-control-layers,
-    .leaflet-control-zoom a {
-      background: var(--card) !important;
-      border-color: var(--border) !important;
-      color: var(--text) !important;
-    }
-    .leaflet-control-zoom a:hover { background: var(--bg3) !important; }
-    .leaflet-bar a { color: var(--text) !important; }
-    .leaflet-control-layers-list { color: var(--text-dim) !important; }
   </style>
 </head>
 <body class="grid-bg">
 
-  <!-- ===================================================
-       NAV
-  =================================================== -->
-  <nav>
-    <a href="#hero" class="nav-brand">
-      <div class="bolt">⚡</div>
-      <span>SustAmbiTech</span>
+<!-- ============================================================ NAV -->
+<nav>
+  <a href="#" onclick="showPage('home')" class="nav-brand">
+    <div class="nav-bolt">⚡</div>
+    <span class="nav-brand-name">SustAmbiTech</span>
+  </a>
+
+  <!-- primary links (scroll within home) -->
+  <div class="nav-primary">
+    <a href="#" onclick="showPage('home');scrollTo('powerbi-section')"><i class="fas fa-chart-bar"></i>Dashboard</a>
+    <a href="#" onclick="showPage('home');scrollTo('mapa-section')"><i class="fas fa-map-marked-alt"></i>Mapa</a>
+  </div>
+
+  <!-- page tabs -->
+  <div class="nav-pages">
+    <a href="#" onclick="showPage('sobre')" id="nav-sobre"><i class="fas fa-info-circle"></i> Sobre</a>
+    <a href="#" onclick="showPage('servicos')" id="nav-servicos"><i class="fas fa-cogs"></i> Serviços</a>
+    <a href="#" onclick="showPage('fontes')" id="nav-fontes"><i class="fas fa-database"></i> Fontes</a>
+    <a href="#" onclick="showPage('politicas')" id="nav-politicas"><i class="fas fa-shield-alt"></i> Políticas</a>
+    <a href="#" onclick="showPage('home');scrollTo('team-section')" id="nav-time"><i class="fas fa-users"></i> Time</a>
+    <a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io" target="_blank" class="nav-gh">
+      <i class="fab fa-github"></i> GitHub
     </a>
-    <div class="nav-links">
-      <a href="#powerbi"><i class="fas fa-chart-bar" style="margin-right:.3rem;font-size:.8rem;"></i>Dashboard</a>
-      <a href="#mapa-section"><i class="fas fa-map-marked-alt" style="margin-right:.3rem;font-size:.8rem;"></i>Mapa</a>
-      <a href="#dados"><i class="fas fa-database" style="margin-right:.3rem;font-size:.8rem;"></i>Dados</a>
-      <a href="#schema"><i class="fas fa-project-diagram" style="margin-right:.3rem;font-size:.8rem;"></i>Schema</a>
-      <a href="#time"><i class="fas fa-users" style="margin-right:.3rem;font-size:.8rem;"></i>Time</a>
-      <a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io" target="_blank" class="nav-badge">
-        <i class="fab fa-github" style="margin-right:.3rem;"></i>GitHub
-      </a>
-    </div>
-  </nav>
+  </div>
 
-  <!-- ===================================================
-       HERO
-  =================================================== -->
-  <section id="hero">
-    <div class="hero-glow hero-glow-1"></div>
-    <div class="hero-glow hero-glow-2"></div>
-    <div class="hero-glow hero-glow-3"></div>
+  <!-- hamburger -->
+  <button class="nav-toggle" onclick="toggleMobile()" aria-label="Menu">
+    <i class="fas fa-bars"></i>
+  </button>
+</nav>
 
+<!-- mobile menu -->
+<div class="nav-mobile" id="nav-mobile">
+  <a href="#" onclick="showPage('home');toggleMobile()"><i class="fas fa-home"></i> Início</a>
+  <a href="#" onclick="showPage('home');scrollTo('powerbi-section');toggleMobile()"><i class="fas fa-chart-bar"></i> Dashboard</a>
+  <a href="#" onclick="showPage('home');scrollTo('mapa-section');toggleMobile()"><i class="fas fa-map-marked-alt"></i> Mapa</a>
+  <a href="#" onclick="showPage('sobre');toggleMobile()"><i class="fas fa-info-circle"></i> Sobre</a>
+  <a href="#" onclick="showPage('servicos');toggleMobile()"><i class="fas fa-cogs"></i> Serviços</a>
+  <a href="#" onclick="showPage('fontes');toggleMobile()"><i class="fas fa-database"></i> Fontes</a>
+  <a href="#" onclick="showPage('politicas');toggleMobile()"><i class="fas fa-shield-alt"></i> Políticas</a>
+  <a href="#" onclick="showPage('home');scrollTo('team-section');toggleMobile()"><i class="fas fa-users"></i> Time</a>
+  <a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+</div>
+
+<!-- ============================================================ PAGE: HOME -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section id="hero-section">
+    <div class="hero-glow g1"></div>
+    <div class="hero-glow g2"></div>
+    <div class="hero-glow g3"></div>
     <div class="hero-inner">
-      <div class="hero-eyebrow">
-        <span class="dot"></span>
-        Plataforma BI · Mobilidade Elétrica · Brasil 2026
-      </div>
-
+      <div class="hero-pill"><span class="dot"></span>Plataforma BI · Mobilidade Elétrica · Brasil 2026</div>
       <h1 class="hero-title">
         <span class="line-green">Inteligência de Dados</span>
         <span class="line-white">para Veículos Elétricos</span>
       </h1>
-
       <p class="hero-sub">
         Visualize emplacamentos nacionais, postos de recarga, frotas ABVE e tendências do mercado EV brasileiro — tudo em um único painel interativo.
       </p>
-
       <div class="hero-ctas">
-        <a href="#powerbi" class="btn-primary">
-          <i class="fas fa-chart-line"></i>
-          Ver Dashboard Power BI
-        </a>
-        <a href="#mapa-section" class="btn-outline">
-          <i class="fas fa-map-marked-alt"></i>
-          Explorar Postos
-        </a>
+        <button class="btn-primary" onclick="scrollTo('powerbi-section')">
+          <i class="fas fa-chart-line"></i> Ver Dashboard Power BI
+        </button>
+        <button class="btn-outline" onclick="scrollTo('mapa-section')">
+          <i class="fas fa-map-marked-alt"></i> Explorar Postos
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- ===================================================
-       KPI STRIP
-  =================================================== -->
+  <!-- KPI STRIP -->
   <section id="kpis">
     <div class="kpi-grid">
-      <div class="kpi-item">
-        <div class="kpi-number green">11.783</div>
-        <div class="kpi-label">Estações de Recarga</div>
-      </div>
-      <div class="kpi-item">
-        <div class="kpi-number cyan">591.407</div>
-        <div class="kpi-label">EVs Emplacados</div>
-      </div>
-      <div class="kpi-item">
-        <div class="kpi-number blue">213.288</div>
-        <div class="kpi-label">Vendas em 2026</div>
-      </div>
-      <div class="kpi-item">
-        <div class="kpi-number purple">27</div>
-        <div class="kpi-label">Estados Mapeados</div>
-      </div>
-      <div class="kpi-item">
-        <div class="kpi-number green">6</div>
-        <div class="kpi-label">Tipos de Conector</div>
-      </div>
-      <div class="kpi-item">
-        <div class="kpi-number cyan">5</div>
-        <div class="kpi-label">Categorias ABVE</div>
-      </div>
+      <div class="kpi-item"><div class="kpi-num g" id="k0">11.783</div><div class="kpi-lbl">Estações de Recarga</div></div>
+      <div class="kpi-item"><div class="kpi-num c" id="k1">591.407</div><div class="kpi-lbl">EVs Emplacados</div></div>
+      <div class="kpi-item"><div class="kpi-num b" id="k2">213.288</div><div class="kpi-lbl">Vendas em 2026</div></div>
+      <div class="kpi-item"><div class="kpi-num p" id="k3">27</div><div class="kpi-lbl">Estados Mapeados</div></div>
+      <div class="kpi-item"><div class="kpi-num g" id="k4">6</div><div class="kpi-lbl">Tipos de Conector</div></div>
+      <div class="kpi-item"><div class="kpi-num c" id="k5">5</div><div class="kpi-lbl">Categorias ABVE</div></div>
     </div>
   </section>
 
-  <!-- ===================================================
-       ABVE METRICS STRIP
-  =================================================== -->
+  <!-- ABVE STRIP -->
   <div id="abve-strip">
-    <div class="abve-strip-inner">
-      <div class="abve-metric">
-        <span class="abve-metric-icon">🚗</span>
-        <div>
-          <div class="abve-metric-val">BEV</div>
-          <div class="abve-metric-lbl">100% Elétrico</div>
-        </div>
-      </div>
-      <div class="abve-metric">
-        <span class="abve-metric-icon">🔋</span>
-        <div>
-          <div class="abve-metric-val">PHEV</div>
-          <div class="abve-metric-lbl">Plug-in Híbrido</div>
-        </div>
-      </div>
-      <div class="abve-metric">
-        <span class="abve-metric-icon">⚡</span>
-        <div>
-          <div class="abve-metric-val">HEV</div>
-          <div class="abve-metric-lbl">Híbrido Convencional</div>
-        </div>
-      </div>
-      <div class="abve-metric">
-        <span class="abve-metric-icon">🌿</span>
-        <div>
-          <div class="abve-metric-val">MHEV</div>
-          <div class="abve-metric-lbl">Mild Hybrid</div>
-        </div>
-      </div>
-      <div class="abve-metric">
-        <span class="abve-metric-icon">💧</span>
-        <div>
-          <div class="abve-metric-val">FCEV</div>
-          <div class="abve-metric-lbl">Célula de Hidrogênio</div>
-        </div>
-      </div>
-      <div class="abve-metric">
-        <span class="abve-metric-icon">📊</span>
-        <div>
-          <div class="abve-metric-val">ABVE</div>
-          <div class="abve-metric-lbl">Fonte Oficial</div>
-        </div>
-      </div>
+    <div class="abve-inner">
+      <div class="abve-chip"><span>🚗</span><div><div class="abve-chip-val">BEV</div><div class="abve-chip-lbl">100% Elétrico</div></div></div>
+      <div class="abve-chip"><span>🔋</span><div><div class="abve-chip-val">PHEV</div><div class="abve-chip-lbl">Plug-in Híbrido</div></div></div>
+      <div class="abve-chip"><span>⚡</span><div><div class="abve-chip-val">HEV</div><div class="abve-chip-lbl">Híbrido Convencional</div></div></div>
+      <div class="abve-chip"><span>🌿</span><div><div class="abve-chip-val">MHEV</div><div class="abve-chip-lbl">Mild Hybrid</div></div></div>
+      <div class="abve-chip"><span>💧</span><div><div class="abve-chip-val">FCEV</div><div class="abve-chip-lbl">Célula de Hidrogênio</div></div></div>
+      <div class="abve-chip"><span>📊</span><div><div class="abve-chip-val">ABVE</div><div class="abve-chip-lbl">Fonte Oficial</div></div></div>
     </div>
   </div>
 
-  <!-- ===================================================
-       POWER BI DASHBOARD
-  =================================================== -->
-  <section id="powerbi">
+  <!-- POWER BI -->
+  <section id="powerbi-section">
     <div class="section">
-      <div class="section-tag">Dashboard Interativo</div>
-      <h2 class="section-title">Power BI — Mercado Elétrico Brasileiro</h2>
-      <p class="section-sub">
-        Análise completa de emplacamentos, frotas, postos e tendências do mercado EV. Dados ABVE + Carregados.com.br integrados em tempo real.
-      </p>
+      <div class="sec-tag">Dashboard Interativo</div>
+      <h2 class="sec-title">Power BI — Mercado Elétrico Brasileiro</h2>
+      <p class="sec-sub">Análise completa de emplacamentos, frotas e tendências do mercado EV. Selecione o painel abaixo.</p>
 
+      <!-- TABS — trocam o iframe, NÃO abrem novo site -->
       <div class="pbi-tabs">
-        <a href="https://abve.org.br/bi-frotas/" target="_blank" class="pbi-tab">
-          <i class="fas fa-truck" style="margin-right:.4rem;"></i>BI Frotas ABVE
-        </a>
-        <a href="https://abve.org.br/bi-geral/" target="_blank" class="pbi-tab">
-          <i class="fas fa-chart-pie" style="margin-right:.4rem;"></i>BI Geral ABVE
-        </a>
-        <a href="https://abve.org.br/abve-data/eletrificadosmhev/" target="_blank" class="pbi-tab">
-          <i class="fas fa-leaf" style="margin-right:.4rem;"></i>Eletrificados MHEV
-        </a>
-        <a href="https://carregados.com.br/dados-sobre-o-mercado-eletrico" target="_blank" class="pbi-tab">
-          <i class="fas fa-charging-station" style="margin-right:.4rem;"></i>Dados Carregados
-        </a>
-        <span class="pbi-tab active">
-          <i class="fas fa-tachometer-alt" style="margin-right:.4rem;"></i>SustAmbiTech BI
-        </span>
+        <button class="pbi-tab" onclick="setPBITab(this,'https://app.powerbi.com/view?r=eyJrIjoiODQ1ODM1YzctMzFiNS00MThlLTljNTktNTYyNGU1YjQwYzAzIiwidCI6IjQwNmMyNTc1LWM5ZDQtNGQ0NC1hNWI2LWJiNThiYzg2MDMzZSJ9','Frotas ABVE')">
+          <i class="fas fa-truck"></i>Frotas ABVE
+        </button>
+        <button class="pbi-tab" onclick="setPBITab(this,'https://app.powerbi.com/view?r=eyJrIjoiNTkyODU3OWQtNjIyMS00OWUxLWI1MWQtZWI3ODY2MmVhYzBiIiwidCI6IjQwNmMyNTc1LWM5ZDQtNGQ0NC1hNWI2LWJiNThiYzg2MDMzZSJ9','Eletromobilidade ABVE')">
+          <i class="fas fa-chart-pie"></i>Eletromobilidade
+        </button>
+        <button class="pbi-tab" onclick="setPBITab(this,'https://app.powerbi.com/view?r=eyJrIjoiYjRjNDI5YTAtODZkNy00NmYzLTk4NzktOTNjM2I2NGMyZGY3IiwidCI6IjQwNmMyNTc1LWM5ZDQtNGQ0NC1hNWI2LWJiNThiYzg2MDMzZSJ9','Eletrificados + MHEV')">
+          <i class="fas fa-leaf"></i>Eletrificados + MHEV
+        </button>
+        <button class="pbi-tab active" onclick="setPBITab(this,'https://app.powerbi.com/view?r=eyJrIjoiZmZkODA1NmUtOGM2OC00OWZjLWE3YzMtZTJiYmJhMzcyYjI0IiwidCI6IjQwNmMyNTc1LWM5ZDQtNGQ0NC1hNWI2LWJiNThiYzg2MDMzZSJ9','SustAmbiTech BI')">
+          <i class="fas fa-tachometer-alt"></i>SustAmbiTech BI
+        </button>
       </div>
 
-      <div class="pbi-frame-wrap">
+      <div class="pbi-chrome">
         <div class="pbi-topbar">
-          <div class="pbi-dots">
-            <span></span><span></span><span></span>
-          </div>
-          <div class="pbi-url">
+          <div class="pbi-dots"><span></span><span></span><span></span></div>
+          <div class="pbi-url-bar">
             <i class="fas fa-lock fa-xs"></i>
-            app.powerbi.com/view — SustAmbiTech BI · Mobilidade Elétrica Brasil
+            <span id="pbi-url-text">app.powerbi.com/view — SustAmbiTech BI · Mobilidade Elétrica Brasil</span>
           </div>
-          <a href="https://app.powerbi.com/view?r=eyJrIjoiZmZkODA1NmUtOGM2OC00OWZjLWE3YzMtZTJiYmJhMzcyYjI0IiwidCI6IjQwNmMyNTc1LWM5ZDQtNGQ0NC1hNWI2LWJiNThiYzg2MDMzZSJ9"
-             target="_blank"
-             style="background:rgba(0,230,118,.1);border:1px solid var(--border);color:var(--green);padding:.3rem .7rem;border-radius:6px;font-size:.72rem;font-weight:600;text-decoration:none;flex-shrink:0;">
+          <a id="pbi-open-btn" class="pbi-open-btn"
+             href="https://app.powerbi.com/view?r=eyJrIjoiZmZkODA1NmUtOGM2OC00OWZjLWE3YzMtZTJiYmJhMzcyYjI0IiwidCI6IjQwNmMyNTc1LWM5ZDQtNGQ0NC1hNWI2LWJiNThiYzg2MDMzZSJ9"
+             target="_blank" title="Abrir em nova aba">
             <i class="fas fa-external-link-alt fa-xs"></i>
           </a>
         </div>
-
-        <iframe
-          class="pbi-iframe"
+        <iframe id="pbi-frame"
           src="https://app.powerbi.com/view?r=eyJrIjoiZmZkODA1NmUtOGM2OC00OWZjLWE3YzMtZTJiYmJhMzcyYjI0IiwidCI6IjQwNmMyNTc1LWM5ZDQtNGQ0NC1hNWI2LWJiNThiYzg2MDMzZSJ9"
-          title="SustAmbiTech Power BI Dashboard"
-          allowfullscreen
-          loading="lazy"
+          title="Power BI Dashboard"
+          allowfullscreen loading="lazy"
           sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation"
         ></iframe>
       </div>
     </div>
   </section>
 
-  <!-- ===================================================
-       MAPA DE POSTOS
-  =================================================== -->
+  <!-- MAPA -->
   <section id="mapa-section">
     <div class="section">
-      <div class="section-tag">Mapa Interativo</div>
-      <h2 class="section-title">Estações de Recarga no Brasil</h2>
-      <p class="section-sub">
-        Visualização de postos estilo <strong style="color:var(--green);">Carregados.com.br</strong> — CCS2, CHAdeMO, Type 2, AC L1/L2 e Tesla.
-      </p>
+      <div class="sec-tag">Mapa Interativo</div>
+      <h2 class="sec-title">Estações de Recarga no Brasil</h2>
+      <p class="sec-sub">Mapa em tempo real via <strong style="color:var(--green)">Carregados.com.br</strong> — dados de 11.783 estações em todo o país.</p>
+
+      <!-- state filter -->
+      <div class="map-filter-row">
+        <span style="font-size:.76rem;color:var(--muted);font-weight:600;">Filtrar:</span>
+        <button class="map-filter-btn active" onclick="setMap(this,'https://carregados.com.br/mapa','Mapa Nacional')">Nacional</button>
+        <button class="map-filter-btn" onclick="setMap(this,'https://carregados.com.br/estacoes?estado=s%C3%A3o+paulo+%28sp%29','São Paulo (SP)')">São Paulo</button>
+        <button class="map-filter-btn" onclick="setMap(this,'https://carregados.com.br/estacoes?estado=minas+gerais+%28mg%29','Minas Gerais (MG)')">Minas Gerais</button>
+        <button class="map-filter-btn" onclick="setMap(this,'https://carregados.com.br/estacoes?estado=rio+de+janeiro+%28rj%29','Rio de Janeiro (RJ)')">Rio de Janeiro</button>
+        <button class="map-filter-btn" onclick="setMap(this,'https://carregados.com.br/estacoes?estado=rio+grande+do+sul+%28rs%29','Rio Grande do Sul (RS)')">Rio Grande do Sul</button>
+        <button class="map-filter-btn" onclick="setMap(this,'https://carregados.com.br/estacoes?estado=paran%C3%A1+%28pr%29','Paraná (PR)')">Paraná</button>
+        <button class="map-filter-btn" onclick="setMap(this,'https://carregados.com.br/estacoes','Todas as Estações')">Ver Todas</button>
+      </div>
 
       <div class="map-layout">
-        <div id="map"></div>
+        <!-- iframe -->
+        <div class="map-iframe-wrap">
+          <div class="map-iframe-topbar">
+            <div class="pbi-dots"><span></span><span></span><span></span></div>
+            <div class="map-iframe-url">
+              <i class="fas fa-map-marker-alt fa-xs"></i>
+              <span id="map-url-text">carregados.com.br/mapa — Estações Nacionais</span>
+            </div>
+            <a id="map-open-btn" class="map-open-btn"
+               href="https://carregados.com.br/mapa" target="_blank" title="Abrir no site">
+              <i class="fas fa-external-link-alt fa-xs"></i>
+            </a>
+          </div>
+          <iframe id="map-frame"
+            src="https://carregados.com.br/mapa"
+            title="Mapa de Estações de Recarga — Carregados.com.br"
+            allowfullscreen loading="lazy"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation allow-popups-to-escape-sandbox"
+          ></iframe>
+        </div>
 
+        <!-- sidebar -->
         <aside class="map-sidebar">
-          <div class="map-stat-card">
-            <div class="map-stat-label">Total de Estações</div>
-            <div class="map-stat-value">11.783</div>
-            <div class="map-stat-sub">Fonte: Carregados.com.br · Ago/2026</div>
+          <div class="map-card">
+            <div class="map-card-label">Total Nacional</div>
+            <div class="map-card-value">11.783</div>
+            <div class="map-card-sub">Estações · Fonte: Carregados.com.br</div>
           </div>
-
-          <div class="map-stat-card">
-            <div class="map-stat-label">Tipos de Conector</div>
-            <div class="connector-list">
-              <div class="connector-item">
-                <div class="connector-dot" style="background:#00e5ff;"></div>
-                <span class="connector-name">CCS2 (Combo 2)</span>
-                <span class="connector-type type-dc">DC</span>
-              </div>
-              <div class="connector-item">
-                <div class="connector-dot" style="background:#aa00ff;"></div>
-                <span class="connector-name">CHAdeMO</span>
-                <span class="connector-type type-dc">DC</span>
-              </div>
-              <div class="connector-item">
-                <div class="connector-dot" style="background:#2979ff;"></div>
-                <span class="connector-name">Type 2 (IEC 62196)</span>
-                <span class="connector-type type-ac">AC</span>
-              </div>
-              <div class="connector-item">
-                <div class="connector-dot" style="background:#00e676;"></div>
-                <span class="connector-name">AC Nível 2</span>
-                <span class="connector-type type-ac">AC</span>
-              </div>
-              <div class="connector-item">
-                <div class="connector-dot" style="background:#ffd740;"></div>
-                <span class="connector-name">Tesla Supercharger</span>
-                <span class="connector-type type-dc">DC</span>
-              </div>
-              <div class="connector-item">
-                <div class="connector-dot" style="background:#ff6d00;"></div>
-                <span class="connector-name">AC Nível 1</span>
-                <span class="connector-type type-ac">AC</span>
-              </div>
-            </div>
+          <div class="map-card">
+            <div class="map-card-label">Conectores Disponíveis</div>
+            <div class="connector-row"><div class="c-dot" style="background:#00e5ff"></div><span class="c-name">CCS2 (Combo 2)</span><span class="c-badge c-dc">DC</span></div>
+            <div class="connector-row"><div class="c-dot" style="background:#aa00ff"></div><span class="c-name">CHAdeMO</span><span class="c-badge c-dc">DC</span></div>
+            <div class="connector-row"><div class="c-dot" style="background:#2979ff"></div><span class="c-name">Type 2 (IEC 62196)</span><span class="c-badge c-ac">AC</span></div>
+            <div class="connector-row"><div class="c-dot" style="background:#00e676"></div><span class="c-name">AC Nível 2</span><span class="c-badge c-ac">AC</span></div>
+            <div class="connector-row"><div class="c-dot" style="background:#ffd740"></div><span class="c-name">Tesla Supercharger</span><span class="c-badge c-dc">DC</span></div>
+            <div class="connector-row"><div class="c-dot" style="background:#ff6d00"></div><span class="c-name">AC Nível 1</span><span class="c-badge c-ac">AC</span></div>
           </div>
-
-          <div class="map-stat-card">
-            <div class="map-stat-label">Top 3 Estados</div>
-            <div class="connector-list">
-              <div class="connector-item">
-                <div class="connector-dot" style="background:var(--green);"></div>
-                <span class="connector-name">São Paulo (SP)</span>
-                <span style="font-size:.78rem;color:var(--green);font-weight:700;">2.641</span>
-              </div>
-              <div class="connector-item">
-                <div class="connector-dot" style="background:var(--cyan);"></div>
-                <span class="connector-name">Minas Gerais (MG)</span>
-                <span style="font-size:.78rem;color:var(--cyan);font-weight:700;">1.055</span>
-              </div>
-              <div class="connector-item">
-                <div class="connector-dot" style="background:var(--blue);"></div>
-                <span class="connector-name">Rio Grande do Sul (RS)</span>
-                <span style="font-size:.78rem;color:var(--blue);font-weight:700;">1.031</span>
-              </div>
-            </div>
+          <div class="map-card">
+            <div class="map-card-label">Top 3 Estados</div>
+            <div class="connector-row"><div class="c-dot" style="background:var(--green)"></div><span class="c-name">São Paulo (SP)</span><span style="color:var(--green);font-weight:700;font-size:.78rem">2.641</span></div>
+            <div class="connector-row"><div class="c-dot" style="background:var(--cyan)"></div><span class="c-name">Minas Gerais (MG)</span><span style="color:var(--cyan);font-weight:700;font-size:.78rem">1.055</span></div>
+            <div class="connector-row"><div class="c-dot" style="background:var(--blue)"></div><span class="c-name">Rio Grande do Sul</span><span style="color:var(--blue);font-weight:700;font-size:.78rem">1.031</span></div>
           </div>
-
-          <a href="https://carregados.com.br/estacoes" target="_blank" class="map-external-link">
-            <i class="fas fa-external-link-alt"></i>
-            Ver todas no Carregados.com.br
+          <a href="https://carregados.com.br/estacoes" target="_blank" class="map-ext-btn">
+            <i class="fas fa-external-link-alt"></i> Ver todas no Carregados.com.br
           </a>
         </aside>
       </div>
     </div>
   </section>
 
-  <!-- ===================================================
-       DATA SOURCES
-  =================================================== -->
-  <section id="dados">
-    <div class="section">
-      <div class="section-tag">Fontes de Dados</div>
-      <h2 class="section-title">Inteligência de Mercado EV</h2>
-      <p class="section-sub">
-        Dados coletados de fontes públicas oficiais — ABVE, Carregados.com.br e APIs governamentais — para análise precisa do ecossistema elétrico brasileiro.
-      </p>
-
-      <div class="sources-grid">
-        <div class="source-card green">
-          <div class="source-icon green"><i class="fas fa-charging-station"></i></div>
-          <div class="source-name">Carregados.com.br</div>
-          <div class="source-desc">API pública com dados de 11.783 estações de recarga em todo o Brasil — por estado, tipo de conector e acesso.</div>
-          <div class="source-tags">
-            <span class="source-tag">11.783 estações</span>
-            <span class="source-tag">27 estados</span>
-            <span class="source-tag">API REST</span>
-            <span class="source-tag">Gratuito</span>
-          </div>
-        </div>
-
-        <div class="source-card cyan">
-          <div class="source-icon cyan"><i class="fas fa-car-side"></i></div>
-          <div class="source-name">ABVE — BI Frotas</div>
-          <div class="source-desc">Associação Brasileira do Veículo Elétrico: emplacamentos por categoria (BEV, PHEV, HEV, MHEV, FCEV), fabricante e estado.</div>
-          <div class="source-tags">
-            <span class="source-tag">BEV · PHEV · HEV</span>
-            <span class="source-tag">MHEV · FCEV</span>
-            <span class="source-tag">Power BI</span>
-            <span class="source-tag">Mensal</span>
-          </div>
-        </div>
-
-        <div class="source-card blue">
-          <div class="source-icon blue"><i class="fas fa-chart-pie"></i></div>
-          <div class="source-name">ABVE — BI Geral</div>
-          <div class="source-desc">Painel geral de mercado com participação por segmento, ranking de modelos, comparativos YoY e projeções de crescimento.</div>
-          <div class="source-tags">
-            <span class="source-tag">591K vendas</span>
-            <span class="source-tag">Ranking modelos</span>
-            <span class="source-tag">YoY</span>
-            <span class="source-tag">Histórico</span>
-          </div>
-        </div>
-
-        <div class="source-card purple">
-          <div class="source-icon purple"><i class="fas fa-leaf"></i></div>
-          <div class="source-name">ABVE — Eletrificados MHEV</div>
-          <div class="source-desc">Dados específicos de mild hybrids (MHEV) — segmento de maior crescimento no Brasil, com análise por fabricante e região.</div>
-          <div class="source-tags">
-            <span class="source-tag">Mild Hybrid</span>
-            <span class="source-tag">Crescimento</span>
-            <span class="source-tag">Por fabricante</span>
-            <span class="source-tag">2022–2026</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================================================
-       DATABASE SCHEMA
-  =================================================== -->
-  <section id="schema">
-    <div class="section">
-      <div class="section-tag">Modelo de Dados</div>
-      <h2 class="section-title">Schema MySQL — <code style="font-size:.9em;color:var(--green);">sustambitech</code></h2>
-      <p class="section-sub">
-        Banco relacional completo com auditoria centralizada via <code style="color:var(--cyan);">LogAuditoria</code> — tabelas de lookup sem timestamps desnecessários.
-      </p>
-
-      <div class="schema-layout">
-        <div class="schema-group">
-          <div class="schema-group-header green">
-            <i class="fas fa-table"></i> Tabelas de Lookup
-          </div>
-          <ul class="schema-table-list">
-            <li class="schema-table-item">
-              <span class="schema-table-name">NivelUsuario</span>
-              <span class="schema-table-desc">Admin, Operador, Usuário</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name">Status</span>
-              <span class="schema-table-desc">+ contexto: posto/tomada/reserva</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name">TipoEnergia</span>
-              <span class="schema-table-desc">BEV, PHEV, HEV, MHEV, FCEV, AC, DC</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name">TipoConector</span>
-              <span class="schema-table-desc">CCS2, CHAdeMO, Type2, Tesla…</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="schema-group">
-          <div class="schema-group-header cyan">
-            <i class="fas fa-project-diagram"></i> Tabelas Transacionais
-          </div>
-          <ul class="schema-table-list">
-            <li class="schema-table-item">
-              <span class="schema-table-name">Usuarios</span>
-              <span class="schema-table-desc">criadoEm · atualizadoEm</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name">Enderecos</span>
-              <span class="schema-table-desc">lat/lng DECIMAL + logradouro</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name">Postos</span>
-              <span class="schema-table-desc">operador, acesso, app, horário</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name">Tomadas</span>
-              <span class="schema-table-desc">fk_posto · fk_tipoConector · kWh</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name">Veiculos</span>
-              <span class="schema-table-desc">autonomia, bateria, preço DECIMAL(12,2)</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name">Usuarios_Veiculos</span>
-              <span class="schema-table-desc">placa, veículo principal</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name">Reservas</span>
-              <span class="schema-table-desc">inicio/fim previsto + real + kWh</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name">Avaliacao</span>
-              <span class="schema-table-desc">nota 1–5 · comentário</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="schema-group">
-          <div class="schema-group-header blue">
-            <i class="fas fa-chart-bar"></i> Tabelas BI (Snapshots)
-          </div>
-          <ul class="schema-table-list">
-            <li class="schema-table-item">
-              <span class="schema-table-name">BI_EmplacamentosNacionais</span>
-              <span class="schema-table-desc">ano · estado · tecnologia · vendas</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name">BI_ModelosTop</span>
-              <span class="schema-table-desc">maker · model · rank · total</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name">BI_EstacoesNacionais</span>
-              <span class="schema-table-desc">UF · estações · veículos/estação</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name">BI_FrotasABVE</span>
-              <span class="schema-table-desc">categoria · fabricante · variação</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="schema-group">
-          <div class="schema-group-header yellow">
-            <i class="fas fa-history"></i> Auditoria &amp; Views
-          </div>
-          <ul class="schema-table-list">
-            <li class="schema-table-item">
-              <span class="schema-table-name">LogAuditoria</span>
-              <span class="schema-table-desc">INSERT/UPDATE/DELETE · JSON diff</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name" style="color:#b0bec5;font-style:italic;">VIEW_PostosComStatus</span>
-              <span class="schema-table-desc">Power BI — postos ativos</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name" style="color:#b0bec5;font-style:italic;">VIEW_EmplacamentosBI</span>
-              <span class="schema-table-desc">Power BI — séries temporais</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name" style="color:#b0bec5;font-style:italic;">VIEW_TopModelosBI</span>
-              <span class="schema-table-desc">Power BI — ranking modelos</span>
-            </li>
-            <li class="schema-table-item">
-              <span class="schema-table-name" style="color:#b0bec5;font-style:italic;">VIEW_ReservasDetalhadas</span>
-              <span class="schema-table-desc">Power BI — reservas + usuários</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div style="margin-top:1.5rem;text-align:center;">
-        <a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io/blob/main/database/schema.sql"
-           target="_blank"
-           class="btn-outline">
-          <i class="fas fa-file-code"></i>
-          Ver schema.sql completo no GitHub
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================================================
-       TECH STACK
-  =================================================== -->
-  <section id="stack">
-    <div class="section">
-      <div class="section-tag">Tecnologias</div>
-      <h2 class="section-title">Stack Técnico</h2>
-      <p class="section-sub">Tecnologias escolhidas para performance, escalabilidade edge e integração com o ecossistema de dados.</p>
-
-      <div class="stack-grid">
-        <div class="stack-item">
-          <i class="fas fa-bolt" style="color:var(--green);"></i>
-          <div class="stack-item-name">Hono</div>
-          <div class="stack-item-role">Backend · API</div>
-        </div>
-        <div class="stack-item">
-          <i class="fas fa-cloud" style="color:#f38020;"></i>
-          <div class="stack-item-name">Cloudflare</div>
-          <div class="stack-item-role">Workers · D1 · Pages</div>
-        </div>
-        <div class="stack-item">
-          <i class="fas fa-database" style="color:var(--cyan);"></i>
-          <div class="stack-item-name">MySQL 8</div>
-          <div class="stack-item-role">Banco Principal</div>
-        </div>
-        <div class="stack-item">
-          <i class="fab fa-microsoft" style="color:#F2C811;"></i>
-          <div class="stack-item-name">Power BI</div>
-          <div class="stack-item-role">Dashboards BI</div>
-        </div>
-        <div class="stack-item">
-          <i class="fas fa-map-marked-alt" style="color:var(--green);"></i>
-          <div class="stack-item-name">Leaflet.js</div>
-          <div class="stack-item-role">Mapas Interativos</div>
-        </div>
-        <div class="stack-item">
-          <i class="fab fa-github" style="color:#fff;"></i>
-          <div class="stack-item-name">GitHub Pages</div>
-          <div class="stack-item-role">Hospedagem</div>
-        </div>
-        <div class="stack-item">
-          <i class="fab fa-js" style="color:#f7df1e;"></i>
-          <div class="stack-item-name">TypeScript</div>
-          <div class="stack-item-role">Linguagem</div>
-        </div>
-        <div class="stack-item">
-          <i class="fas fa-tools" style="color:var(--cyan);"></i>
-          <div class="stack-item-name">Vite + PM2</div>
-          <div class="stack-item-role">Build · Process</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================================================
-       TIME
-  =================================================== -->
-  <section id="time">
-    <div class="section" style="text-align:center;">
-      <div class="section-tag" style="justify-content:center;">
-        <i class="fas fa-users" style="margin-right:.4rem;"></i>Equipe
-      </div>
-      <h2 class="section-title">Time SustAmbiTech</h2>
-      <p class="section-sub" style="margin:0 auto 3rem;">
-        Profissionais dedicados à construção da plataforma de inteligência em mobilidade elétrica do Brasil.
-      </p>
-
+  <!-- TEAM -->
+  <section id="team-section" style="background:var(--bg2);border-top:1px solid var(--border)">
+    <div class="section" style="text-align:center">
+      <div class="sec-tag" style="justify-content:center"><i class="fas fa-users" style="margin-right:.4rem"></i>Equipe</div>
+      <h2 class="sec-title">Time SustAmbiTech</h2>
+      <p class="sec-sub" style="margin:0 auto 3rem">Profissionais dedicados à plataforma de inteligência em mobilidade elétrica do Brasil.</p>
       <div class="team-grid">
-        <!-- LEAD -->
         <div class="team-card lead">
           <div class="team-avatar">⚡</div>
           <div class="team-name">Kayham Cristoffer</div>
           <div class="team-role">Tech Lead &amp; Arquiteto</div>
           <div class="team-badge">Lead</div>
         </div>
-
-        <!-- MEMBROS -->
         <div class="team-card">
           <div class="team-avatar">🛠️</div>
           <div class="team-name">Gabriel</div>
           <div class="team-role">Desenvolvedor Full Stack</div>
-          <div class="team-badge" style="background:rgba(0,229,255,.1);color:var(--cyan);">Dev</div>
+          <div class="team-badge" style="background:rgba(0,229,255,.1);color:var(--cyan)">Dev</div>
         </div>
-
         <div class="team-card">
           <div class="team-avatar">📊</div>
           <div class="team-name">Eric Jr</div>
           <div class="team-role">BI &amp; Data Analytics</div>
-          <div class="team-badge" style="background:rgba(41,121,255,.1);color:var(--blue);">BI</div>
+          <div class="team-badge" style="background:rgba(41,121,255,.1);color:var(--blue)">BI</div>
         </div>
-
         <div class="team-card">
           <div class="team-avatar">🗄️</div>
           <div class="team-name">Natan</div>
           <div class="team-role">Database Engineer</div>
-          <div class="team-badge" style="background:rgba(124,77,255,.1);color:#b388ff;">DB</div>
+          <div class="team-badge" style="background:rgba(124,77,255,.1);color:#b388ff">DB</div>
         </div>
-
         <div class="team-card">
           <div class="team-avatar">🌿</div>
           <div class="team-name">Leandro</div>
           <div class="team-role">Sustentabilidade &amp; ESG</div>
-          <div class="team-badge" style="background:rgba(0,230,118,.08);color:var(--green);">ESG</div>
+          <div class="team-badge" style="background:rgba(0,230,118,.08);color:var(--green)">ESG</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================================================
-       FOOTER
-  =================================================== -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-top">
-        <div>
-          <div class="footer-brand-name">⚡ SustAmbiTech BI</div>
-          <p class="footer-brand-desc">
-            Plataforma de inteligência de dados para o ecossistema de mobilidade elétrica brasileiro. Dados abertos, análises em tempo real.
-          </p>
+</div><!-- end page-home -->
+
+<!-- ============================================================ PAGE: SOBRE -->
+<div class="page" id="page-sobre">
+  <div style="padding-top:60px;background:var(--bg);min-height:100vh;" id="sobre-section">
+    <div class="section">
+      <div class="sec-tag">Sobre o Projeto</div>
+      <h2 class="sec-title">SustAmbiTech BI</h2>
+      <p class="sec-sub">Plataforma de inteligência de dados para o ecossistema de mobilidade elétrica brasileiro — evolução do projeto original com nova equipe e novas ambições.</p>
+
+      <!-- História -->
+      <div class="sobre-grid" style="margin-bottom:1.4rem">
+        <div class="sobre-card full">
+          <div class="sobre-card-icon"><i class="fas fa-history"></i></div>
+          <div class="sobre-card-title">História do Projeto</div>
+          <div class="sobre-card-text">
+            O <strong>SustAmbiTech BI</strong> é uma continuação e melhoria significativa do projeto anterior
+            <strong>SustAmbiTech</strong> (repositório <a href="https://github.com/KayhamCristoffer/SustAmbiTech" target="_blank" style="color:var(--green);text-decoration:none">KayhamCristoffer/SustAmbiTech</a>),
+            que estabeleceu os fundamentos da plataforma de análise de mobilidade elétrica brasileira.<br><br>
+            A nova versão reescreve a arquitetura de dados, migra para MySQL 8, incorpora fontes oficiais da <strong>ABVE</strong> e
+            do <strong>Carregados.com.br</strong> e traz dashboards Power BI embed para visualização direta no portal. A equipe foi
+            renovada — mantendo o Tech Lead original Kayham Cristoffer — e expandida com especialistas em BI, banco de dados, desenvolvimento
+            full stack e sustentabilidade ESG.
+          </div>
+          <div class="badge-row">
+            <span class="badge green">v3.0 — 2026</span>
+            <span class="badge cyan">Continuação do SustAmbiTech</span>
+            <span class="badge blue">Nova Equipe</span>
+            <span class="badge">MySQL 8 · Power BI · GitHub Pages</span>
+          </div>
         </div>
-        <div>
-          <div class="footer-col-title">Fontes de Dados</div>
-          <ul class="footer-links">
-            <li><a href="https://abve.org.br/bi-frotas/" target="_blank"><i class="fas fa-external-link-alt fa-xs"></i>ABVE — BI Frotas</a></li>
-            <li><a href="https://abve.org.br/bi-geral/" target="_blank"><i class="fas fa-external-link-alt fa-xs"></i>ABVE — BI Geral</a></li>
-            <li><a href="https://abve.org.br/abve-data/eletrificadosmhev/" target="_blank"><i class="fas fa-external-link-alt fa-xs"></i>ABVE — Eletrificados MHEV</a></li>
-            <li><a href="https://carregados.com.br/dados-sobre-o-mercado-eletrico" target="_blank"><i class="fas fa-external-link-alt fa-xs"></i>Carregados — Mercado EV</a></li>
-            <li><a href="https://carregados.com.br/estacoes" target="_blank"><i class="fas fa-external-link-alt fa-xs"></i>Carregados — Estações</a></li>
-          </ul>
+
+        <div class="sobre-card">
+          <div class="sobre-card-icon"><i class="fas fa-bullseye"></i></div>
+          <div class="sobre-card-title">Objetivo &amp; Critérios</div>
+          <div class="sobre-card-text">
+            Consolidar dados públicos sobre veículos elétricos no Brasil em uma única plataforma acessível,
+            com dashboards interativos, mapa de estações em tempo real e análises comparativas por estado,
+            categoria e fabricante.<br><br>
+            <strong>Critérios:</strong> fontes confiáveis (ABVE, Carregados), atualização periódica,
+            dados 100% gratuitos e abertos, visualização responsiva em qualquer dispositivo.
+          </div>
         </div>
-        <div>
-          <div class="footer-col-title">Projeto</div>
-          <ul class="footer-links">
-            <li><a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io" target="_blank"><i class="fab fa-github"></i>GitHub Repository</a></li>
-            <li><a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io/blob/main/database/schema.sql" target="_blank"><i class="fas fa-file-code"></i>MySQL Schema</a></li>
-            <li><a href="#powerbi"><i class="fas fa-chart-bar"></i>Dashboard Power BI</a></li>
-            <li><a href="#mapa-section"><i class="fas fa-map-marked-alt"></i>Mapa de Postos</a></li>
-          </ul>
+
+        <div class="sobre-card">
+          <div class="sobre-card-icon cyan"><i class="fas fa-heart"></i></div>
+          <div class="sobre-card-title">Missão &amp; Valores</div>
+          <div class="mv-grid" style="margin-top:.75rem">
+            <div class="mv-item"><div class="mv-icon">🎯</div><div class="mv-label">Missão</div><div class="mv-text">Democratizar o acesso a dados sobre mobilidade elétrica no Brasil</div></div>
+            <div class="mv-item"><div class="mv-icon">🔓</div><div class="mv-label">Abertura</div><div class="mv-text">Dados públicos, código aberto, sem barreiras de acesso</div></div>
+            <div class="mv-item"><div class="mv-icon">🌱</div><div class="mv-label">Sustentabilidade</div><div class="mv-text">Contribuir para a transição energética e redução de emissões</div></div>
+          </div>
         </div>
       </div>
 
-      <div class="footer-bottom">
-        <p class="footer-copy">
-          © 2026 <span>SustAmbiTech BI</span> · Mobilidade Elétrica Brasileira ·
-          Desenvolvido por <span>Kayham Cristoffer</span> e Time
-        </p>
-        <div class="footer-badges">
-          <span class="footer-badge live">GitHub Pages</span>
-          <span class="footer-badge">MySQL 8</span>
-          <span class="footer-badge">Power BI</span>
-          <span class="footer-badge">v3.0</span>
+      <!-- Metodologia + P&D -->
+      <div class="sobre-grid" style="margin-bottom:1.4rem">
+        <div class="sobre-card">
+          <div class="sobre-card-icon blue"><i class="fas fa-flask"></i></div>
+          <div class="sobre-card-title">Metodologia &amp; Pesquisa e Desenvolvimento</div>
+          <div class="sobre-card-text">
+            Os dados são coletados de APIs públicas (Carregados.com.br) e painéis oficiais (ABVE), processados
+            e armazenados em snapshots periódicos no schema MySQL <code style="color:var(--green)">sustambitech</code>.
+            As tabelas BI (<code style="color:var(--cyan)">BI_EmplacamentosNacionais</code>,
+            <code style="color:var(--cyan)">BI_ModelosTop</code>, etc.) alimentam os dashboards Power BI via
+            conexão direta ao banco.
+          </div>
+          <div class="badge-row" style="margin-top:.9rem">
+            <span class="badge green">API REST</span>
+            <span class="badge cyan">Snapshots Mensais</span>
+            <span class="badge blue">Power BI Embed</span>
+          </div>
+        </div>
+
+        <div class="sobre-card">
+          <div class="sobre-card-icon purple"><i class="fas fa-lightbulb"></i></div>
+          <div class="sobre-card-title">Abordagem</div>
+          <div class="sobre-card-text">
+            Optamos por uma abordagem <strong>Data-as-a-Service</strong> — nenhum dado é armazenado no front-end.
+            O GitHub Pages serve o portal estático; todos os dados ao vivo vêm de fontes terceiras confiáveis
+            (Power BI embed, Carregados iframe) sem dependência de backend próprio, garantindo
+            disponibilidade 24/7 a custo zero.
+          </div>
+        </div>
+      </div>
+
+      <!-- Processo -->
+      <div class="sobre-card full" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem">
+        <div class="sobre-card-icon"><i class="fas fa-stream"></i></div>
+        <div class="sobre-card-title">Processo de Desenvolvimento</div>
+        <div class="process-steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Pesquisa de Fontes</strong> — Identificação e validação de APIs públicas: Carregados.com.br, ABVE BI Frotas/Geral/MHEV.</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Modelagem de Dados</strong> — Criação do schema MySQL 8 com tabelas lookup, transacionais, BI e LogAuditoria centralizado.</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Integração Power BI</strong> — Conexão das fontes ao Power BI com dashboards embarcados diretamente no portal.</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Portal GitHub Pages</strong> — Desenvolvimento do front-end estático com mapa Carregados embed e navegação por abas.</div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Revisão Contínua</strong> — Atualização mensal dos snapshots BI e melhorias iterativas no portal com a nova equipe.</div></div>
+        </div>
+      </div>
+
+      <!-- Equipe resumida -->
+      <div class="sobre-card full" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;margin-top:1.4rem">
+        <div class="sobre-card-icon cyan"><i class="fas fa-users"></i></div>
+        <div class="sobre-card-title">Equipe</div>
+        <div class="sobre-card-text" style="margin-bottom:1rem">
+          Time multidisciplinar unindo expertise técnica, análise de dados e visão de sustentabilidade:
+        </div>
+        <div class="team-grid" style="justify-content:flex-start">
+          <div class="team-card lead" style="width:175px">
+            <div class="team-avatar">⚡</div>
+            <div class="team-name">Kayham Cristoffer</div>
+            <div class="team-role">Tech Lead &amp; Arquiteto</div>
+            <div class="team-badge">Lead</div>
+          </div>
+          <div class="team-card" style="width:175px">
+            <div class="team-avatar">🛠️</div>
+            <div class="team-name">Gabriel</div>
+            <div class="team-role">Full Stack Dev</div>
+            <div class="team-badge" style="background:rgba(0,229,255,.1);color:var(--cyan)">Dev</div>
+          </div>
+          <div class="team-card" style="width:175px">
+            <div class="team-avatar">📊</div>
+            <div class="team-name">Eric Jr</div>
+            <div class="team-role">BI &amp; Analytics</div>
+            <div class="team-badge" style="background:rgba(41,121,255,.1);color:var(--blue)">BI</div>
+          </div>
+          <div class="team-card" style="width:175px">
+            <div class="team-avatar">🗄️</div>
+            <div class="team-name">Natan</div>
+            <div class="team-role">Database Engineer</div>
+            <div class="team-badge" style="background:rgba(124,77,255,.1);color:#b388ff">DB</div>
+          </div>
+          <div class="team-card" style="width:175px">
+            <div class="team-avatar">🌿</div>
+            <div class="team-name">Leandro</div>
+            <div class="team-role">Sustentabilidade ESG</div>
+            <div class="team-badge" style="background:rgba(0,230,118,.08);color:var(--green)">ESG</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><!-- end page-sobre -->
+
+<!-- ============================================================ PAGE: SERVIÇOS -->
+<div class="page" id="page-servicos">
+  <div style="padding-top:60px;background:var(--bg);min-height:100vh;" id="servicos-section">
+    <div class="section">
+      <div class="sec-tag">O que Oferecemos</div>
+      <h2 class="sec-title">Serviços &amp; Funcionalidades</h2>
+      <p class="sec-sub">Recursos da plataforma SustAmbiTech BI disponíveis gratuitamente para pesquisadores, empresas e entusiastas de mobilidade elétrica.</p>
+
+      <div class="services-grid">
+        <div class="svc-card">
+          <div class="svc-icon"><i class="fas fa-chart-bar"></i></div>
+          <div class="svc-title">Dashboards Power BI</div>
+          <div class="svc-desc">Painéis interativos embarcados com dados de emplacamentos, frotas e mercado EV brasileiro. Atualização via ABVE — Frotas, Eletromobilidade e Eletrificados MHEV.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon c"><i class="fas fa-map-marked-alt"></i></div>
+          <div class="svc-title">Mapa de Estações</div>
+          <div class="svc-desc">Mapa em tempo real integrado com Carregados.com.br — 11.783 estações em todo o Brasil, filtráveis por estado. Visualização de conectores, potência e tipo de acesso.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon b"><i class="fas fa-database"></i></div>
+          <div class="svc-title">Schema MySQL Público</div>
+          <div class="svc-desc">Schema MySQL 8 completo disponível no GitHub — tabelas de lookup, transacionais, BI e LogAuditoria. Pronto para importar no MySQL Workbench ou servidor próprio.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon p"><i class="fas fa-search"></i></div>
+          <div class="svc-title">Análise por Estado</div>
+          <div class="svc-desc">Filtros de mapa por estado — SP, MG, RJ, RS, PR e mais. Dados de emplacamentos e estações segmentados por UF para análise regional.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon y"><i class="fas fa-car-side"></i></div>
+          <div class="svc-title">Categorias ABVE</div>
+          <div class="svc-desc">Cobertura de todas as categorias ABVE: BEV (100% elétrico), PHEV (plug-in híbrido), HEV (híbrido convencional), MHEV (mild hybrid) e FCEV (célula de hidrogênio).</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon"><i class="fas fa-sync-alt"></i></div>
+          <div class="svc-title">Dados Atualizados</div>
+          <div class="svc-desc">Snapshots mensais dos principais indicadores: total de emplacamentos, ranking de modelos, distribuição por estado e evolução YoY de 2022 a 2026.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon c"><i class="fab fa-github"></i></div>
+          <div class="svc-title">Código Aberto</div>
+          <div class="svc-desc">Todo o código do portal, schemas SQL e scripts de dados disponíveis publicamente no GitHub. Contribuições, forks e issues são bem-vindos.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon b"><i class="fas fa-mobile-alt"></i></div>
+          <div class="svc-title">Responsivo &amp; Acessível</div>
+          <div class="svc-desc">Portal 100% responsivo — funciona em desktop, tablet e smartphone. Fontes web seguras, navegação por teclado e contraste adequado para acessibilidade.</div>
         </div>
       </div>
     </div>
-  </footer>
+  </div>
+</div><!-- end page-servicos -->
 
-  <!-- ===================================================
-       SCRIPTS
-  =================================================== -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script>
-    // =============================================
-    // MAPA DE POSTOS — CartoDB Dark (sem API key)
-    // Estilo: carregados.com.br/estacoes
-    // =============================================
-    (function initMap() {
-      const map = L.map('map', {
-        center: [-14.235, -51.925],
-        zoom: 5,
-        zoomControl: true,
-        attributionControl: true
+<!-- ============================================================ PAGE: FONTES -->
+<div class="page" id="page-fontes">
+  <div style="padding-top:60px;background:var(--bg);min-height:100vh;">
+    <div class="section">
+      <div class="sec-tag">Fontes de Dados</div>
+      <h2 class="sec-title">Inteligência de Mercado EV</h2>
+      <p class="sec-sub">Dados coletados exclusivamente de fontes públicas e confiáveis — ABVE e Carregados.com.br — para análise precisa do ecossistema elétrico brasileiro.</p>
+
+      <div class="sources-grid">
+        <div class="src-card sg">
+          <div class="src-icon si-g"><i class="fas fa-charging-station"></i></div>
+          <div class="src-name">Carregados.com.br — Estações</div>
+          <div class="src-desc">API pública com dados de 11.783 estações de recarga em todo o Brasil, segmentadas por estado, tipo de conector, potência e tipo de acesso (público/privado).</div>
+          <div class="src-tags">
+            <span class="src-tag">11.783 estações</span>
+            <span class="src-tag">27 estados</span>
+            <span class="src-tag">API REST</span>
+            <span class="src-tag">Gratuito</span>
+          </div>
+          <a class="src-link" href="https://carregados.com.br/mapa" target="_blank"><i class="fas fa-external-link-alt fa-xs"></i>Acessar Mapa</a>
+        </div>
+
+        <div class="src-card sc">
+          <div class="src-icon si-c"><i class="fas fa-chart-pie"></i></div>
+          <div class="src-name">Carregados.com.br — Mercado EV</div>
+          <div class="src-desc">Dados de mercado elétrico: total de emplacamentos, veículos por estação, tendências de crescimento e comparativos mensais/anuais do setor EV brasileiro.</div>
+          <div class="src-tags">
+            <span class="src-tag">591K vendas</span>
+            <span class="src-tag">Comparativos YoY</span>
+            <span class="src-tag">Mensal</span>
+          </div>
+          <a class="src-link" href="https://carregados.com.br/dados-sobre-o-mercado-eletrico" target="_blank"><i class="fas fa-external-link-alt fa-xs"></i>Ver Dados de Mercado</a>
+        </div>
+
+        <div class="src-card sb">
+          <div class="src-icon si-b"><i class="fas fa-truck"></i></div>
+          <div class="src-name">ABVE — BI Frotas</div>
+          <div class="src-desc">Associação Brasileira do Veículo Elétrico: painel Power BI de frotas com emplacamentos por categoria (BEV, PHEV, HEV, MHEV, FCEV), fabricante e estado.</div>
+          <div class="src-tags">
+            <span class="src-tag">BEV · PHEV · HEV</span>
+            <span class="src-tag">Por fabricante</span>
+            <span class="src-tag">Power BI oficial</span>
+          </div>
+          <a class="src-link" href="https://abve.org.br/bi-frotas/" target="_blank"><i class="fas fa-external-link-alt fa-xs"></i>Acessar BI Frotas</a>
+        </div>
+
+        <div class="src-card sp">
+          <div class="src-icon si-p"><i class="fas fa-car-side"></i></div>
+          <div class="src-name">ABVE — Eletromobilidade</div>
+          <div class="src-desc">Painel geral de eletromobilidade da ABVE — participação por segmento, ranking de modelos mais vendidos, evolução histórica e projeções de mercado.</div>
+          <div class="src-tags">
+            <span class="src-tag">Ranking modelos</span>
+            <span class="src-tag">Histórico 2022–2026</span>
+            <span class="src-tag">Power BI</span>
+          </div>
+          <a class="src-link" href="https://abve.org.br/bi-geral/" target="_blank"><i class="fas fa-external-link-alt fa-xs"></i>Acessar BI Geral</a>
+        </div>
+
+        <div class="src-card sg">
+          <div class="src-icon si-g"><i class="fas fa-leaf"></i></div>
+          <div class="src-name">ABVE — Eletrificados + MHEV</div>
+          <div class="src-desc">Dados específicos do segmento de mild hybrids (MHEV) — de maior crescimento no Brasil — com análise por fabricante, modelo e região geográfica.</div>
+          <div class="src-tags">
+            <span class="src-tag">Mild Hybrid</span>
+            <span class="src-tag">Maior crescimento</span>
+            <span class="src-tag">Por fabricante</span>
+          </div>
+          <a class="src-link" href="https://abve.org.br/abve-data/eletrificadosmhev/" target="_blank"><i class="fas fa-external-link-alt fa-xs"></i>Acessar Eletrificados MHEV</a>
+        </div>
+
+        <div class="src-card sc">
+          <div class="src-icon si-c"><i class="fab fa-github"></i></div>
+          <div class="src-name">Repositório GitHub</div>
+          <div class="src-desc">Todo o código-fonte do portal, schema MySQL e scripts disponíveis publicamente. Histórico de versões, issues e contribuições abertas à comunidade.</div>
+          <div class="src-tags">
+            <span class="src-tag">Código aberto</span>
+            <span class="src-tag">MIT License</span>
+            <span class="src-tag">GitHub Pages</span>
+          </div>
+          <a class="src-link" href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io" target="_blank"><i class="fab fa-github"></i>Ver no GitHub</a>
+        </div>
+      </div>
+
+      <!-- nota de atualização -->
+      <div style="margin-top:2.5rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;display:flex;align-items:flex-start;gap:1rem">
+        <div style="width:36px;height:36px;border-radius:9px;background:rgba(255,215,64,.1);color:#ffd740;display:grid;place-items:center;font-size:1rem;flex-shrink:0"><i class="fas fa-info-circle"></i></div>
+        <div>
+          <div style="font-weight:700;color:#fff;margin-bottom:.4rem;font-size:.9rem">Política de Atualização dos Dados</div>
+          <div style="font-size:.81rem;color:var(--muted);line-height:1.7">
+            Os dados exibidos nos dashboards Power BI são atualizados mensalmente pela equipe com base nas publicações da ABVE e Carregados.com.br.
+            O mapa de estações é servido diretamente pelo Carregados.com.br e reflete dados em tempo real.
+            Para dados históricos anteriores a 2022, consulte diretamente o portal da ABVE.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- end page-fontes -->
+
+<!-- ============================================================ PAGE: POLÍTICAS -->
+<div class="page" id="page-politicas">
+  <div style="padding-top:60px;background:var(--bg);min-height:100vh;" id="politicas-section">
+    <div class="section">
+      <div class="sec-tag">Políticas &amp; Termos</div>
+      <h2 class="sec-title">Políticas do Projeto</h2>
+      <p class="sec-sub">Diretrizes de uso, privacidade, licenciamento e conduta do projeto SustAmbiTech BI.</p>
+
+      <!-- tab selector -->
+      <div class="pol-nav">
+        <button class="pol-tab active" onclick="setPolTab(this,'pol-uso')">Termos de Uso</button>
+        <button class="pol-tab" onclick="setPolTab(this,'pol-priv')">Privacidade</button>
+        <button class="pol-tab" onclick="setPolTab(this,'pol-lic')">Licença</button>
+        <button class="pol-tab" onclick="setPolTab(this,'pol-dados')">Uso de Dados</button>
+        <button class="pol-tab" onclick="setPolTab(this,'pol-conduta')">Código de Conduta</button>
+      </div>
+
+      <!-- TERMOS DE USO -->
+      <div class="pol-content active" id="pol-uso">
+        <div class="pol-block">
+          <div class="pol-block-title"><i class="fas fa-file-contract"></i>Termos de Uso</div>
+          <p class="pol-text">O portal <strong>SustAmbiTech BI</strong> é um projeto acadêmico e de código aberto, disponibilizado gratuitamente para consulta pública. Ao acessar este site, você concorda com os termos descritos abaixo.</p>
+          <ul class="pol-list">
+            <li>O uso do portal é exclusivamente para fins informativos, educacionais e de pesquisa.</li>
+            <li>É vedado o uso comercial dos dashboards ou dados sem autorização prévia da equipe.</li>
+            <li>Os dados exibidos são provenientes de fontes terceiras (ABVE, Carregados.com.br) e podem conter imprecisões ou atrasos na atualização.</li>
+            <li>A equipe SustAmbiTech não se responsabiliza por decisões tomadas com base nas informações exibidas.</li>
+            <li>É permitido citar e referenciar dados do portal mediante crédito adequado ao projeto e às fontes originais.</li>
+            <li>O portal pode ser modificado, suspenso ou descontinuado a qualquer momento sem aviso prévio.</li>
+          </ul>
+        </div>
+        <div class="pol-block">
+          <div class="pol-block-title"><i class="fas fa-exclamation-triangle"></i>Isenção de Responsabilidade</div>
+          <p class="pol-text">Os dashboards Power BI são embarcados diretamente das plataformas oficiais da ABVE e do Carregados.com.br. A SustAmbiTech não possui controle sobre a disponibilidade, precisão ou conteúdo desses serviços externos.</p>
+        </div>
+      </div>
+
+      <!-- PRIVACIDADE -->
+      <div class="pol-content" id="pol-priv">
+        <div class="pol-block">
+          <div class="pol-block-title"><i class="fas fa-user-shield"></i>Política de Privacidade</div>
+          <p class="pol-text">O portal SustAmbiTech BI é um site estático hospedado no GitHub Pages. <strong>Não coletamos, armazenamos ou processamos nenhum dado pessoal dos visitantes.</strong></p>
+          <ul class="pol-list">
+            <li>Não utilizamos cookies próprios ou rastreadores de terceiros.</li>
+            <li>Não há formulários de cadastro, login ou coleta de e-mail.</li>
+            <li>O GitHub Pages pode coletar dados de acesso básicos (IP, user-agent) conforme sua própria política de privacidade.</li>
+            <li>Os iframes do Power BI (Microsoft) e do Carregados.com.br seguem as políticas de privacidade dos respectivos serviços.</li>
+            <li>Nenhuma informação de navegação é compartilhada com terceiros pela equipe SustAmbiTech.</li>
+          </ul>
+        </div>
+        <div class="pol-block">
+          <div class="pol-block-title"><i class="fas fa-cookie-bite"></i>Cookies de Terceiros</div>
+          <p class="pol-text">Os iframes embarcados (Power BI, Carregados.com.br) podem utilizar cookies conforme suas políticas individuais. Recomendamos consultar:</p>
+          <ul class="pol-list">
+            <li><a href="https://privacy.microsoft.com/pt-br/privacystatement" target="_blank" style="color:var(--green)">Política de Privacidade da Microsoft (Power BI)</a></li>
+            <li><a href="https://carregados.com.br" target="_blank" style="color:var(--green)">Política de Privacidade do Carregados.com.br</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- LICENÇA -->
+      <div class="pol-content" id="pol-lic">
+        <div class="pol-block">
+          <div class="pol-block-title"><i class="fas fa-balance-scale"></i>Licença de Uso do Código</div>
+          <p class="pol-text">O código-fonte do portal SustAmbiTech BI é disponibilizado sob a <strong>licença MIT</strong>, permitindo uso, cópia, modificação e distribuição com a obrigatoriedade de manter o aviso de copyright original.</p>
+          <ul class="pol-list">
+            <li>É permitido usar o código para projetos pessoais, acadêmicos e comerciais.</li>
+            <li>É obrigatório manter o aviso de copyright e a licença MIT em cópias ou derivações.</li>
+            <li>O software é fornecido "como está", sem garantias de qualquer tipo.</li>
+            <li>Contribuições via Pull Request são bem-vindas e sujeitas à revisão da equipe.</li>
+          </ul>
+        </div>
+        <div class="pol-block">
+          <div class="pol-block-title"><i class="fas fa-copyright"></i>Copyright</div>
+          <p class="pol-text">© 2026 SustAmbiTech BI — Kayham Cristoffer, Gabriel, Eric Jr, Natan e Leandro.<br>
+          Repositório: <a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io" target="_blank" style="color:var(--green)">github.com/KayhamCristoffer/SustAmbiTechBI.io</a></p>
+        </div>
+      </div>
+
+      <!-- USO DE DADOS -->
+      <div class="pol-content" id="pol-dados">
+        <div class="pol-block">
+          <div class="pol-block-title"><i class="fas fa-database"></i>Política de Uso de Dados</div>
+          <p class="pol-text">Todos os dados exibidos neste portal são provenientes de fontes públicas e abertas. A SustAmbiTech BI não gera dados primários — atua como agregador e visualizador de dados de terceiros.</p>
+          <ul class="pol-list">
+            <li><strong>ABVE:</strong> Dados de emplacamentos e frotas reproduzidos com fins educacionais e de pesquisa, conforme disponibilização pública pela Associação Brasileira do Veículo Elétrico.</li>
+            <li><strong>Carregados.com.br:</strong> API pública utilizada para exibição do mapa de estações e dados de mercado.</li>
+            <li><strong>Schema MySQL:</strong> Estrutura de dados original do projeto, disponível sob licença MIT.</li>
+            <li>Para uso comercial dos dados da ABVE ou Carregados, consultar diretamente as organizações responsáveis.</li>
+            <li>Snapshots de dados armazenados localmente no banco MySQL são usados exclusivamente para alimentar os dashboards Power BI do projeto.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- CÓDIGO DE CONDUTA -->
+      <div class="pol-content" id="pol-conduta">
+        <div class="pol-block">
+          <div class="pol-block-title"><i class="fas fa-handshake"></i>Código de Conduta</div>
+          <p class="pol-text">O projeto SustAmbiTech BI é um espaço colaborativo e inclusivo. Esperamos que todos os contribuidores e usuários sigam as diretrizes abaixo:</p>
+          <ul class="pol-list">
+            <li>Tratar todos com respeito, independentemente de nível técnico, gênero, etnia ou background.</li>
+            <li>Comunicação construtiva — feedback é bem-vindo; hostilidade não é tolerada.</li>
+            <li>Reportar bugs e sugestões via Issues no GitHub de forma clara e detalhada.</li>
+            <li>Pull Requests devem seguir os padrões de código do projeto e incluir descrição das mudanças.</li>
+            <li>Não utilizar o projeto para fins que violem leis brasileiras ou direitos de terceiros.</li>
+            <li>Respeitar as licenças das fontes de dados (ABVE, Carregados.com.br) ao reutilizar informações.</li>
+          </ul>
+        </div>
+        <div class="pol-block">
+          <div class="pol-block-title"><i class="fas fa-envelope"></i>Contato</div>
+          <p class="pol-text">Para dúvidas, violações ou sugestões relacionadas às políticas do projeto, abra uma Issue no repositório GitHub ou entre em contato via <a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io/issues" target="_blank" style="color:var(--green)">github.com/KayhamCristoffer/SustAmbiTechBI.io/issues</a>.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><!-- end page-politicas -->
+
+<!-- ============================================================ FOOTER (global) -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">⚡ SustAmbiTech BI</div>
+        <p class="footer-brand-desc">Plataforma de inteligência de dados para o ecossistema de mobilidade elétrica brasileiro. Dados abertos, análises em tempo real.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navegação</div>
+        <ul class="footer-links">
+          <li><button onclick="showPage('home')"><i class="fas fa-home"></i>Início</button></li>
+          <li><button onclick="showPage('sobre')"><i class="fas fa-info-circle"></i>Sobre</button></li>
+          <li><button onclick="showPage('servicos')"><i class="fas fa-cogs"></i>Serviços</button></li>
+          <li><button onclick="showPage('fontes')"><i class="fas fa-database"></i>Fontes</button></li>
+          <li><button onclick="showPage('politicas')"><i class="fas fa-shield-alt"></i>Políticas</button></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Fontes de Dados</div>
+        <ul class="footer-links">
+          <li><a href="https://abve.org.br/bi-frotas/" target="_blank"><i class="fas fa-external-link-alt fa-xs"></i>ABVE — BI Frotas</a></li>
+          <li><a href="https://abve.org.br/bi-geral/" target="_blank"><i class="fas fa-external-link-alt fa-xs"></i>ABVE — Eletromobilidade</a></li>
+          <li><a href="https://abve.org.br/abve-data/eletrificadosmhev/" target="_blank"><i class="fas fa-external-link-alt fa-xs"></i>ABVE — Eletrificados MHEV</a></li>
+          <li><a href="https://carregados.com.br/mapa" target="_blank"><i class="fas fa-external-link-alt fa-xs"></i>Carregados — Mapa</a></li>
+          <li><a href="https://carregados.com.br/dados-sobre-o-mercado-eletrico" target="_blank"><i class="fas fa-external-link-alt fa-xs"></i>Carregados — Mercado</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Projeto</div>
+        <ul class="footer-links">
+          <li><a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io" target="_blank"><i class="fab fa-github"></i>GitHub Repository</a></li>
+          <li><a href="https://github.com/KayhamCristoffer/SustAmbiTech" target="_blank"><i class="fab fa-github"></i>Projeto Anterior</a></li>
+          <li><a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io/blob/main/database/schema.sql" target="_blank"><i class="fas fa-file-code"></i>MySQL Schema</a></li>
+          <li><a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io/issues" target="_blank"><i class="fas fa-bug"></i>Reportar Issue</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 <span>SustAmbiTech BI</span> · Mobilidade Elétrica Brasileira · Desenvolvido por <span>Kayham Cristoffer</span> e Time</p>
+      <div class="footer-badges">
+        <span class="f-badge live">GitHub Pages</span>
+        <span class="f-badge">Power BI</span>
+        <span class="f-badge">ABVE + Carregados</span>
+        <span class="f-badge">v4.0</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================ SCRIPTS -->
+<script>
+/* ---------------------------------------------------------------
+   PAGE SYSTEM
+--------------------------------------------------------------- */
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  var target = document.getElementById('page-' + name);
+  if (target) { target.classList.add('active'); }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // update nav highlight
+  ['sobre','servicos','fontes','politicas','time'].forEach(function(n) {
+    var el = document.getElementById('nav-' + n);
+    if (el) el.classList.remove('active');
+  });
+  var active = document.getElementById('nav-' + name);
+  if (active) active.classList.add('active');
+}
+
+function scrollTo(id) {
+  setTimeout(function() {
+    var el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+}
+
+/* ---------------------------------------------------------------
+   MOBILE MENU
+--------------------------------------------------------------- */
+function toggleMobile() {
+  var m = document.getElementById('nav-mobile');
+  m.classList.toggle('open');
+}
+
+/* ---------------------------------------------------------------
+   POWER BI TABS — trocam iframe sem abrir novo site
+--------------------------------------------------------------- */
+function setPBITab(btn, url, label) {
+  // update active tab style
+  document.querySelectorAll('.pbi-tab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  // swap iframe src
+  var frame = document.getElementById('pbi-frame');
+  frame.src = url;
+  // update address bar text
+  document.getElementById('pbi-url-text').textContent = 'app.powerbi.com/view — ' + label;
+  // update open-in-new-tab link
+  document.getElementById('pbi-open-btn').href = url;
+}
+
+/* ---------------------------------------------------------------
+   MAP FILTER — troca iframe do Carregados
+--------------------------------------------------------------- */
+function setMap(btn, url, label) {
+  document.querySelectorAll('.map-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  var frame = document.getElementById('map-frame');
+  frame.src = url;
+  document.getElementById('map-url-text').textContent = 'carregados.com.br — ' + label;
+  document.getElementById('map-open-btn').href = url;
+}
+
+/* ---------------------------------------------------------------
+   POLÍTICAS TABS
+--------------------------------------------------------------- */
+function setPolTab(btn, contentId) {
+  document.querySelectorAll('.pol-tab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.pol-content').forEach(function(c) { c.classList.remove('active'); });
+  var content = document.getElementById(contentId);
+  if (content) content.classList.add('active');
+}
+
+/* ---------------------------------------------------------------
+   KPI ANIMATED COUNTERS
+--------------------------------------------------------------- */
+var kpiTargets = [11783, 591407, 213288, 27, 6, 5];
+var kpiAnimated = false;
+
+function animateKPI(el, target) {
+  var duration = 1800;
+  var startTime = null;
+  function step(ts) {
+    if (!startTime) startTime = ts;
+    var progress = Math.min((ts - startTime) / duration, 1);
+    var eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(eased * target).toLocaleString('pt-BR');
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = target.toLocaleString('pt-BR');
+  }
+  requestAnimationFrame(step);
+}
+
+if ('IntersectionObserver' in window) {
+  var kpiObs = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting && !kpiAnimated) {
+      kpiAnimated = true;
+      kpiTargets.forEach(function(t, i) {
+        var el = document.getElementById('k' + i);
+        if (el) animateKPI(el, t);
       });
-
-      // ---- TILE LAYERS (sem API key) ----
-      const tiles = {
-        'CartoDB Dark':  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-          attribution: '© <a href="https://carto.com">CARTO</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-          subdomains: 'abcd', maxZoom: 20
-        }),
-        'CartoDB Light': L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-          attribution: '© <a href="https://carto.com">CARTO</a>',
-          subdomains: 'abcd', maxZoom: 20
-        }),
-        'OSM Standard':  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-          maxZoom: 19
-        }),
-        'Stadia Dark':   L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
-          attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a>',
-          maxZoom: 20
-        })
-      };
-
-      tiles['CartoDB Dark'].addTo(map);
-      L.control.layers(tiles, {}, { position: 'topright' }).addTo(map);
-
-      // ---- ÍCONES ----
-      function makeIcon(color, size) {
-        size = size || 10;
-        return L.divIcon({
-          className: '',
-          html: '<div style="width:' + size + 'px;height:' + size + 'px;background:' + color + ';border-radius:50%;border:2px solid rgba(255,255,255,.6);box-shadow:0 0 8px ' + color + '88;"></div>',
-          iconSize: [size, size],
-          iconAnchor: [size/2, size/2]
-        });
-      }
-
-      var iconCCS2    = makeIcon('#00e5ff', 12);
-      var iconCHAdeMO = makeIcon('#aa00ff', 12);
-      var iconType2   = makeIcon('#2979ff', 10);
-      var iconAC      = makeIcon('#00e676', 10);
-      var iconTesla   = makeIcon('#ffd740', 12);
-      var iconDefault = makeIcon('#78909c',  9);
-
-      // ---- DADOS DE EXEMPLO (snapshot estático) ----
-      // Baseado em dados reais do Carregados API (top estações por estado)
-      var estacoes = [
-        // São Paulo
-        { lat: -23.5505, lng: -46.6333, nome: 'Shopping Iguatemi SP', conector: 'CCS2', potencia: '150kW', estado: 'SP' },
-        { lat: -23.5932, lng: -46.6760, nome: 'WEG Pinheiros', conector: 'Type2', potencia: '22kW', estado: 'SP' },
-        { lat: -23.6160, lng: -46.6982, nome: 'Graal Rodovias SP', conector: 'CCS2', potencia: '120kW', estado: 'SP' },
-        { lat: -23.5487, lng: -46.6555, nome: 'Ev4u Paulista', conector: 'AC', potencia: '7kW', estado: 'SP' },
-        { lat: -23.5074, lng: -46.8535, nome: 'Supercharger Barueri', conector: 'Tesla', potencia: '250kW', estado: 'SP' },
-        // Minas Gerais
-        { lat: -19.9191, lng: -43.9386, nome: 'BH Shopping', conector: 'CCS2', potencia: '150kW', estado: 'MG' },
-        { lat: -19.8688, lng: -43.9588, nome: 'Shopping Del Rey', conector: 'CHAdeMO', potencia: '50kW', estado: 'MG' },
-        { lat: -21.7654, lng: -43.3495, nome: 'JF Norte', conector: 'Type2', potencia: '22kW', estado: 'MG' },
-        // Rio de Janeiro
-        { lat: -22.9068, lng: -43.1729, nome: 'Shopping NorteShopping', conector: 'CCS2', potencia: '100kW', estado: 'RJ' },
-        { lat: -22.9716, lng: -43.1822, nome: 'Via Parque', conector: 'AC', potencia: '7kW', estado: 'RJ' },
-        { lat: -22.8829, lng: -43.2946, nome: 'Supercharger Barra', conector: 'Tesla', potencia: '250kW', estado: 'RJ' },
-        // Rio Grande do Sul
-        { lat: -30.0346, lng: -51.2177, nome: 'Iguatemi POA', conector: 'CCS2', potencia: '150kW', estado: 'RS' },
-        { lat: -29.7432, lng: -52.4235, nome: 'Shopping Lajeado', conector: 'Type2', potencia: '22kW', estado: 'RS' },
-        { lat: -28.2619, lng: -52.4030, nome: 'WEG Passo Fundo', conector: 'CHAdeMO', potencia: '50kW', estado: 'RS' },
-        // Paraná
-        { lat: -25.4290, lng: -49.2671, nome: 'ParkShopping Barigüi', conector: 'CCS2', potencia: '150kW', estado: 'PR' },
-        { lat: -25.4244, lng: -49.2654, nome: 'Supercharger Curitiba', conector: 'Tesla', potencia: '250kW', estado: 'PR' },
-        { lat: -23.4237, lng: -51.9331, nome: 'Shopping Catuaí', conector: 'Type2', potencia: '22kW', estado: 'PR' },
-        // Brasília / DF
-        { lat: -15.7942, lng: -47.8822, nome: 'Shopping Iguatemi BSB', conector: 'CCS2', potencia: '150kW', estado: 'DF' },
-        { lat: -15.7801, lng: -47.9292, nome: 'ParkShopping', conector: 'AC', potencia: '22kW', estado: 'DF' },
-        // Bahia
-        { lat: -12.9714, lng: -38.5014, nome: 'Shopping Barra', conector: 'CCS2', potencia: '100kW', estado: 'BA' },
-        { lat: -12.9822, lng: -38.4744, nome: 'Outlet Premium SSA', conector: 'Type2', potencia: '22kW', estado: 'BA' },
-        // Santa Catarina
-        { lat: -27.5954, lng: -48.5480, nome: 'Beiramar Shopping', conector: 'CCS2', potencia: '150kW', estado: 'SC' },
-        { lat: -26.9100, lng: -49.0759, nome: 'Mueller Joinville', conector: 'CHAdeMO', potencia: '50kW', estado: 'SC' },
-        // Goiás
-        { lat: -16.6869, lng: -49.2648, nome: 'Flamboyant Shopping', conector: 'CCS2', potencia: '120kW', estado: 'GO' },
-        // Pernambuco
-        { lat: -8.0576, lng: -34.8829, nome: 'Shopping Recife', conector: 'Type2', potencia: '22kW', estado: 'PE' },
-        // Amazonas
-        { lat: -3.1190, lng: -60.0217, nome: 'Manauara Shopping', conector: 'AC', potencia: '7kW', estado: 'AM' },
-        // Ceará
-        { lat: -3.7327, lng: -38.5267, nome: 'North Shopping', conector: 'CCS2', potencia: '100kW', estado: 'CE' },
-      ];
-
-      function getIcon(conector) {
-        var map = { CCS2: iconCCS2, CHAdeMO: iconCHAdeMO, Type2: iconType2, AC: iconAC, Tesla: iconTesla };
-        return map[conector] || iconDefault;
-      }
-
-      var markers = [];
-      estacoes.forEach(function(e) {
-        var m = L.marker([e.lat, e.lng], { icon: getIcon(e.conector) });
-        m.bindPopup(
-          '<div style="min-width:180px;">' +
-          '<strong style="color:#00e676;font-size:.9rem;">' + e.nome + '</strong>' +
-          '<div style="margin-top:.5rem;display:grid;grid-template-columns:1fr 1fr;gap:.25rem .5rem;font-size:.78rem;">' +
-          '<span style="color:#78909c;">Estado</span><span>' + e.estado + '</span>' +
-          '<span style="color:#78909c;">Conector</span><span>' + e.conector + '</span>' +
-          '<span style="color:#78909c;">Potência</span><span style="color:#00e676;">' + e.potencia + '</span>' +
-          '</div>' +
-          '<a href="https://carregados.com.br/estacoes" target="_blank" style="display:block;margin-top:.75rem;text-align:center;padding:.35rem;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);border-radius:6px;color:#00e676;text-decoration:none;font-size:.75rem;font-weight:600;">Ver no Carregados.com.br ↗</a>' +
-          '</div>'
-        );
-        m.addTo(map);
-        markers.push(m);
-      });
-
-      // Auto-fit
-      if (markers.length > 0) {
-        var group = L.featureGroup(markers);
-        map.fitBounds(group.getBounds().pad(0.1));
-      }
-    })();
-
-    // =============================================
-    // CONTADOR ANIMADO (KPIs)
-    // =============================================
-    function animateCounter(el, target, suffix) {
-      var start = 0;
-      var duration = 1800;
-      var startTime = null;
-      function step(ts) {
-        if (!startTime) startTime = ts;
-        var progress = Math.min((ts - startTime) / duration, 1);
-        var val = Math.floor(progress * target);
-        el.textContent = val.toLocaleString('pt-BR') + (suffix || '');
-        if (progress < 1) requestAnimationFrame(step);
-        else el.textContent = target.toLocaleString('pt-BR') + (suffix || '');
-      }
-      requestAnimationFrame(step);
     }
+  }, { threshold: 0.3 });
+  var kpiSection = document.getElementById('kpis');
+  if (kpiSection) kpiObs.observe(kpiSection);
+}
 
-    // IntersectionObserver para disparar animação quando KPIs ficam visíveis
-    var kpiSection = document.getElementById('kpis');
-    var animated = false;
-    if ('IntersectionObserver' in window) {
-      var obs = new IntersectionObserver(function(entries) {
-        if (entries[0].isIntersecting && !animated) {
-          animated = true;
-          var kpiNums = document.querySelectorAll('.kpi-number');
-          var targets = [11783, 591407, 213288, 27, 6, 5];
-          kpiNums.forEach(function(el, i) {
-            animateCounter(el, targets[i]);
-          });
-        }
-      }, { threshold: 0.3 });
-      obs.observe(kpiSection);
-    }
-
-    // =============================================
-    // SMOOTH SCROLL para anchor links
-    // =============================================
-    document.querySelectorAll('a[href^="#"]').forEach(function(a) {
-      a.addEventListener('click', function(e) {
-        var id = this.getAttribute('href').slice(1);
-        var el = document.getElementById(id);
-        if (el) {
-          e.preventDefault();
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-  </script>
+/* ---------------------------------------------------------------
+   PREVENT DEFAULT on nav anchor clicks (already handled by JS)
+--------------------------------------------------------------- */
+document.querySelectorAll('nav a[href="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) { e.preventDefault(); });
+});
+</script>
 </body>
 </html>
