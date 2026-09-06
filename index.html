@@ -629,6 +629,7 @@
     .team-card.lead .team-avatar { border-color: var(--green); box-shadow: 0 0 14px rgba(0,230,118,.3); }
     .team-name { font-weight: 700; font-size: .9rem; color: #fff; margin-bottom: .22rem; }
     .team-role { font-size: .72rem; color: var(--muted); }
+    .team-ra { font-size: .65rem; color: var(--green); font-weight: 600; letter-spacing: .03em; margin: .18rem 0 .1rem; opacity: .8; }
     .team-badge {
       display: inline-block; margin-top: .55rem;
       font-size: .62rem; font-weight: 700; padding: .18rem .55rem;
@@ -762,6 +763,153 @@
     }
     .contato-link-btn:hover { background: rgba(0,230,118,.2); }
 
+    /* =====================================================  MAPA GEO BTN  */
+    .map-geo-btn {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: rgba(0,229,255,.1); border: 1px solid rgba(0,229,255,.3);
+      color: var(--cyan); font-size: .75rem; font-weight: 600;
+      padding: .32rem .85rem; border-radius: 20px; cursor: pointer;
+      transition: all .2s; font-family: 'Inter', sans-serif;
+    }
+    .map-geo-btn:hover { background: rgba(0,229,255,.2); }
+    .map-geo-btn.loading { opacity: .6; pointer-events: none; }
+
+    /* =====================================================  CLIMA FLUTUANTE  */
+    /* Botão flutuante */
+    #clima-fab {
+      position: fixed; bottom: 2rem; right: 1.8rem; z-index: 3000;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: linear-gradient(135deg, #00b4d8, #0077b6);
+      border: none; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0,180,216,.5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; color: #fff;
+      transition: transform .25s, box-shadow .25s;
+    }
+    #clima-fab:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(0,180,216,.7); }
+    #clima-fab.open { background: linear-gradient(135deg, #0077b6, #023e8a); }
+
+    /* Painel flutuante */
+    #clima-panel {
+      position: fixed; bottom: 5.5rem; right: 1.8rem; z-index: 2999;
+      width: 370px; max-width: calc(100vw - 2rem);
+      background: var(--bg2); border: 1px solid var(--border2);
+      border-radius: 18px; box-shadow: 0 8px 40px rgba(0,0,0,.7);
+      display: none; flex-direction: column; overflow: hidden;
+      animation: slideUp .22s ease;
+    }
+    #clima-panel.open { display: flex; }
+    @keyframes slideUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+    .clima-panel-header {
+      background: linear-gradient(135deg, rgba(0,180,216,.15), rgba(0,119,182,.1));
+      border-bottom: 1px solid var(--border2);
+      padding: .9rem 1.1rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .clima-panel-title {
+      font-family: 'Orbitron', sans-serif; font-size: .8rem; font-weight: 800;
+      color: var(--cyan); display: flex; align-items: center; gap: .4rem;
+    }
+    .clima-panel-close {
+      background: none; border: none; color: var(--muted); cursor: pointer;
+      font-size: 1rem; padding: .2rem .4rem; border-radius: 6px; transition: color .2s;
+    }
+    .clima-panel-close:hover { color: var(--text); }
+
+    .clima-panel-body { padding: .9rem 1rem; display: flex; flex-direction: column; gap: .65rem; }
+
+    /* input + botões no painel */
+    .clima-panel-search {
+      display: flex; gap: .5rem;
+    }
+    .clima-panel-input {
+      flex: 1; background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 9px; color: var(--text); font-family: 'Inter', sans-serif;
+      font-size: .82rem; padding: .55rem .8rem; outline: none; transition: border-color .2s;
+    }
+    .clima-panel-input:focus { border-color: var(--cyan); }
+    .clima-panel-input::placeholder { color: var(--muted); }
+    .clima-panel-btn {
+      background: linear-gradient(135deg, #00b4d8, #0077b6);
+      border: none; color: #fff; font-size: .78rem; font-weight: 700;
+      padding: .55rem .9rem; border-radius: 9px; cursor: pointer;
+      font-family: 'Inter', sans-serif; white-space: nowrap;
+    }
+    .clima-panel-btn:hover { opacity: .85; }
+    .clima-geo-btn {
+      display: flex; align-items: center; justify-content: center; gap: .4rem;
+      background: rgba(0,229,255,.06); border: 1px dashed rgba(0,229,255,.3);
+      color: var(--cyan); font-size: .75rem; font-weight: 600;
+      padding: .45rem; border-radius: 9px; cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: all .2s;
+    }
+    .clima-geo-btn:hover { background: rgba(0,229,255,.12); }
+
+    /* quick pills */
+    .clima-panel-quick {
+      display: flex; flex-wrap: wrap; gap: .3rem;
+    }
+    .clima-panel-quick-btn {
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--dim); font-size: .7rem; font-weight: 600;
+      padding: .22rem .6rem; border-radius: 14px; cursor: pointer;
+      transition: all .18s; font-family: 'Inter', sans-serif;
+    }
+    .clima-panel-quick-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    /* result no painel */
+    .clima-panel-result { display: none; }
+    .clima-panel-result.show { display: block; }
+
+    .cp-top {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: .55rem;
+    }
+    .cp-city { font-weight: 700; font-size: .92rem; color: var(--text); }
+    .cp-coords { font-size: .65rem; color: var(--muted); margin-top: .12rem; }
+    .cp-icon { font-size: 2.2rem; line-height: 1; }
+
+    .cp-temp-row { display: flex; align-items: flex-end; gap: 1.2rem; margin-bottom: .75rem; }
+    .cp-temp {
+      font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 900; line-height: 1;
+      background: linear-gradient(135deg, #00b4d8, #00e5ff);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .cp-feels-val { font-size: 1.1rem; font-weight: 700; color: var(--dim); }
+    .cp-feels-lbl { font-size: .62rem; color: var(--muted); }
+
+    .cp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: .4rem; margin-bottom: .6rem; }
+    .cp-cell {
+      background: var(--bg3); border-radius: 8px; padding: .5rem .4rem;
+      text-align: center; font-size: .65rem;
+    }
+    .cp-cell i { font-size: .85rem; display: block; margin-bottom: .15rem; }
+    .cp-cell-val { font-weight: 700; font-size: .8rem; color: var(--text); }
+    .cp-cell-lbl { color: var(--muted); text-transform: uppercase; letter-spacing: .03em; margin-top: .1rem; }
+
+    .cp-condition {
+      background: rgba(0,180,216,.07); border: 1px solid rgba(0,180,216,.2);
+      border-radius: 7px; padding: .4rem .7rem; font-size: .78rem; color: var(--dim);
+      display: flex; align-items: center; gap: .35rem; margin-bottom: .5rem;
+    }
+
+    /* mini forecast in panel */
+    .cp-forecast { display: grid; grid-template-columns: repeat(7,1fr); gap: .25rem; }
+    .cp-fday {
+      background: var(--bg3); border-radius: 7px; padding: .45rem .2rem; text-align: center;
+    }
+    .cp-fdow { font-size: .58rem; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+    .cp-ficon { font-size: 1.1rem; }
+    .cp-fmax { font-weight: 700; font-size: .75rem; color: var(--green); }
+    .cp-fmin { font-size: .63rem; color: var(--muted); }
+
+    .cp-msg { text-align: center; padding: .8rem; font-size: .8rem; color: var(--muted); }
+
+    @media (max-width: 420px) {
+      #clima-panel { width: calc(100vw - 1.5rem); right: .75rem; bottom: 5rem; }
+      #clima-fab { bottom: 1.2rem; right: 1rem; width: 52px; height: 52px; font-size: 1.2rem; }
+    }
+
     /* =====================================================  FOOTER  */
     footer {
       background: var(--bg2); border-top: 1px solid var(--border);
@@ -844,15 +992,15 @@
 
 <!-- ============================================================ NAV -->
 <nav>
-  <a href="#" onclick="showPage('home')" class="nav-brand">
+  <a href="#" onclick="goHome()" class="nav-brand">
     <div class="nav-bolt">⚡</div>
     <span class="nav-brand-name">SustAmbiTech</span>
   </a>
 
   <!-- primary links (scroll within home) -->
   <div class="nav-primary">
-    <a href="#" onclick="showPage('home');scrollTo('powerbi-section')"><i class="fas fa-chart-bar"></i>Dashboard</a>
-    <a href="#" onclick="showPage('home');scrollTo('mapa-section')"><i class="fas fa-map-marked-alt"></i>Mapa</a>
+    <a href="#" onclick="goHome();scrollToSection('powerbi-section')"><i class="fas fa-chart-bar"></i>Dashboard</a>
+    <a href="#" onclick="goHome();scrollToSection('mapa-section')"><i class="fas fa-map-marked-alt"></i>Mapa</a>
   </div>
 
   <!-- page tabs -->
@@ -862,7 +1010,7 @@
     <a href="#" onclick="showPage('contato')" id="nav-contato"><i class="fas fa-envelope"></i> Contato</a>
     <a href="#" onclick="showPage('fontes')" id="nav-fontes"><i class="fas fa-database"></i> Fontes</a>
     <a href="#" onclick="showPage('politicas')" id="nav-politicas"><i class="fas fa-shield-alt"></i> Políticas</a>
-    <a href="#" onclick="showPage('home');scrollTo('team-section')" id="nav-time"><i class="fas fa-users"></i> Time</a>
+    <a href="#" onclick="goHome();scrollToSection('team-section')" id="nav-time"><i class="fas fa-users"></i> Time</a>
     <a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io" target="_blank" class="nav-gh">
       <i class="fab fa-github"></i> GitHub
     </a>
@@ -876,16 +1024,15 @@
 
 <!-- mobile menu -->
 <div class="nav-mobile" id="nav-mobile">
-  <a href="#" onclick="showPage('home');toggleMobile()"><i class="fas fa-home"></i> Início</a>
-  <a href="#" onclick="showPage('home');scrollTo('powerbi-section');toggleMobile()"><i class="fas fa-chart-bar"></i> Dashboard</a>
-  <a href="#" onclick="showPage('home');scrollTo('mapa-section');toggleMobile()"><i class="fas fa-map-marked-alt"></i> Mapa</a>
-  <a href="#" onclick="showPage('home');scrollTo('clima-section');toggleMobile()"><i class="fas fa-cloud-sun"></i> Clima</a>
+  <a href="#" onclick="goHome();toggleMobile()"><i class="fas fa-home"></i> Início</a>
+  <a href="#" onclick="goHome();scrollToSection('powerbi-section');toggleMobile()"><i class="fas fa-chart-bar"></i> Dashboard</a>
+  <a href="#" onclick="goHome();scrollToSection('mapa-section');toggleMobile()"><i class="fas fa-map-marked-alt"></i> Mapa</a>
   <a href="#" onclick="showPage('sobre');toggleMobile()"><i class="fas fa-info-circle"></i> Sobre</a>
   <a href="#" onclick="showPage('servicos');toggleMobile()"><i class="fas fa-cogs"></i> Serviços</a>
   <a href="#" onclick="showPage('contato');toggleMobile()"><i class="fas fa-envelope"></i> Contato</a>
   <a href="#" onclick="showPage('fontes');toggleMobile()"><i class="fas fa-database"></i> Fontes</a>
   <a href="#" onclick="showPage('politicas');toggleMobile()"><i class="fas fa-shield-alt"></i> Políticas</a>
-  <a href="#" onclick="showPage('home');scrollTo('team-section');toggleMobile()"><i class="fas fa-users"></i> Time</a>
+  <a href="#" onclick="goHome();scrollToSection('team-section');toggleMobile()"><i class="fas fa-users"></i> Time</a>
   <a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io" target="_blank"><i class="fab fa-github"></i> GitHub</a>
 </div>
 
@@ -907,10 +1054,10 @@
         Visualize emplacamentos nacionais, postos de recarga, frotas ABVE e tendências do mercado EV brasileiro — tudo em um único painel interativo.
       </p>
       <div class="hero-ctas">
-        <button class="btn-primary" onclick="scrollTo('powerbi-section')">
+        <button class="btn-primary" onclick="scrollToSection('powerbi-section')">
           <i class="fas fa-chart-line"></i> Ver Dashboard Power BI
         </button>
-        <button class="btn-outline" onclick="scrollTo('mapa-section')">
+        <button class="btn-outline" onclick="scrollToSection('mapa-section')">
           <i class="fas fa-map-marked-alt"></i> Explorar Postos
         </button>
       </div>
@@ -992,52 +1139,76 @@
     <div class="section">
       <div class="sec-tag">Mapa Interativo</div>
       <h2 class="sec-title">Estações de Recarga no Brasil</h2>
-      <p class="sec-sub">Mapa com dados reais via <strong style="color:var(--green)">Carregados.com.br API</strong> — <span id="total-stations">11.783</span> estações em todo o país. Tiles gratuitos via <strong style="color:var(--cyan)">OpenFreeMap</strong>.</p>
+      <p class="sec-sub">Mapa ao vivo via <strong style="color:var(--green)">Carregados.com.br</strong> — 11.783 estações em todo o país. Ative a localização para ver as mais próximas.</p>
 
-      <!-- state filter -->
-      <div class="map-filter-row">
-        <span style="font-size:.76rem;color:var(--muted);font-weight:600;"><i class="fas fa-filter" style="margin-right:.3rem"></i>Filtrar:</span>
-        <button class="map-filter-btn active" id="filter-all" onclick="filterMapState(this,'')">Nacional</button>
-        <button class="map-filter-btn" onclick="filterMapState(this,'SP')">São Paulo</button>
-        <button class="map-filter-btn" onclick="filterMapState(this,'MG')">Minas Gerais</button>
-        <button class="map-filter-btn" onclick="filterMapState(this,'RJ')">Rio de Janeiro</button>
-        <button class="map-filter-btn" onclick="filterMapState(this,'RS')">Rio Grande do Sul</button>
-        <button class="map-filter-btn" onclick="filterMapState(this,'PR')">Paraná</button>
-        <button class="map-filter-btn" onclick="filterMapState(this,'SC')">Santa Catarina</button>
-        <button class="map-filter-btn" onclick="filterMapState(this,'BA')">Bahia</button>
+      <!-- controls row -->
+      <div class="map-filter-row" style="flex-wrap:wrap;gap:.5rem;">
+        <span style="font-size:.76rem;color:var(--muted);font-weight:600;"><i class="fas fa-filter" style="margin-right:.3rem"></i>Estado:</span>
+        <button class="map-filter-btn active" id="map-btn-all"  onclick="setMapEmbed(this,'https://carregados.com.br/mapa','Mapa Nacional')">Nacional</button>
+        <button class="map-filter-btn" onclick="setMapEmbed(this,'https://carregados.com.br/estacoes?estado=s%C3%A3o+paulo+%28sp%29','São Paulo')">São Paulo</button>
+        <button class="map-filter-btn" onclick="setMapEmbed(this,'https://carregados.com.br/estacoes?estado=minas+gerais+%28mg%29','Minas Gerais')">Minas Gerais</button>
+        <button class="map-filter-btn" onclick="setMapEmbed(this,'https://carregados.com.br/estacoes?estado=rio+de+janeiro+%28rj%29','Rio de Janeiro')">Rio de Janeiro</button>
+        <button class="map-filter-btn" onclick="setMapEmbed(this,'https://carregados.com.br/estacoes?estado=rio+grande+do+sul+%28rs%29','Rio Grande do Sul')">Rio Grande do Sul</button>
+        <button class="map-filter-btn" onclick="setMapEmbed(this,'https://carregados.com.br/estacoes?estado=paran%C3%A1+%28pr%29','Paraná')">Paraná</button>
+        <button class="map-filter-btn" onclick="setMapEmbed(this,'https://carregados.com.br/estacoes?estado=santa+catarina+%28sc%29','Santa Catarina')">Santa Catarina</button>
+        <button class="map-geo-btn" onclick="geolocateMap()" id="geo-btn" title="Usar minha localização">
+          <i class="fas fa-crosshairs"></i> Minha Localização
+        </button>
       </div>
 
       <div class="map-layout">
-        <!-- MapLibre GL map container -->
-        <div class="map-iframe-wrap" style="position:relative;">
+        <!-- mapa principal: iframe carregados + fallback maplibre -->
+        <div class="map-iframe-wrap" style="position:relative;overflow:hidden;">
           <div class="map-iframe-topbar">
             <div class="pbi-dots"><span></span><span></span><span></span></div>
             <div class="map-iframe-url">
               <i class="fas fa-map-marker-alt fa-xs"></i>
-              <span id="map-url-text">OpenFreeMap · Carregados API — Estações Nacionais</span>
+              <span id="map-url-text">carregados.com.br — Estações Nacionais</span>
             </div>
             <a id="map-open-btn" class="map-open-btn"
-               href="https://carregados.com.br/estacoes" target="_blank" title="Ver no Carregados.com.br">
+               href="https://carregados.com.br/mapa" target="_blank" title="Abrir no Carregados.com.br">
               <i class="fas fa-external-link-alt fa-xs"></i>
             </a>
           </div>
-          <!-- MapLibre container -->
-          <div id="maplibre-map" style="width:100%;height:520px;border-radius:0 0 var(--radius) var(--radius);"></div>
-          <!-- map overlay loading -->
-          <div id="map-loading" style="position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);background:rgba(11,18,25,.88);border:1px solid var(--border);border-radius:20px;padding:.4rem 1rem;font-size:.75rem;color:var(--green);display:flex;align-items:center;gap:.5rem;z-index:10;pointer-events:none;">
-            <i class="fas fa-spinner fa-spin"></i> <span id="map-status">Carregando estações…</span>
+
+          <!-- IFRAME CARREGADOS (espelho) -->
+          <iframe id="map-iframe-carregados"
+            src="https://carregados.com.br/mapa"
+            title="Mapa de Estações de Recarga — Carregados.com.br"
+            allow="geolocation; fullscreen"
+            allowfullscreen loading="lazy"
+            style="width:100%;height:520px;border:none;display:block;"
+            onload="onMapIframeLoad(this)"
+            onerror="onMapIframeError()"
+          ></iframe>
+
+          <!-- FALLBACK: MapLibre GL (aparece se iframe falhar) -->
+          <div id="maplibre-map" style="width:100%;height:520px;display:none;border-radius:0 0 var(--radius) var(--radius);"></div>
+
+          <!-- overlay de status -->
+          <div id="map-loading" style="position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);background:rgba(11,18,25,.88);border:1px solid var(--border);border-radius:20px;padding:.4rem 1rem;font-size:.75rem;color:var(--green);display:none;align-items:center;gap:.5rem;z-index:10;pointer-events:none;">
+            <i class="fas fa-spinner fa-spin"></i> <span id="map-status">Carregando…</span>
+          </div>
+
+          <!-- blocker overlay: se o iframe falhou, mostra fallback -->
+          <div id="map-blocked-overlay" style="display:none;position:absolute;inset:38px 0 0 0;background:var(--bg3);flex-direction:column;align-items:center;justify-content:center;gap:1rem;z-index:5;">
+            <i class="fas fa-map-marked-alt" style="font-size:2.5rem;color:var(--green);opacity:.7"></i>
+            <p style="color:var(--dim);font-size:.88rem;text-align:center;max-width:320px;">Mapa Carregados carregando…<br>Aguarde ou <strong style="color:var(--green)">use o mapa abaixo</strong>.</p>
+            <button class="btn-primary" onclick="showMapLibre()" style="padding:.6rem 1.4rem;font-size:.82rem">
+              <i class="fas fa-map"></i> Usar Mapa Alternativo
+            </button>
           </div>
         </div>
 
         <!-- sidebar -->
         <aside class="map-sidebar">
           <div class="map-card">
-            <div class="map-card-label">Visíveis no mapa</div>
-            <div class="map-card-value" id="visible-count">—</div>
-            <div class="map-card-sub">Estações · Fonte: Carregados API</div>
+            <div class="map-card-label">Total Nacional</div>
+            <div class="map-card-value">11.783</div>
+            <div class="map-card-sub">Estações · Fonte: Carregados.com.br</div>
           </div>
           <div class="map-card">
-            <div class="map-card-label">Conectores Disponíveis</div>
+            <div class="map-card-label">Conectores</div>
             <div class="connector-row"><div class="c-dot" style="background:#00e5ff"></div><span class="c-name">CCS2 (Combo 2)</span><span class="c-badge c-dc">DC</span></div>
             <div class="connector-row"><div class="c-dot" style="background:#aa00ff"></div><span class="c-name">CHAdeMO</span><span class="c-badge c-dc">DC</span></div>
             <div class="connector-row"><div class="c-dot" style="background:#2979ff"></div><span class="c-name">Type 2 (IEC 62196)</span><span class="c-badge c-ac">AC</span></div>
@@ -1051,82 +1222,13 @@
             <div class="connector-row"><div class="c-dot" style="background:var(--cyan)"></div><span class="c-name">Minas Gerais (MG)</span><span style="color:var(--cyan);font-weight:700;font-size:.78rem">1.055</span></div>
             <div class="connector-row"><div class="c-dot" style="background:var(--blue)"></div><span class="c-name">Rio Grande do Sul</span><span style="color:var(--blue);font-weight:700;font-size:.78rem">1.031</span></div>
           </div>
-          <a href="https://carregados.com.br/estacoes" target="_blank" class="map-ext-btn">
-            <i class="fas fa-external-link-alt"></i> Ver todas no Carregados.com.br
+          <button class="map-ext-btn" onclick="geolocateMap()" style="width:100%;cursor:pointer;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);color:var(--cyan);">
+            <i class="fas fa-crosshairs"></i> Usar Minha Localização
+          </button>
+          <a href="https://carregados.com.br/mapa" target="_blank" class="map-ext-btn" style="margin-top:.5rem">
+            <i class="fas fa-external-link-alt"></i> Ver mapa completo
           </a>
         </aside>
-      </div>
-    </div>
-  </section>
-
-  <!-- CLIMA WIDGET -->
-  <section id="clima-section" style="background:var(--bg3);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);">
-    <div class="section">
-      <div class="sec-tag"><i class="fas fa-cloud-sun" style="margin-right:.4rem"></i>Clima</div>
-      <h2 class="sec-title">Buscador de Clima</h2>
-      <p class="sec-sub">Consulte temperatura, umidade e condições climáticas de qualquer cidade brasileira — dados gratuitos via <strong style="color:var(--cyan)">Open-Meteo</strong>.</p>
-
-      <div class="clima-wrap">
-        <!-- Search bar -->
-        <div class="clima-search-row">
-          <div class="clima-input-wrap">
-            <i class="fas fa-search clima-search-icon"></i>
-            <input type="text" id="clima-input" class="clima-input" placeholder="Digite uma cidade… (ex: São Paulo, Curitiba)"
-              onkeydown="if(event.key==='Enter')searchClima()" autocomplete="off" />
-          </div>
-          <button class="btn-primary" onclick="searchClima()" style="flex-shrink:0;padding:.7rem 1.4rem;">
-            <i class="fas fa-search"></i> Buscar
-          </button>
-        </div>
-
-        <!-- Quick cities -->
-        <div class="clima-quick">
-          <span style="font-size:.72rem;color:var(--muted);font-weight:600;">Cidades rápidas:</span>
-          <button class="clima-quick-btn" onclick="quickClima('São Paulo')">São Paulo</button>
-          <button class="clima-quick-btn" onclick="quickClima('Rio de Janeiro')">Rio de Janeiro</button>
-          <button class="clima-quick-btn" onclick="quickClima('Curitiba')">Curitiba</button>
-          <button class="clima-quick-btn" onclick="quickClima('Belo Horizonte')">Belo Horizonte</button>
-          <button class="clima-quick-btn" onclick="quickClima('Brasília')">Brasília</button>
-          <button class="clima-quick-btn" onclick="quickClima('Porto Alegre')">Porto Alegre</button>
-        </div>
-
-        <!-- Result card -->
-        <div id="clima-result" class="clima-result" style="display:none">
-          <div class="clima-card">
-            <div class="clima-card-top">
-              <div class="clima-city-info">
-                <div class="clima-city-name" id="clima-city">—</div>
-                <div class="clima-city-coords" id="clima-coords">—</div>
-              </div>
-              <div class="clima-icon-wrap" id="clima-icon-wrap">☁️</div>
-            </div>
-            <div class="clima-temp-row">
-              <div class="clima-temp" id="clima-temp">—</div>
-              <div class="clima-feels">
-                <div class="clima-feels-val" id="clima-feels">—</div>
-                <div class="clima-feels-lbl">Sensação térmica</div>
-              </div>
-            </div>
-            <div class="clima-details-grid">
-              <div class="clima-detail"><i class="fas fa-tint" style="color:var(--cyan)"></i><div class="cd-val" id="cd-hum">—</div><div class="cd-lbl">Umidade</div></div>
-              <div class="clima-detail"><i class="fas fa-wind" style="color:var(--blue)"></i><div class="cd-val" id="cd-wind">—</div><div class="cd-lbl">Vento</div></div>
-              <div class="clima-detail"><i class="fas fa-compress-arrows-alt" style="color:#b388ff"></i><div class="cd-val" id="cd-pres">—</div><div class="cd-lbl">Pressão</div></div>
-              <div class="clima-detail"><i class="fas fa-eye" style="color:var(--green)"></i><div class="cd-val" id="cd-uv">—</div><div class="cd-lbl">Índice UV</div></div>
-              <div class="clima-detail"><i class="fas fa-sun" style="color:#ffd740"></i><div class="cd-val" id="cd-rad">—</div><div class="cd-lbl">Radiação</div></div>
-              <div class="clima-detail"><i class="fas fa-cloud-rain" style="color:var(--cyan)"></i><div class="cd-val" id="cd-precip">—</div><div class="cd-lbl">Precipitação</div></div>
-            </div>
-            <div class="clima-condition-bar">
-              <i class="fas fa-info-circle" style="color:var(--green);margin-right:.4rem"></i>
-              <span id="clima-condition">—</span>
-            </div>
-          </div>
-
-          <!-- 7-day forecast strip -->
-          <div class="forecast-strip" id="forecast-strip"></div>
-        </div>
-
-        <!-- Error / loading state -->
-        <div id="clima-msg" class="clima-msg" style="display:none"></div>
       </div>
     </div>
   </section>
@@ -1136,38 +1238,94 @@
     <div class="section" style="text-align:center">
       <div class="sec-tag" style="justify-content:center"><i class="fas fa-users" style="margin-right:.4rem"></i>Equipe</div>
       <h2 class="sec-title">Time SustAmbiTech</h2>
-      <p class="sec-sub" style="margin:0 auto 3rem">Profissionais dedicados à plataforma de inteligência em mobilidade elétrica do Brasil.</p>
+      <p class="sec-sub" style="margin:0 auto 3rem">Grupo <strong style="color:var(--green)">SustAmbiTechBI</strong> — Inteligência em Mobilidade Elétrica no Brasil.</p>
       <div class="team-grid">
+
+        <!-- Kayham -->
         <div class="team-card lead">
-          <div class="team-avatar">⚡</div>
-          <div class="team-name">Kayham Cristoffer</div>
-          <div class="team-role">Tech Lead &amp; Arquiteto</div>
+          <div class="team-avatar" style="background:none;border:none;padding:0;">
+            <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="tg0" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00e676"/><stop offset="100%" style="stop-color:#00c853"/></linearGradient></defs>
+              <circle cx="36" cy="36" r="36" fill="url(#tg0)"/>
+              <circle cx="36" cy="28" r="11" fill="rgba(0,0,0,.35)"/>
+              <ellipse cx="36" cy="56" rx="18" ry="12" fill="rgba(0,0,0,.35)"/>
+              <text x="36" y="33" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="13" font-weight="900" fill="#050a0e">KC</text>
+            </svg>
+          </div>
+          <div class="team-name">Kayham C. G. de Oliveira</div>
+          <div class="team-role">Tech Lead &amp; Arquiteto · CCO</div>
+          <div class="team-ra">RA 232000577</div>
           <div class="team-badge">Lead</div>
         </div>
+
+        <!-- Gabriel -->
         <div class="team-card">
-          <div class="team-avatar">🛠️</div>
-          <div class="team-name">Gabriel</div>
-          <div class="team-role">Desenvolvedor Full Stack</div>
+          <div class="team-avatar" style="background:none;border:none;padding:0;">
+            <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="tg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00e5ff"/><stop offset="100%" style="stop-color:#0091ea"/></linearGradient></defs>
+              <circle cx="36" cy="36" r="36" fill="url(#tg1)"/>
+              <circle cx="36" cy="28" r="11" fill="rgba(0,0,0,.35)"/>
+              <ellipse cx="36" cy="56" rx="18" ry="12" fill="rgba(0,0,0,.35)"/>
+              <text x="36" y="33" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="13" font-weight="900" fill="#050a0e">GL</text>
+            </svg>
+          </div>
+          <div class="team-name">Gabriel Luz Gomes da Silva</div>
+          <div class="team-role">Desenvolvedor Full Stack · ADS</div>
+          <div class="team-ra">RA 251004471</div>
           <div class="team-badge" style="background:rgba(0,229,255,.1);color:var(--cyan)">Dev</div>
         </div>
+
+        <!-- Eric Jr -->
         <div class="team-card">
-          <div class="team-avatar">📊</div>
-          <div class="team-name">Eric Jr</div>
-          <div class="team-role">BI &amp; Data Analytics</div>
+          <div class="team-avatar" style="background:none;border:none;padding:0;">
+            <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="tg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#2979ff"/><stop offset="100%" style="stop-color:#651fff"/></linearGradient></defs>
+              <circle cx="36" cy="36" r="36" fill="url(#tg2)"/>
+              <circle cx="36" cy="28" r="11" fill="rgba(0,0,0,.35)"/>
+              <ellipse cx="36" cy="56" rx="18" ry="12" fill="rgba(0,0,0,.35)"/>
+              <text x="36" y="33" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="13" font-weight="900" fill="#fff">EJ</text>
+            </svg>
+          </div>
+          <div class="team-name">Eric Junior Santos</div>
+          <div class="team-role">BI &amp; Data Analytics · ADS</div>
+          <div class="team-ra">RA 251004675</div>
           <div class="team-badge" style="background:rgba(41,121,255,.1);color:var(--blue)">BI</div>
         </div>
+
+        <!-- Natan -->
         <div class="team-card">
-          <div class="team-avatar">🗄️</div>
-          <div class="team-name">Natan</div>
-          <div class="team-role">Database Engineer</div>
+          <div class="team-avatar" style="background:none;border:none;padding:0;">
+            <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="tg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#aa00ff"/><stop offset="100%" style="stop-color:#7c4dff"/></linearGradient></defs>
+              <circle cx="36" cy="36" r="36" fill="url(#tg3)"/>
+              <circle cx="36" cy="28" r="11" fill="rgba(0,0,0,.35)"/>
+              <ellipse cx="36" cy="56" rx="18" ry="12" fill="rgba(0,0,0,.35)"/>
+              <text x="36" y="33" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="13" font-weight="900" fill="#fff">NA</text>
+            </svg>
+          </div>
+          <div class="team-name">Natan Arroyo</div>
+          <div class="team-role">Database Engineer · ADS</div>
+          <div class="team-ra">RA 252005106</div>
           <div class="team-badge" style="background:rgba(124,77,255,.1);color:#b388ff">DB</div>
         </div>
+
+        <!-- Leandro -->
         <div class="team-card">
-          <div class="team-avatar">🌿</div>
-          <div class="team-name">Leandro</div>
-          <div class="team-role">Sustentabilidade &amp; ESG</div>
+          <div class="team-avatar" style="background:none;border:none;padding:0;">
+            <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="tg4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00e676"/><stop offset="100%" style="stop-color:#1de9b6"/></linearGradient></defs>
+              <circle cx="36" cy="36" r="36" fill="url(#tg4)"/>
+              <circle cx="36" cy="28" r="11" fill="rgba(0,0,0,.35)"/>
+              <ellipse cx="36" cy="56" rx="18" ry="12" fill="rgba(0,0,0,.35)"/>
+              <text x="36" y="33" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="13" font-weight="900" fill="#050a0e">LG</text>
+            </svg>
+          </div>
+          <div class="team-name">Leandro Gama dos Santos</div>
+          <div class="team-role">Sustentabilidade &amp; ESG · ADS</div>
+          <div class="team-ra">RA 252005142</div>
           <div class="team-badge" style="background:rgba(0,230,118,.08);color:var(--green)">ESG</div>
         </div>
+
       </div>
     </div>
   </section>
@@ -1280,33 +1438,38 @@
         </div>
         <div class="team-grid" style="justify-content:flex-start">
           <div class="team-card lead" style="width:175px">
-            <div class="team-avatar">⚡</div>
+            <div class="team-avatar" style="background:none;border:none;padding:0;"><svg width="56" height="56" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sg0" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00e676"/><stop offset="100%" style="stop-color:#00c853"/></linearGradient></defs><circle cx="36" cy="36" r="36" fill="url(#sg0)"/><circle cx="36" cy="28" r="11" fill="rgba(0,0,0,.35)"/><ellipse cx="36" cy="56" rx="18" ry="12" fill="rgba(0,0,0,.35)"/><text x="36" y="33" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="13" font-weight="900" fill="#050a0e">KC</text></svg></div>
             <div class="team-name">Kayham Cristoffer</div>
-            <div class="team-role">Tech Lead &amp; Arquiteto</div>
+            <div class="team-role">Tech Lead · CCO</div>
+            <div class="team-ra">RA 232000577</div>
             <div class="team-badge">Lead</div>
           </div>
           <div class="team-card" style="width:175px">
-            <div class="team-avatar">🛠️</div>
-            <div class="team-name">Gabriel</div>
-            <div class="team-role">Full Stack Dev</div>
+            <div class="team-avatar" style="background:none;border:none;padding:0;"><svg width="56" height="56" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00e5ff"/><stop offset="100%" style="stop-color:#0091ea"/></linearGradient></defs><circle cx="36" cy="36" r="36" fill="url(#sg1)"/><circle cx="36" cy="28" r="11" fill="rgba(0,0,0,.35)"/><ellipse cx="36" cy="56" rx="18" ry="12" fill="rgba(0,0,0,.35)"/><text x="36" y="33" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="13" font-weight="900" fill="#050a0e">GL</text></svg></div>
+            <div class="team-name">Gabriel Luz</div>
+            <div class="team-role">Full Stack · ADS</div>
+            <div class="team-ra">RA 251004471</div>
             <div class="team-badge" style="background:rgba(0,229,255,.1);color:var(--cyan)">Dev</div>
           </div>
           <div class="team-card" style="width:175px">
-            <div class="team-avatar">📊</div>
-            <div class="team-name">Eric Jr</div>
-            <div class="team-role">BI &amp; Analytics</div>
+            <div class="team-avatar" style="background:none;border:none;padding:0;"><svg width="56" height="56" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#2979ff"/><stop offset="100%" style="stop-color:#651fff"/></linearGradient></defs><circle cx="36" cy="36" r="36" fill="url(#sg2)"/><circle cx="36" cy="28" r="11" fill="rgba(0,0,0,.35)"/><ellipse cx="36" cy="56" rx="18" ry="12" fill="rgba(0,0,0,.35)"/><text x="36" y="33" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="13" font-weight="900" fill="#fff">EJ</text></svg></div>
+            <div class="team-name">Eric Junior</div>
+            <div class="team-role">BI &amp; Analytics · ADS</div>
+            <div class="team-ra">RA 251004675</div>
             <div class="team-badge" style="background:rgba(41,121,255,.1);color:var(--blue)">BI</div>
           </div>
           <div class="team-card" style="width:175px">
-            <div class="team-avatar">🗄️</div>
-            <div class="team-name">Natan</div>
-            <div class="team-role">Database Engineer</div>
+            <div class="team-avatar" style="background:none;border:none;padding:0;"><svg width="56" height="56" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#aa00ff"/><stop offset="100%" style="stop-color:#7c4dff"/></linearGradient></defs><circle cx="36" cy="36" r="36" fill="url(#sg3)"/><circle cx="36" cy="28" r="11" fill="rgba(0,0,0,.35)"/><ellipse cx="36" cy="56" rx="18" ry="12" fill="rgba(0,0,0,.35)"/><text x="36" y="33" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="13" font-weight="900" fill="#fff">NA</text></svg></div>
+            <div class="team-name">Natan Arroyo</div>
+            <div class="team-role">Database · ADS</div>
+            <div class="team-ra">RA 252005106</div>
             <div class="team-badge" style="background:rgba(124,77,255,.1);color:#b388ff">DB</div>
           </div>
           <div class="team-card" style="width:175px">
-            <div class="team-avatar">🌿</div>
-            <div class="team-name">Leandro</div>
-            <div class="team-role">Sustentabilidade ESG</div>
+            <div class="team-avatar" style="background:none;border:none;padding:0;"><svg width="56" height="56" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sg4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00e676"/><stop offset="100%" style="stop-color:#1de9b6"/></linearGradient></defs><circle cx="36" cy="36" r="36" fill="url(#sg4)"/><circle cx="36" cy="28" r="11" fill="rgba(0,0,0,.35)"/><ellipse cx="36" cy="56" rx="18" ry="12" fill="rgba(0,0,0,.35)"/><text x="36" y="33" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="13" font-weight="900" fill="#050a0e">LG</text></svg></div>
+            <div class="team-name">Leandro Gama</div>
+            <div class="team-role">ESG · ADS</div>
+            <div class="team-ra">RA 252005142</div>
             <div class="team-badge" style="background:rgba(0,230,118,.08);color:var(--green)">ESG</div>
           </div>
         </div>
@@ -1336,9 +1499,9 @@
           <div class="svc-desc">Mapa em tempo real integrado com Carregados.com.br — 11.783 estações em todo o Brasil, filtráveis por estado. Visualização de conectores, potência e tipo de acesso.</div>
         </div>
         <div class="svc-card">
-          <div class="svc-icon b"><i class="fas fa-database"></i></div>
-          <div class="svc-title">Schema MySQL Público</div>
-          <div class="svc-desc">Schema MySQL 8 completo disponível no GitHub — tabelas de lookup, transacionais, BI e LogAuditoria. Pronto para importar no MySQL Workbench ou servidor próprio.</div>
+          <div class="svc-icon b"><i class="fas fa-cloud-sun"></i></div>
+          <div class="svc-title">Buscador de Clima</div>
+          <div class="svc-desc">Widget flutuante de clima em tempo real via Open-Meteo API — temperatura, sensação, umidade, vento, UV e previsão de 7 dias. Suporte a geolocalização automática.</div>
         </div>
         <div class="svc-card">
           <div class="svc-icon p"><i class="fas fa-search"></i></div>
@@ -1720,7 +1883,7 @@
           <li><button onclick="showPage('contato')"><i class="fas fa-envelope"></i>Contato</button></li>
           <li><button onclick="showPage('fontes')"><i class="fas fa-database"></i>Fontes</button></li>
           <li><button onclick="showPage('politicas')"><i class="fas fa-shield-alt"></i>Políticas</button></li>
-          <li><button onclick="showPage('home');scrollTo('clima-section')"><i class="fas fa-cloud-sun"></i>Clima</button></li>
+          <li><button onclick="toggleClimaPanel()"><i class="fas fa-cloud-sun"></i>Clima</button></li>
         </ul>
       </div>
       <div>
@@ -1756,17 +1919,100 @@
   </div>
 </footer>
 
+<!-- ============================================================ CLIMA FLUTUANTE (global) -->
+<!-- Botão FAB -->
+<button id="clima-fab" onclick="toggleClimaPanel()" aria-label="Buscador de Clima" title="Clima em tempo real">
+  <i class="fas fa-cloud-sun" id="clima-fab-icon"></i>
+</button>
+
+<!-- Painel -->
+<div id="clima-panel" role="dialog" aria-label="Buscador de Clima">
+  <div class="clima-panel-header">
+    <div class="clima-panel-title">
+      <i class="fas fa-cloud-sun"></i> Buscador de Clima
+    </div>
+    <button class="clima-panel-close" onclick="toggleClimaPanel()" aria-label="Fechar">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="clima-panel-body">
+
+    <!-- Busca por cidade -->
+    <div class="clima-panel-search">
+      <input type="text" id="clima-panel-input" class="clima-panel-input"
+        placeholder="Ex: São Paulo, Curitiba…"
+        onkeydown="if(event.key==='Enter')searchClimaPanel()" autocomplete="off" />
+      <button class="clima-panel-btn" onclick="searchClimaPanel()">
+        <i class="fas fa-search"></i> Buscar
+      </button>
+    </div>
+
+    <!-- Geolocalização -->
+    <button class="clima-geo-btn" onclick="geoClimaPanel()" id="clima-geo-btn">
+      <i class="fas fa-crosshairs"></i> Usar minha localização atual
+    </button>
+
+    <!-- Cidades rápidas -->
+    <div class="clima-panel-quick">
+      <span style="font-size:.68rem;color:var(--muted);font-weight:600;align-self:center;">Rápido:</span>
+      <button class="clima-panel-quick-btn" onclick="quickClimaPanel('São Paulo')">SP</button>
+      <button class="clima-panel-quick-btn" onclick="quickClimaPanel('Rio de Janeiro')">RJ</button>
+      <button class="clima-panel-quick-btn" onclick="quickClimaPanel('Curitiba')">Curitiba</button>
+      <button class="clima-panel-quick-btn" onclick="quickClimaPanel('Belo Horizonte')">BH</button>
+      <button class="clima-panel-quick-btn" onclick="quickClimaPanel('Brasília')">Brasília</button>
+      <button class="clima-panel-quick-btn" onclick="quickClimaPanel('Porto Alegre')">POA</button>
+      <button class="clima-panel-quick-btn" onclick="quickClimaPanel('Fortaleza')">Fortaleza</button>
+      <button class="clima-panel-quick-btn" onclick="quickClimaPanel('Salvador')">Salvador</button>
+    </div>
+
+    <!-- Mensagem / loading -->
+    <div id="cp-msg" class="cp-msg" style="display:none"></div>
+
+    <!-- Resultado -->
+    <div id="cp-result" class="clima-panel-result">
+      <div class="cp-top">
+        <div>
+          <div class="cp-city" id="cp-city">—</div>
+          <div class="cp-coords" id="cp-coords">—</div>
+        </div>
+        <div class="cp-icon" id="cp-icon">☁️</div>
+      </div>
+      <div class="cp-temp-row">
+        <div class="cp-temp" id="cp-temp">—</div>
+        <div>
+          <div class="cp-feels-val" id="cp-feels">—</div>
+          <div class="cp-feels-lbl">Sensação térmica</div>
+        </div>
+      </div>
+      <div class="cp-grid">
+        <div class="cp-cell"><i class="fas fa-tint" style="color:#00e5ff"></i><div class="cp-cell-val" id="cp-hum">—</div><div class="cp-cell-lbl">Umidade</div></div>
+        <div class="cp-cell"><i class="fas fa-wind" style="color:#2979ff"></i><div class="cp-cell-val" id="cp-wind">—</div><div class="cp-cell-lbl">Vento</div></div>
+        <div class="cp-cell"><i class="fas fa-compress-arrows-alt" style="color:#b388ff"></i><div class="cp-cell-val" id="cp-pres">—</div><div class="cp-cell-lbl">Pressão</div></div>
+        <div class="cp-cell"><i class="fas fa-eye" style="color:#00e676"></i><div class="cp-cell-val" id="cp-uv">—</div><div class="cp-cell-lbl">UV</div></div>
+        <div class="cp-cell"><i class="fas fa-sun" style="color:#ffd740"></i><div class="cp-cell-val" id="cp-rad">—</div><div class="cp-cell-lbl">Radiação</div></div>
+        <div class="cp-cell"><i class="fas fa-cloud-rain" style="color:#00e5ff"></i><div class="cp-cell-val" id="cp-precip">—</div><div class="cp-cell-lbl">Precip.</div></div>
+      </div>
+      <div class="cp-condition">
+        <i class="fas fa-circle" style="color:#00b4d8;font-size:.55rem"></i>
+        <span id="cp-condition">—</span>
+      </div>
+      <!-- mini previsão 7 dias -->
+      <div class="cp-forecast" id="cp-forecast"></div>
+    </div>
+
+  </div>
+</div>
+
 <!-- ============================================================ SCRIPTS -->
 <script>
-/* ---------------------------------------------------------------
+/* =============================================================
    PAGE SYSTEM
---------------------------------------------------------------- */
+============================================================= */
 function showPage(name) {
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
   var target = document.getElementById('page-' + name);
   if (target) { target.classList.add('active'); }
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  // update nav highlight
   ['sobre','servicos','fontes','politicas','time','contato'].forEach(function(n) {
     var el = document.getElementById('nav-' + n);
     if (el) el.classList.remove('active');
@@ -1775,538 +2021,312 @@ function showPage(name) {
   if (active) active.classList.add('active');
 }
 
-function scrollTo(id) {
+/* Vai para home E rola para o topo da página (hero) */
+function goHome() {
+  showPage('home');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function scrollToSection(id) {
   setTimeout(function() {
     var el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 80);
+  }, 150);
 }
 
-/* ---------------------------------------------------------------
-   MOBILE MENU
---------------------------------------------------------------- */
 function toggleMobile() {
-  var m = document.getElementById('nav-mobile');
-  m.classList.toggle('open');
+  document.getElementById('nav-mobile').classList.toggle('open');
 }
 
-/* ---------------------------------------------------------------
+/* =============================================================
    POWER BI TABS — trocam iframe sem abrir novo site
---------------------------------------------------------------- */
+============================================================= */
 function setPBITab(btn, url, label) {
-  // update active tab style
   document.querySelectorAll('.pbi-tab').forEach(function(t) { t.classList.remove('active'); });
   btn.classList.add('active');
-  // swap iframe src
-  var frame = document.getElementById('pbi-frame');
-  frame.src = url;
-  // update address bar text
+  document.getElementById('pbi-frame').src = url;
   document.getElementById('pbi-url-text').textContent = 'app.powerbi.com/view — ' + label;
-  // update open-in-new-tab link
   document.getElementById('pbi-open-btn').href = url;
 }
 
-/* ---------------------------------------------------------------
-   MAP FILTER — filtra marcadores MapLibre por estado
---------------------------------------------------------------- */
-function filterMapState(btn, stateCode) {
+/* =============================================================
+   MAPA — iframe Carregados (espelho real) + fallback MapLibre
+============================================================= */
+var _mapIframeOk = false;
+var _mapLibreActive = false;
+
+function setMapEmbed(btn, url, label) {
   document.querySelectorAll('.map-filter-btn').forEach(function(b) { b.classList.remove('active'); });
   btn.classList.add('active');
-  var label = stateCode ? (btn.textContent.trim() + ' (' + stateCode + ')') : 'Mapa Nacional';
-  document.getElementById('map-url-text').textContent = 'OpenFreeMap · Carregados API — ' + label;
-  document.getElementById('map-open-btn').href = stateCode
-    ? 'https://carregados.com.br/estacoes?estado=' + stateCode
-    : 'https://carregados.com.br/estacoes';
-  // apply filter on maplibre source
-  applyStateFilter(stateCode);
+  document.getElementById('map-url-text').textContent = 'carregados.com.br — ' + label;
+  document.getElementById('map-open-btn').href = url;
+  if (_mapLibreActive) {
+    // se maplibre já aberto, usa filtro de estado
+    var state = btn.getAttribute('data-state') || '';
+    applyStateFilter(state);
+  } else {
+    document.getElementById('map-iframe-carregados').src = url;
+  }
 }
 
-/* ---------------------------------------------------------------
-   MAPLIBRE GL — Estações de Recarga (OpenFreeMap, sem API key)
---------------------------------------------------------------- */
+function onMapIframeLoad(iframe) {
+  _mapIframeOk = true;
+  var overlay = document.getElementById('map-blocked-overlay');
+  if (overlay) overlay.style.display = 'none';
+}
+
+function onMapIframeError() {
+  showMapLibre();
+}
+
+function showMapLibre() {
+  _mapLibreActive = true;
+  var iframe = document.getElementById('map-iframe-carregados');
+  var ml = document.getElementById('maplibre-map');
+  var overlay = document.getElementById('map-blocked-overlay');
+  if (iframe) iframe.style.display = 'none';
+  if (ml) ml.style.display = 'block';
+  if (overlay) overlay.style.display = 'none';
+  initMapLibre();
+}
+
+/* Detecta se iframe ficou bloqueado (height=0 ou sem conteúdo após 6s) */
+setTimeout(function() {
+  var iframe = document.getElementById('map-iframe-carregados');
+  if (!iframe) return;
+  try {
+    // Tenta acessar contentDocument — vai lançar erro se bloqueado por CSP
+    var cd = iframe.contentDocument || iframe.contentWindow.document;
+    if (!cd || !cd.body || cd.body.innerHTML === '') throw new Error('blocked');
+  } catch(e) {
+    // bloqueado → mostra overlay com opção de alternar para MapLibre
+    var overlay = document.getElementById('map-blocked-overlay');
+    if (overlay) overlay.style.display = 'flex';
+  }
+}, 6000);
+
+/* Geolocalização → centraliza iframe + solicita permissão */
+function geolocateMap() {
+  var btn = document.getElementById('geo-btn');
+  if (!navigator.geolocation) {
+    alert('Geolocalização não suportada neste navegador.');
+    return;
+  }
+  if (btn) { btn.classList.add('loading'); btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Localizando…'; }
+  navigator.geolocation.getCurrentPosition(
+    function(pos) {
+      var lat = pos.coords.latitude;
+      var lng = pos.coords.longitude;
+      if (btn) { btn.classList.remove('loading'); btn.innerHTML = '<i class="fas fa-crosshairs"></i> Minha Localização'; }
+      document.getElementById('map-url-text').textContent = 'carregados.com.br — Próximo a mim (' + lat.toFixed(4) + ', ' + lng.toFixed(4) + ')';
+      document.querySelectorAll('.map-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+      if (_mapLibreActive && _mapInstance) {
+        _mapInstance.flyTo({ center: [lng, lat], zoom: 11, duration: 1400 });
+        new maplibregl.Marker({ color: '#00e5ff' }).setLngLat([lng, lat]).addTo(_mapInstance);
+      } else {
+        // passa coordenadas via URL do Carregados
+        var url = 'https://carregados.com.br/mapa#' + lat + '/' + lng + '/13';
+        document.getElementById('map-iframe-carregados').src = url;
+        document.getElementById('map-open-btn').href = url;
+      }
+    },
+    function(err) {
+      if (btn) { btn.classList.remove('loading'); btn.innerHTML = '<i class="fas fa-crosshairs"></i> Minha Localização'; }
+      var msgs = { 1:'Permissão de localização negada.', 2:'Localização indisponível.', 3:'Tempo esgotado.' };
+      alert('Erro de geolocalização: ' + (msgs[err.code] || err.message));
+    },
+    { enableHighAccuracy: true, timeout: 10000 }
+  );
+}
+
+/* =============================================================
+   MAPLIBRE GL — fallback (OpenFreeMap, sem API key)
+============================================================= */
 var _mapInstance = null;
 var _allStations = [];
-var _mapReady = false;
+var _mapLibreReady = false;
 
-function initMap() {
+function initMapLibre() {
   if (_mapInstance) return;
   var map = new maplibregl.Map({
     container: 'maplibre-map',
     style: 'https://tiles.openfreemap.org/styles/liberty',
-    center: [-51.5, -15.8],
-    zoom: 3.8,
+    center: [-51.5, -15.8], zoom: 3.8,
     attributionControl: false
   });
   map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
   map.addControl(new maplibregl.NavigationControl(), 'top-right');
-
   _mapInstance = map;
-
   map.on('load', function() {
-    _mapReady = true;
-    // add empty source
-    map.addSource('stations', {
-      type: 'geojson',
-      data: { type: 'FeatureCollection', features: [] },
-      cluster: true,
-      clusterMaxZoom: 12,
-      clusterRadius: 45
-    });
-
-    // cluster circles
-    map.addLayer({
-      id: 'clusters',
-      type: 'circle',
-      source: 'stations',
-      filter: ['has', 'point_count'],
-      paint: {
-        'circle-color': [
-          'step', ['get', 'point_count'],
-          '#00e676', 20, '#00e5ff', 50, '#2979ff'
-        ],
-        'circle-radius': ['step', ['get', 'point_count'], 16, 20, 22, 50, 28],
-        'circle-opacity': 0.85,
-        'circle-stroke-width': 1.5,
-        'circle-stroke-color': 'rgba(0,0,0,.4)'
-      }
-    });
-
-    // cluster count labels
-    map.addLayer({
-      id: 'cluster-count',
-      type: 'symbol',
-      source: 'stations',
-      filter: ['has', 'point_count'],
-      layout: {
-        'text-field': '{point_count_abbreviated}',
-        'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-        'text-size': 11
-      },
-      paint: { 'text-color': '#050a0e' }
-    });
-
-    // individual markers
-    map.addLayer({
-      id: 'unclustered-point',
-      type: 'circle',
-      source: 'stations',
-      filter: ['!', ['has', 'point_count']],
-      paint: {
-        'circle-color': '#00e676',
-        'circle-radius': 6,
-        'circle-stroke-width': 1.5,
-        'circle-stroke-color': 'rgba(0,230,118,.4)',
-        'circle-opacity': 0.85
-      }
-    });
-
-    // click on individual point → popup
-    map.on('click', 'unclustered-point', function(e) {
-      var props = e.features[0].properties;
-      var coords = e.features[0].geometry.coordinates.slice();
-      new maplibregl.Popup({ offset: 12, className: 'map-popup' })
-        .setLngLat(coords)
-        .setHTML('<strong style="color:#00e676">' + (props.name || 'Estação') + '</strong>' +
-          (props.city ? '<br><span style="color:#78909c;font-size:.78rem">' + props.city + (props.state ? ', ' + props.state : '') + '</span>' : '') +
-          (props.connectors ? '<br><span style="color:#b0bec5;font-size:.75rem">Conectores: ' + props.connectors + '</span>' : ''))
-        .addTo(map);
-    });
-
-    // click on cluster → zoom in
-    map.on('click', 'clusters', function(e) {
-      var features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
-      var clusterId = features[0].properties.cluster_id;
-      map.getSource('stations').getClusterExpansionZoom(clusterId, function(err, zoom) {
-        if (err) return;
-        map.easeTo({ center: features[0].geometry.coordinates, zoom: zoom });
-      });
-    });
-
-    map.on('mouseenter', 'clusters', function() { map.getCanvas().style.cursor = 'pointer'; });
-    map.on('mouseleave', 'clusters', function() { map.getCanvas().style.cursor = ''; });
-    map.on('mouseenter', 'unclustered-point', function() { map.getCanvas().style.cursor = 'pointer'; });
-    map.on('mouseleave', 'unclustered-point', function() { map.getCanvas().style.cursor = ''; });
-
-    // load stations data
-    fetchStations();
+    _mapLibreReady = true;
+    map.addSource('stations', { type:'geojson', data:{type:'FeatureCollection',features:[]}, cluster:true, clusterMaxZoom:12, clusterRadius:45 });
+    map.addLayer({ id:'clusters', type:'circle', source:'stations', filter:['has','point_count'], paint:{ 'circle-color':['step',['get','point_count'],'#00e676',20,'#00e5ff',50,'#2979ff'], 'circle-radius':['step',['get','point_count'],16,20,22,50,28], 'circle-opacity':.85, 'circle-stroke-width':1.5, 'circle-stroke-color':'rgba(0,0,0,.4)' } });
+    map.addLayer({ id:'cluster-count', type:'symbol', source:'stations', filter:['has','point_count'], layout:{'text-field':'{point_count_abbreviated}','text-font':['Open Sans Bold','Arial Unicode MS Bold'],'text-size':11}, paint:{'text-color':'#050a0e'} });
+    map.addLayer({ id:'unclustered-point', type:'circle', source:'stations', filter:['!',[' has','point_count']], paint:{'circle-color':'#00e676','circle-radius':6,'circle-stroke-width':1.5,'circle-stroke-color':'rgba(0,230,118,.4)','circle-opacity':.85} });
+    map.on('click','unclustered-point',function(e){ var p=e.features[0].properties; var c=e.features[0].geometry.coordinates.slice(); new maplibregl.Popup({offset:12}).setLngLat(c).setHTML('<strong style="color:#00e676">'+(p.name||'Estação')+'</strong>'+(p.city?'<br><span style="color:#78909c;font-size:.78rem">'+p.city+(p.state?', '+p.state:'')+'</span>':'')).addTo(map); });
+    map.on('click','clusters',function(e){ var f=map.queryRenderedFeatures(e.point,{layers:['clusters']}); map.getSource('stations').getClusterExpansionZoom(f[0].properties.cluster_id,function(err,z){ if(!err) map.easeTo({center:f[0].geometry.coordinates,zoom:z}); }); });
+    ['clusters','unclustered-point'].forEach(function(l){ map.on('mouseenter',l,function(){map.getCanvas().style.cursor='pointer';}); map.on('mouseleave',l,function(){map.getCanvas().style.cursor='';}); });
+    loadFallbackStations();
   });
 }
 
-function fetchStations() {
-  setMapStatus('Buscando estações via Carregados API…');
-  // Use a proxy-friendly endpoint. Carregados public API:
-  fetch('https://carregados.com.br/api/public/market-data')
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      var stations = [];
-      if (Array.isArray(data)) { stations = data; }
-      else if (data && Array.isArray(data.stations)) { stations = data.stations; }
-      else if (data && Array.isArray(data.data)) { stations = data.data; }
-      if (stations.length === 0) { throw new Error('empty'); }
-      _allStations = stations;
-      buildGeoJSON('');
-    })
-    .catch(function() {
-      // fallback: use curated static dataset of known major stations in Brazil
-      setMapStatus('Usando dados offline (11.783 estações estimadas)…');
-      useFallbackData();
-    });
-}
-
-function useFallbackData() {
-  // Representative ~150 stations across Brazil from known public data
-  var cities = [
-    { name:'Posto Eletrobras SP Centro',lat:-23.5505,lng:-46.6333,city:'São Paulo',state:'SP' },
-    { name:'Shopping Paulista EV',lat:-23.5617,lng:-46.6558,city:'São Paulo',state:'SP' },
-    { name:'Parque Maquiné EV',lat:-23.5913,lng:-46.6866,city:'São Paulo',state:'SP' },
-    { name:'Berrini Supercharger',lat:-23.6000,lng:-46.6860,city:'São Paulo',state:'SP' },
-    { name:'WPW Vila Olímpia',lat:-23.5950,lng:-46.6830,city:'São Paulo',state:'SP' },
-    { name:'Shopping Morumbi EV',lat:-23.6228,lng:-46.7218,city:'São Paulo',state:'SP' },
-    { name:'Terminal Bandeira',lat:-23.5358,lng:-46.6396,city:'São Paulo',state:'SP' },
-    { name:'EV Lapa',lat:-23.5232,lng:-46.7012,city:'São Paulo',state:'SP' },
-    { name:'Pinheiros EV Hub',lat:-23.5662,lng:-46.6794,city:'São Paulo',state:'SP' },
-    { name:'Itaim Bibi Charger',lat:-23.5831,lng:-46.6752,city:'São Paulo',state:'SP' },
-    { name:'EV Rio Ipanema',lat:-22.9838,lng:-43.2096,city:'Rio de Janeiro',state:'RJ' },
-    { name:'Barra da Tijuca EV',lat:-23.0047,lng:-43.3658,city:'Rio de Janeiro',state:'RJ' },
-    { name:'Copacabana Charge',lat:-22.9711,lng:-43.1877,city:'Rio de Janeiro',state:'RJ' },
-    { name:'Botafogo Hub',lat:-22.9518,lng:-43.1835,city:'Rio de Janeiro',state:'RJ' },
-    { name:'Centro RJ EV',lat:-22.9068,lng:-43.1729,city:'Rio de Janeiro',state:'RJ' },
-    { name:'Niterói EV',lat:-22.8940,lng:-43.1057,city:'Niterói',state:'RJ' },
-    { name:'BH Savassi EV',lat:-19.9391,lng:-43.9381,city:'Belo Horizonte',state:'MG' },
-    { name:'BH Lourdes Charge',lat:-19.9357,lng:-43.9357,city:'Belo Horizonte',state:'MG' },
-    { name:'Funcionários BH',lat:-19.9284,lng:-43.9332,city:'Belo Horizonte',state:'MG' },
-    { name:'Uberlândia EV Center',lat:-18.9186,lng:-48.2772,city:'Uberlândia',state:'MG' },
-    { name:'Poços de Caldas EV',lat:-21.7870,lng:-46.5633,city:'Poços de Caldas',state:'MG' },
-    { name:'Curitiba Centro EV',lat:-25.4284,lng:-49.2733,city:'Curitiba',state:'PR' },
-    { name:'Curitiba Batel Charge',lat:-25.4411,lng:-49.2826,city:'Curitiba',state:'PR' },
-    { name:'Barigui EV Hub',lat:-25.4236,lng:-49.3076,city:'Curitiba',state:'PR' },
-    { name:'Londrina EV',lat:-23.3045,lng:-51.1696,city:'Londrina',state:'PR' },
-    { name:'Maringá EV Station',lat:-23.4205,lng:-51.9331,city:'Maringá',state:'PR' },
-    { name:'Cascavel EV',lat:-24.9573,lng:-53.4552,city:'Cascavel',state:'PR' },
-    { name:'Porto Alegre Centro EV',lat:-30.0346,lng:-51.2177,city:'Porto Alegre',state:'RS' },
-    { name:'Moinhos de Vento EV',lat:-30.0280,lng:-51.2131,city:'Porto Alegre',state:'RS' },
-    { name:'Caxias do Sul EV',lat:-29.1681,lng:-51.1793,city:'Caxias do Sul',state:'RS' },
-    { name:'Canoas EV Hub',lat:-29.9177,lng:-51.1824,city:'Canoas',state:'RS' },
-    { name:'Novo Hamburgo EV',lat:-29.6780,lng:-51.1307,city:'Novo Hamburgo',state:'RS' },
-    { name:'Pelotas EV Station',lat:-31.7654,lng:-52.3376,city:'Pelotas',state:'RS' },
-    { name:'Florianópolis EV Norte',lat:-27.5954,lng:-48.5480,city:'Florianópolis',state:'SC' },
-    { name:'Florianópolis Sul EV',lat:-27.6683,lng:-48.5153,city:'Florianópolis',state:'SC' },
-    { name:'Joinville EV Hub',lat:-26.3044,lng:-48.8456,city:'Joinville',state:'SC' },
-    { name:'Blumenau EV',lat:-26.9194,lng:-49.0661,city:'Blumenau',state:'SC' },
-    { name:'Balneário Camboriú EV',lat:-26.9906,lng:-48.6347,city:'Balneário Camboriú',state:'SC' },
-    { name:'Brasília Asa Norte EV',lat:-15.7801,lng:-47.8912,city:'Brasília',state:'DF' },
-    { name:'Brasília Asa Sul EV',lat:-15.8267,lng:-47.9218,city:'Brasília',state:'DF' },
-    { name:'Brasília Sudoeste EV',lat:-15.8023,lng:-47.9387,city:'Brasília',state:'DF' },
-    { name:'Taguatinga EV',lat:-15.8311,lng:-48.0594,city:'Taguatinga',state:'DF' },
-    { name:'Salvador Centro EV',lat:-12.9714,lng:-38.5014,city:'Salvador',state:'BA' },
-    { name:'Salvador Itaigara EV',lat:-12.9835,lng:-38.4721,city:'Salvador',state:'BA' },
-    { name:'Boca do Rio EV',lat:-12.9980,lng:-38.4543,city:'Salvador',state:'BA' },
-    { name:'Feira de Santana EV',lat:-12.2661,lng:-38.9663,city:'Feira de Santana',state:'BA' },
-    { name:'Fortaleza Centro EV',lat:-3.7172,lng:-38.5433,city:'Fortaleza',state:'CE' },
-    { name:'Meireles EV Hub',lat:-3.7255,lng:-38.5141,city:'Fortaleza',state:'CE' },
-    { name:'Aldeota EV',lat:-3.7380,lng:-38.5001,city:'Fortaleza',state:'CE' },
-    { name:'Recife Boa Viagem EV',lat:-8.1199,lng:-34.9003,city:'Recife',state:'PE' },
-    { name:'Recife Casa Forte EV',lat:-8.0524,lng:-34.9233,city:'Recife',state:'PE' },
-    { name:'Caruaru EV',lat:-8.2760,lng:-35.9753,city:'Caruaru',state:'PE' },
-    { name:'Manaus Centro EV',lat:-3.1190,lng:-60.0217,city:'Manaus',state:'AM' },
-    { name:'Adrianópolis EV',lat:-3.1001,lng:-60.0183,city:'Manaus',state:'AM' },
-    { name:'Belém EV Hub',lat:-1.4558,lng:-48.5044,city:'Belém',state:'PA' },
-    { name:'Batista Campos EV',lat:-1.4590,lng:-48.4888,city:'Belém',state:'PA' },
-    { name:'Goiânia Setor Sul EV',lat:-16.6869,lng:-49.2648,city:'Goiânia',state:'GO' },
-    { name:'Goiânia Bueno EV',lat:-16.6985,lng:-49.2740,city:'Goiânia',state:'GO' },
-    { name:'Anápolis EV',lat:-16.3281,lng:-48.9531,city:'Anápolis',state:'GO' },
-    { name:'Natal Tirol EV',lat:-5.7945,lng:-35.2110,city:'Natal',state:'RN' },
-    { name:'Maceió Ponta Verde EV',lat:-9.6498,lng:-35.7206,city:'Maceió',state:'AL' },
-    { name:'Aracaju EV Center',lat:-10.9472,lng:-37.0731,city:'Aracaju',state:'SE' },
-    { name:'João Pessoa EV',lat:-7.1153,lng:-34.8641,city:'João Pessoa',state:'PB' },
-    { name:'Campina Grande EV',lat:-7.2306,lng:-35.8811,city:'Campina Grande',state:'PB' },
-    { name:'Teresina EV Hub',lat:-5.0920,lng:-42.8034,city:'Teresina',state:'PI' },
-    { name:'São Luís EV Center',lat:-2.5307,lng:-44.3068,city:'São Luís',state:'MA' },
-    { name:'Palmas EV',lat:-10.2491,lng:-48.3243,city:'Palmas',state:'TO' },
-    { name:'Cuiabá EV Hub',lat:-15.6014,lng:-56.0979,city:'Cuiabá',state:'MT' },
-    { name:'Campo Grande EV',lat:-20.4697,lng:-54.6201,city:'Campo Grande',state:'MS' },
-    { name:'Dourados EV',lat:-22.2231,lng:-54.8056,city:'Dourados',state:'MS' },
-    { name:'Macapá EV',lat:0.0356,lng:-51.0705,city:'Macapá',state:'AP' },
-    { name:'Porto Velho EV',lat:-8.7612,lng:-63.9004,city:'Porto Velho',state:'RO' },
-    { name:'Rio Branco EV',lat:-9.9754,lng:-67.8113,city:'Rio Branco',state:'AC' },
-    { name:'Boa Vista EV',lat:2.8235,lng:-60.6758,city:'Boa Vista',state:'RR' },
-    { name:'Campinas Cambuí EV',lat:-22.9056,lng:-47.0608,city:'Campinas',state:'SP' },
-    { name:'Campinas Centro EV',lat:-22.9099,lng:-47.0626,city:'Campinas',state:'SP' },
-    { name:'Santos EV Hub',lat:-23.9608,lng:-46.3336,city:'Santos',state:'SP' },
-    { name:'Ribeirão Preto EV',lat:-21.1767,lng:-47.8208,city:'Ribeirão Preto',state:'SP' },
-    { name:'São José dos Campos EV',lat:-23.1794,lng:-45.8869,city:'São José dos Campos',state:'SP' },
-    { name:'Sorocaba EV',lat:-23.5015,lng:-47.4526,city:'Sorocaba',state:'SP' },
-    { name:'Osasco EV Hub',lat:-23.5329,lng:-46.7916,city:'Osasco',state:'SP' },
-    { name:'Santo André EV',lat:-23.6639,lng:-46.5338,city:'Santo André',state:'SP' },
-    { name:'São Bernardo EV',lat:-23.6944,lng:-46.5654,city:'São Bernardo do Campo',state:'SP' },
-    { name:'Guarulhos EV Hub',lat:-23.4543,lng:-46.5333,city:'Guarulhos',state:'SP' },
-    { name:'Mogi das Cruzes EV',lat:-23.5222,lng:-46.1853,city:'Mogi das Cruzes',state:'SP' },
-    { name:'Taubaté EV',lat:-23.0265,lng:-45.5554,city:'Taubaté',state:'SP' },
-    { name:'Bauru EV Center',lat:-22.3113,lng:-49.0600,city:'Bauru',state:'SP' },
-    { name:'Presidente Prudente EV',lat:-22.1206,lng:-51.3886,city:'Pres. Prudente',state:'SP' },
-    { name:'São Carlos EV',lat:-22.0087,lng:-47.8944,city:'São Carlos',state:'SP' },
-    { name:'Araraquara EV',lat:-21.7948,lng:-48.1756,city:'Araraquara',state:'SP' },
-    { name:'Piracicaba EV',lat:-22.7253,lng:-47.6492,city:'Piracicaba',state:'SP' },
-    { name:'Jundiaí EV Hub',lat:-23.1857,lng:-46.8974,city:'Jundiaí',state:'SP' },
-    { name:'Itapeva EV',lat:-23.9818,lng:-48.8759,city:'Itapeva',state:'SP' },
-    { name:'Araçatuba EV',lat:-21.2108,lng:-50.4343,city:'Araçatuba',state:'SP' },
-    { name:'Marília EV',lat:-22.2139,lng:-49.9458,city:'Marília',state:'SP' },
-    { name:'Americana EV',lat:-22.7400,lng:-47.3335,city:'Americana',state:'SP' },
-    { name:'Praia Grande EV',lat:-24.0055,lng:-46.4027,city:'Praia Grande',state:'SP' },
-    { name:'Vitória EV Centro',lat:-20.3155,lng:-40.3128,city:'Vitória',state:'ES' },
-    { name:'Vila Velha EV',lat:-20.3297,lng:-40.2924,city:'Vila Velha',state:'ES' },
-    { name:'Cachoeiro EV',lat:-20.8453,lng:-41.1136,city:'Cachoeiro de Itapemirim',state:'ES' },
-    { name:'Montes Claros EV',lat:-16.7286,lng:-43.8617,city:'Montes Claros',state:'MG' },
-    { name:'Juiz de Fora EV',lat:-21.7642,lng:-43.3503,city:'Juiz de Fora',state:'MG' },
-    { name:'Contagem EV',lat:-19.9347,lng:-44.0569,city:'Contagem',state:'MG' },
-    { name:'Betim EV',lat:-19.9680,lng:-44.1981,city:'Betim',state:'MG' },
-    { name:'Ipatinga EV',lat:-19.4680,lng:-42.5376,city:'Ipatinga',state:'MG' },
-    { name:'Divinópolis EV',lat:-20.1394,lng:-44.8831,city:'Divinópolis',state:'MG' },
-    { name:'Pampulha EV Hub',lat:-19.8656,lng:-43.9726,city:'Belo Horizonte',state:'MG' },
-    { name:'Patos de Minas EV',lat:-18.5783,lng:-46.5178,city:'Patos de Minas',state:'MG' }
-  ];
-
-  // add some scatter points per major city for density
-  var scattered = [];
-  cities.forEach(function(c) {
-    scattered.push(c);
-    for (var i = 0; i < 2; i++) {
-      scattered.push({
-        name: c.name + ' #' + (i+2),
-        lat: c.lat + (Math.random() - 0.5) * 0.08,
-        lng: c.lng + (Math.random() - 0.5) * 0.08,
-        city: c.city, state: c.state
-      });
-    }
-  });
-
-  _allStations = scattered;
+function loadFallbackStations() {
+  var cities=[{name:'Posto SP Centro',lat:-23.5505,lng:-46.6333,city:'São Paulo',state:'SP'},{name:'Berrini EV',lat:-23.600,lng:-46.686,city:'São Paulo',state:'SP'},{name:'Vila Olímpia',lat:-23.595,lng:-46.683,city:'São Paulo',state:'SP'},{name:'Morumbi EV',lat:-23.6228,lng:-46.7218,city:'São Paulo',state:'SP'},{name:'Pinheiros EV',lat:-23.5662,lng:-46.6794,city:'São Paulo',state:'SP'},{name:'Itaim EV',lat:-23.5831,lng:-46.6752,city:'São Paulo',state:'SP'},{name:'Campinas EV',lat:-22.9056,lng:-47.0608,city:'Campinas',state:'SP'},{name:'Santos EV',lat:-23.9608,lng:-46.3336,city:'Santos',state:'SP'},{name:'Ribeirão Preto',lat:-21.1767,lng:-47.8208,city:'Ribeirão Preto',state:'SP'},{name:'RJ Ipanema',lat:-22.9838,lng:-43.2096,city:'Rio de Janeiro',state:'RJ'},{name:'Barra EV',lat:-23.0047,lng:-43.3658,city:'Rio de Janeiro',state:'RJ'},{name:'Copacabana',lat:-22.9711,lng:-43.1877,city:'Rio de Janeiro',state:'RJ'},{name:'BH Savassi',lat:-19.9391,lng:-43.9381,city:'Belo Horizonte',state:'MG'},{name:'BH Lourdes',lat:-19.9357,lng:-43.9357,city:'Belo Horizonte',state:'MG'},{name:'Uberlândia EV',lat:-18.9186,lng:-48.2772,city:'Uberlândia',state:'MG'},{name:'Curitiba Centro',lat:-25.4284,lng:-49.2733,city:'Curitiba',state:'PR'},{name:'Curitiba Batel',lat:-25.4411,lng:-49.2826,city:'Curitiba',state:'PR'},{name:'Londrina EV',lat:-23.3045,lng:-51.1696,city:'Londrina',state:'PR'},{name:'POA Centro',lat:-30.0346,lng:-51.2177,city:'Porto Alegre',state:'RS'},{name:'Moinhos EV',lat:-30.0280,lng:-51.2131,city:'Porto Alegre',state:'RS'},{name:'Caxias do Sul',lat:-29.1681,lng:-51.1793,city:'Caxias do Sul',state:'RS'},{name:'Florianópolis N',lat:-27.5954,lng:-48.5480,city:'Florianópolis',state:'SC'},{name:'Joinville EV',lat:-26.3044,lng:-48.8456,city:'Joinville',state:'SC'},{name:'Brasília Asa N',lat:-15.7801,lng:-47.8912,city:'Brasília',state:'DF'},{name:'Brasília Asa S',lat:-15.8267,lng:-47.9218,city:'Brasília',state:'DF'},{name:'Salvador Centro',lat:-12.9714,lng:-38.5014,city:'Salvador',state:'BA'},{name:'Fortaleza EV',lat:-3.7172,lng:-38.5433,city:'Fortaleza',state:'CE'},{name:'Recife EV',lat:-8.1199,lng:-34.9003,city:'Recife',state:'PE'},{name:'Manaus EV',lat:-3.1190,lng:-60.0217,city:'Manaus',state:'AM'},{name:'Goiânia EV',lat:-16.6869,lng:-49.2648,city:'Goiânia',state:'GO'},{name:'Vitória EV',lat:-20.3155,lng:-40.3128,city:'Vitória',state:'ES'}];
+  var all=[];
+  cities.forEach(function(c){ all.push(c); for(var i=0;i<3;i++) all.push({name:c.name+' #'+(i+2),lat:c.lat+(Math.random()-.5)*.1,lng:c.lng+(Math.random()-.5)*.1,city:c.city,state:c.state}); });
+  _allStations=all;
   buildGeoJSON('');
-  setMapStatus('✓ ' + scattered.length + ' estações carregadas (modo offline)');
-  document.getElementById('total-stations').textContent = '11.783';
 }
 
 function buildGeoJSON(stateFilter) {
-  var features = _allStations
-    .filter(function(s) {
-      if (!stateFilter) return true;
-      return (s.state || '') === stateFilter;
-    })
-    .map(function(s) {
-      var lat = parseFloat(s.lat || s.latitude || s.y || 0);
-      var lng = parseFloat(s.lng || s.longitude || s.long || s.x || 0);
-      if (!lat || !lng) return null;
-      return {
-        type: 'Feature',
-        geometry: { type: 'Point', coordinates: [lng, lat] },
-        properties: {
-          name: s.name || s.nome || s.title || 'Estação EV',
-          city: s.city || s.cidade || s.municipio || '',
-          state: s.state || s.estado || s.uf || '',
-          connectors: s.connectors || s.conectores || ''
-        }
-      };
-    })
-    .filter(Boolean);
-
-  var geojson = { type: 'FeatureCollection', features: features };
-  if (_mapInstance && _mapReady) {
-    _mapInstance.getSource('stations').setData(geojson);
-  }
-  document.getElementById('visible-count').textContent = features.length.toLocaleString('pt-BR');
-  setMapStatus('✓ ' + features.length.toLocaleString('pt-BR') + ' estações' + (stateFilter ? ' em ' + stateFilter : ' no Brasil'));
-  setTimeout(function() {
-    var loadingEl = document.getElementById('map-loading');
-    if (loadingEl) loadingEl.style.opacity = '0';
-  }, 2500);
+  var features=_allStations.filter(function(s){ return !stateFilter||(s.state||'')===stateFilter; }).map(function(s){ var lat=parseFloat(s.lat||0),lng=parseFloat(s.lng||0); if(!lat||!lng) return null; return {type:'Feature',geometry:{type:'Point',coordinates:[lng,lat]},properties:{name:s.name||'Estação EV',city:s.city||'',state:s.state||''}}; }).filter(Boolean);
+  if(_mapInstance&&_mapLibreReady) _mapInstance.getSource('stations').setData({type:'FeatureCollection',features:features});
 }
 
 function applyStateFilter(stateCode) {
-  if (_allStations.length > 0) {
-    buildGeoJSON(stateCode);
-    // fly to state center
-    var centers = {
-      'SP': [-46.65,-23.5], 'RJ': [-43.2,-22.9], 'MG': [-44.0,-19.9],
-      'RS': [-51.2,-30.0], 'PR': [-49.27,-25.4], 'SC': [-48.55,-27.6],
-      'BA': [-38.5,-12.97], 'CE': [-38.54,-3.72], 'PE': [-34.9,-8.12],
-      'DF': [-47.9,-15.8]
-    };
-    if (stateCode && centers[stateCode] && _mapInstance) {
-      _mapInstance.flyTo({ center: centers[stateCode], zoom: 7.5, duration: 1200 });
-    } else if (!stateCode && _mapInstance) {
-      _mapInstance.flyTo({ center: [-51.5,-15.8], zoom: 3.8, duration: 1200 });
-    }
-  }
+  if(!_mapLibreActive) return;
+  buildGeoJSON(stateCode);
+  var centers={'SP':[-46.65,-23.5],'RJ':[-43.2,-22.9],'MG':[-44.0,-19.9],'RS':[-51.2,-30.0],'PR':[-49.27,-25.4],'SC':[-48.55,-27.6],'BA':[-38.5,-12.97],'CE':[-38.54,-3.72],'DF':[-47.9,-15.8]};
+  if(stateCode&&centers[stateCode]&&_mapInstance) _mapInstance.flyTo({center:centers[stateCode],zoom:7.5,duration:1200});
+  else if(!stateCode&&_mapInstance) _mapInstance.flyTo({center:[-51.5,-15.8],zoom:3.8,duration:1200});
 }
 
-function setMapStatus(msg) {
-  var el = document.getElementById('map-status');
-  var wrap = document.getElementById('map-loading');
-  if (el) el.textContent = msg;
-  if (wrap) { wrap.style.opacity = '1'; wrap.style.display = 'flex'; }
+/* =============================================================
+   CLIMA — PAINEL FLUTUANTE (Open-Meteo, sem API key)
+============================================================= */
+var WMO_CODES={0:'Céu limpo',1:'Principalmente limpo',2:'Parcialmente nublado',3:'Nublado',45:'Névoa',48:'Névoa com cristais',51:'Chuvisco leve',53:'Chuvisco moderado',55:'Chuvisco denso',61:'Chuva leve',63:'Chuva moderada',65:'Chuva forte',71:'Neve leve',73:'Neve moderada',75:'Neve forte',80:'Pancadas leves',81:'Pancadas moderadas',82:'Pancadas fortes',95:'Tempestade',96:'Tempestade com granizo',99:'Tempestade forte'};
+var WMO_ICONS={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'❄️',73:'❄️',75:'❄️',80:'🌧️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
+var DAYS=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+function toggleClimaPanel() {
+  var panel=document.getElementById('clima-panel');
+  var fab=document.getElementById('clima-fab');
+  var icon=document.getElementById('clima-fab-icon');
+  panel.classList.toggle('open');
+  fab.classList.toggle('open');
+  icon.className = panel.classList.contains('open') ? 'fas fa-times' : 'fas fa-cloud-sun';
 }
 
-// Initialize map when section comes into view
-if ('IntersectionObserver' in window) {
-  var mapObs = new IntersectionObserver(function(entries) {
-    if (entries[0].isIntersecting) {
-      mapObs.disconnect();
-      setTimeout(initMap, 300);
-    }
-  }, { threshold: 0.1 });
-  var mapaSection = document.getElementById('mapa-section');
-  if (mapaSection) mapObs.observe(mapaSection);
-}
+function quickClimaPanel(city) { document.getElementById('clima-panel-input').value=city; searchClimaPanel(); }
 
-/* ---------------------------------------------------------------
-   CLIMA — Open-Meteo API (sem API key)
---------------------------------------------------------------- */
-var WMO_CODES = {
-  0:'Céu limpo', 1:'Principalmente limpo', 2:'Parcialmente nublado', 3:'Nublado',
-  45:'Névoa', 48:'Névoa com cristais', 51:'Chuvisco leve', 53:'Chuvisco moderado',
-  55:'Chuvisco denso', 61:'Chuva leve', 63:'Chuva moderada', 65:'Chuva forte',
-  71:'Neve leve', 73:'Neve moderada', 75:'Neve forte',
-  80:'Pancadas de chuva leves', 81:'Pancadas de chuva moderadas', 82:'Pancadas de chuva fortes',
-  95:'Tempestade', 96:'Tempestade com granizo', 99:'Tempestade com granizo forte'
-};
-var WMO_ICONS = {
-  0:'☀️', 1:'🌤️', 2:'⛅', 3:'☁️',
-  45:'🌫️', 48:'🌫️', 51:'🌦️', 53:'🌦️', 55:'🌧️',
-  61:'🌧️', 63:'🌧️', 65:'🌧️', 71:'❄️', 73:'❄️', 75:'❄️',
-  80:'🌧️', 81:'🌧️', 82:'⛈️', 95:'⛈️', 96:'⛈️', 99:'⛈️'
-};
-var DAYS = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
-
-function quickClima(city) {
-  document.getElementById('clima-input').value = city;
-  searchClima();
-}
-
-function searchClima() {
-  var city = document.getElementById('clima-input').value.trim();
-  if (!city) return;
-  setClimaMsg('<i class="fas fa-spinner fa-spin"></i> Buscando "' + city + '"…', false);
-  // geocode via Open-Meteo geocoding
-  fetch('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(city) + '&count=1&language=pt&format=json')
-    .then(function(r) { return r.json(); })
-    .then(function(geo) {
-      if (!geo.results || geo.results.length === 0) throw new Error('Cidade não encontrada: "' + city + '"');
-      var loc = geo.results[0];
-      return fetchWeather(loc);
+function searchClimaPanel() {
+  var city=document.getElementById('clima-panel-input').value.trim();
+  if(!city) return;
+  setCPMsg('<i class="fas fa-spinner fa-spin"></i> Buscando "'+city+'"…');
+  fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(city)+'&count=1&language=pt&format=json')
+    .then(function(r){return r.json();})
+    .then(function(geo){
+      if(!geo.results||geo.results.length===0) throw new Error('Cidade não encontrada: "'+city+'"');
+      return fetchWeatherPanel(geo.results[0]);
     })
-    .catch(function(err) {
-      setClimaMsg('<i class="fas fa-exclamation-triangle" style="color:#ff6d00"></i> ' + err.message, true);
-    });
+    .catch(function(err){ setCPMsg('<i class="fas fa-exclamation-triangle" style="color:#ff6d00"></i> '+err.message, true); });
 }
 
-function fetchWeather(loc) {
-  var url = 'https://api.open-meteo.com/v1/forecast?' +
-    'latitude=' + loc.latitude + '&longitude=' + loc.longitude +
-    '&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,' +
-    'wind_speed_10m,pressure_msl,uv_index,precipitation,shortwave_radiation' +
-    '&daily=weather_code,temperature_2m_max,temperature_2m_min' +
-    '&timezone=America%2FSao_Paulo&forecast_days=7';
-  return fetch(url)
-    .then(function(r) { return r.json(); })
-    .then(function(data) { renderClima(loc, data); });
+function geoClimaPanel() {
+  if(!navigator.geolocation){ setCPMsg('Geolocalização não suportada.',true); return; }
+  var btn=document.getElementById('clima-geo-btn');
+  btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Localizando…';
+  setCPMsg('<i class="fas fa-spinner fa-spin"></i> Detectando localização…');
+  navigator.geolocation.getCurrentPosition(
+    function(pos){
+      btn.innerHTML='<i class="fas fa-crosshairs"></i> Usar minha localização atual';
+      var lat=pos.coords.latitude, lng=pos.coords.longitude;
+      // Reverse geocode via Open-Meteo
+      fetch('https://geocoding-api.open-meteo.com/v1/search?name=&count=1&language=pt&format=json&latitude='+lat+'&longitude='+lng)
+        .then(function(r){return r.json();})
+        .catch(function(){ return {}; })
+        .then(function(){
+          fetchWeatherPanel({latitude:lat,longitude:lng,name:'Minha Localização',admin1:'',country:'BR'});
+        });
+    },
+    function(err){
+      btn.innerHTML='<i class="fas fa-crosshairs"></i> Usar minha localização atual';
+      var msgs={1:'Permissão negada.',2:'Localização indisponível.',3:'Tempo esgotado.'};
+      setCPMsg('<i class="fas fa-ban" style="color:#ff6d00"></i> '+(msgs[err.code]||'Erro de geolocalização.'), true);
+    },
+    {enableHighAccuracy:true,timeout:10000}
+  );
 }
 
-function renderClima(loc, data) {
-  var c = data.current;
-  var d = data.daily;
-  var code = c.weather_code;
-  document.getElementById('clima-city').textContent = loc.name + (loc.admin1 ? ', ' + loc.admin1 : '') + (loc.country ? ' · ' + loc.country : '');
-  document.getElementById('clima-coords').textContent = 'Lat ' + loc.latitude.toFixed(4) + '  Lng ' + loc.longitude.toFixed(4);
-  document.getElementById('clima-icon-wrap').textContent = WMO_ICONS[code] || '🌡️';
-  document.getElementById('clima-temp').textContent = Math.round(c.temperature_2m) + '°C';
-  document.getElementById('clima-feels').textContent = Math.round(c.apparent_temperature) + '°C';
-  document.getElementById('cd-hum').textContent = c.relative_humidity_2m + '%';
-  document.getElementById('cd-wind').textContent = Math.round(c.wind_speed_10m) + ' km/h';
-  document.getElementById('cd-pres').textContent = Math.round(c.pressure_msl) + ' hPa';
-  document.getElementById('cd-uv').textContent = (c.uv_index !== undefined ? c.uv_index.toFixed(1) : '—');
-  document.getElementById('cd-rad').textContent = (c.shortwave_radiation !== undefined ? Math.round(c.shortwave_radiation) + ' W/m²' : '—');
-  document.getElementById('cd-precip').textContent = (c.precipitation !== undefined ? c.precipitation.toFixed(1) + ' mm' : '—');
-  document.getElementById('clima-condition').textContent = WMO_CODES[code] || ('Código ' + code);
+function fetchWeatherPanel(loc) {
+  var url='https://api.open-meteo.com/v1/forecast?latitude='+loc.latitude+'&longitude='+loc.longitude+'&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,pressure_msl,uv_index,precipitation,shortwave_radiation&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=America%2FSao_Paulo&forecast_days=7';
+  return fetch(url).then(function(r){return r.json();}).then(function(data){ renderWeatherPanel(loc,data); });
+}
 
-  // 7-day forecast
-  var strip = document.getElementById('forecast-strip');
-  strip.innerHTML = '';
-  for (var i = 0; i < 7; i++) {
-    var date = new Date(d.time[i] + 'T12:00:00');
-    var dow = DAYS[date.getDay()];
-    var fcode = d.weather_code[i];
-    strip.innerHTML += '<div class="forecast-day">' +
-      '<div class="forecast-dow">' + dow + '</div>' +
-      '<div class="forecast-icon">' + (WMO_ICONS[fcode] || '🌡️') + '</div>' +
-      '<div class="forecast-max">' + Math.round(d.temperature_2m_max[i]) + '°</div>' +
-      '<div class="forecast-min">' + Math.round(d.temperature_2m_min[i]) + '°</div>' +
-      '</div>';
+function renderWeatherPanel(loc,data) {
+  var c=data.current, d=data.daily, code=c.weather_code;
+  document.getElementById('cp-city').textContent=loc.name+(loc.admin1?', '+loc.admin1:'')+(loc.country?' · '+loc.country:'');
+  document.getElementById('cp-coords').textContent='Lat '+loc.latitude.toFixed(4)+' Lng '+loc.longitude.toFixed(4);
+  document.getElementById('cp-icon').textContent=WMO_ICONS[code]||'🌡️';
+  document.getElementById('cp-temp').textContent=Math.round(c.temperature_2m)+'°C';
+  document.getElementById('cp-feels').textContent=Math.round(c.apparent_temperature)+'°C';
+  document.getElementById('cp-hum').textContent=c.relative_humidity_2m+'%';
+  document.getElementById('cp-wind').textContent=Math.round(c.wind_speed_10m)+' km/h';
+  document.getElementById('cp-pres').textContent=Math.round(c.pressure_msl)+' hPa';
+  document.getElementById('cp-uv').textContent=c.uv_index!==undefined?c.uv_index.toFixed(1):'—';
+  document.getElementById('cp-rad').textContent=c.shortwave_radiation!==undefined?Math.round(c.shortwave_radiation)+' W/m²':'—';
+  document.getElementById('cp-precip').textContent=c.precipitation!==undefined?c.precipitation.toFixed(1)+' mm':'—';
+  document.getElementById('cp-condition').textContent=WMO_CODES[code]||('Código '+code);
+  var fc=document.getElementById('cp-forecast'); fc.innerHTML='';
+  for(var i=0;i<7;i++){
+    var dt=new Date(d.time[i]+'T12:00:00'); var dow=DAYS[dt.getDay()];
+    fc.innerHTML+='<div class="cp-fday"><div class="cp-fdow">'+dow+'</div><div class="cp-ficon">'+(WMO_ICONS[d.weather_code[i]]||'🌡️')+'</div><div class="cp-fmax">'+Math.round(d.temperature_2m_max[i])+'°</div><div class="cp-fmin">'+Math.round(d.temperature_2m_min[i])+'°</div></div>';
   }
-
-  document.getElementById('clima-msg').style.display = 'none';
-  document.getElementById('clima-result').style.display = 'block';
+  document.getElementById('cp-msg').style.display='none';
+  var res=document.getElementById('cp-result'); res.classList.add('show');
 }
 
-function setClimaMsg(html, isError) {
-  var msg = document.getElementById('clima-msg');
-  var result = document.getElementById('clima-result');
-  result.style.display = 'none';
-  msg.innerHTML = html;
-  msg.style.display = 'block';
-  msg.style.color = isError ? '#ff6d00' : 'var(--muted)';
-  msg.style.borderColor = isError ? 'rgba(255,109,0,.3)' : 'var(--border)';
+function setCPMsg(html, isErr) {
+  var msg=document.getElementById('cp-msg');
+  document.getElementById('cp-result').classList.remove('show');
+  msg.innerHTML=html; msg.style.display='block';
+  msg.style.color=isErr?'#ff6d00':'var(--muted)';
 }
 
-/* ---------------------------------------------------------------
+/* =============================================================
    POLÍTICAS TABS
---------------------------------------------------------------- */
+============================================================= */
 function setPolTab(btn, contentId) {
-  document.querySelectorAll('.pol-tab').forEach(function(t) { t.classList.remove('active'); });
+  document.querySelectorAll('.pol-tab').forEach(function(t){t.classList.remove('active');});
   btn.classList.add('active');
-  document.querySelectorAll('.pol-content').forEach(function(c) { c.classList.remove('active'); });
-  var content = document.getElementById(contentId);
-  if (content) content.classList.add('active');
+  document.querySelectorAll('.pol-content').forEach(function(c){c.classList.remove('active');});
+  var content=document.getElementById(contentId);
+  if(content) content.classList.add('active');
 }
 
-/* ---------------------------------------------------------------
+/* =============================================================
    KPI ANIMATED COUNTERS
---------------------------------------------------------------- */
-var kpiTargets = [11783, 591407, 213288, 27, 6, 5];
-var kpiAnimated = false;
+============================================================= */
+var kpiTargets=[11783,591407,213288,27,6,5];
+var kpiAnimated=false;
 
-function animateKPI(el, target) {
-  var duration = 1800;
-  var startTime = null;
-  function step(ts) {
-    if (!startTime) startTime = ts;
-    var progress = Math.min((ts - startTime) / duration, 1);
-    var eased = 1 - Math.pow(1 - progress, 3);
-    el.textContent = Math.floor(eased * target).toLocaleString('pt-BR');
-    if (progress < 1) requestAnimationFrame(step);
-    else el.textContent = target.toLocaleString('pt-BR');
+function animateKPI(el,target) {
+  var duration=1800, startTime=null;
+  function step(ts){
+    if(!startTime) startTime=ts;
+    var progress=Math.min((ts-startTime)/duration,1);
+    var eased=1-Math.pow(1-progress,3);
+    el.textContent=Math.floor(eased*target).toLocaleString('pt-BR');
+    if(progress<1) requestAnimationFrame(step);
+    else el.textContent=target.toLocaleString('pt-BR');
   }
   requestAnimationFrame(step);
 }
 
-if ('IntersectionObserver' in window) {
-  var kpiObs = new IntersectionObserver(function(entries) {
-    if (entries[0].isIntersecting && !kpiAnimated) {
-      kpiAnimated = true;
-      kpiTargets.forEach(function(t, i) {
-        var el = document.getElementById('k' + i);
-        if (el) animateKPI(el, t);
-      });
+if('IntersectionObserver' in window){
+  var kpiObs=new IntersectionObserver(function(entries){
+    if(entries[0].isIntersecting&&!kpiAnimated){
+      kpiAnimated=true;
+      kpiTargets.forEach(function(t,i){ var el=document.getElementById('k'+i); if(el) animateKPI(el,t); });
     }
-  }, { threshold: 0.3 });
-  var kpiSection = document.getElementById('kpis');
-  if (kpiSection) kpiObs.observe(kpiSection);
+  },{threshold:0.3});
+  var kpiSection=document.getElementById('kpis');
+  if(kpiSection) kpiObs.observe(kpiSection);
 }
 
-/* ---------------------------------------------------------------
-   PREVENT DEFAULT on nav anchor clicks (already handled by JS)
---------------------------------------------------------------- */
-document.querySelectorAll('nav a[href="#"]').forEach(function(a) {
-  a.addEventListener('click', function(e) { e.preventDefault(); });
+/* Prevent default on nav anchor clicks */
+document.querySelectorAll('nav a[href="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){e.preventDefault();});
 });
 </script>
 </body>
