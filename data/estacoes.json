@@ -1,0 +1,7602 @@
+[
+  {
+    "id": "mock_sp_0001",
+    "nome": "BeCharge — Sorocaba #001",
+    "endereco": "Rua das Palmeiras 7481",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "82662-165",
+    "lat": -23.433202,
+    "lng": -47.446962,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0002",
+    "nome": "Eletrocar — São Paulo #002",
+    "endereco": "Rua Central 310",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "97026-609",
+    "lat": -23.606601,
+    "lng": -46.627843,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0003",
+    "nome": "Shell Recharge — Santo André #003",
+    "endereco": "Rua das Flores 6314",
+    "cidade": "Santo André",
+    "estado": "SP",
+    "cep": "59992-403",
+    "lat": -23.608047,
+    "lng": -46.522111,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0004",
+    "nome": "Blink — São Paulo #004",
+    "endereco": "Rua Central 883",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "76465-335",
+    "lat": -23.589177,
+    "lng": -46.648202,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0005",
+    "nome": "Tupi — Campinas #005",
+    "endereco": "Rua Brasil 8526",
+    "cidade": "Campinas",
+    "estado": "SP",
+    "cep": "36201-576",
+    "lat": -22.919027,
+    "lng": -47.072092,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0006",
+    "nome": "Neoenergia — São Paulo #006",
+    "endereco": "Rua São Paulo 7643",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "60001-250",
+    "lat": -23.471692,
+    "lng": -46.605096,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0007",
+    "nome": "Privada — Sorocaba #007",
+    "endereco": "Rua das Flores 2228",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "69147-428",
+    "lat": -23.546983,
+    "lng": -47.441467,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0008",
+    "nome": "Neoenergia — São Paulo #008",
+    "endereco": "Rua das Flores 9937",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "12201-616",
+    "lat": -23.505402,
+    "lng": -46.562336,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0009",
+    "nome": "BeCharge — Campinas #009",
+    "endereco": "Rua das Flores 1975",
+    "cidade": "Campinas",
+    "estado": "SP",
+    "cep": "94813-771",
+    "lat": -22.860404,
+    "lng": -47.029504,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0010",
+    "nome": "BeCharge — Sorocaba #010",
+    "endereco": "Rua São Paulo 8154",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "50297-980",
+    "lat": -23.532878,
+    "lng": -47.383179,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0011",
+    "nome": "Copel — Campinas #011",
+    "endereco": "Rua das Palmeiras 9777",
+    "cidade": "Campinas",
+    "estado": "SP",
+    "cep": "83771-200",
+    "lat": -22.875247,
+    "lng": -47.039372,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0012",
+    "nome": "Shell Recharge — São Paulo #012",
+    "endereco": "Rua das Flores 321",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "22731-524",
+    "lat": -23.628822,
+    "lng": -46.575598,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0013",
+    "nome": "Voe Energia — São Paulo #013",
+    "endereco": "Rua Brasil 353",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "19332-380",
+    "lat": -23.555991,
+    "lng": -46.626621,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0014",
+    "nome": "Neoenergia — São Paulo #014",
+    "endereco": "Rua Central 7920",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "84944-430",
+    "lat": -23.609867,
+    "lng": -46.654013,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0015",
+    "nome": "Voe Energia — São Paulo #015",
+    "endereco": "Rua Brasil 7897",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "81638-169",
+    "lat": -23.584699,
+    "lng": -46.697509,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0016",
+    "nome": "Tupi — Sorocaba #016",
+    "endereco": "Rua das Flores 3745",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "57927-773",
+    "lat": -23.509624,
+    "lng": -47.384292,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0017",
+    "nome": "Shell Recharge — Sorocaba #017",
+    "endereco": "Rua Brasil 1835",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "39150-619",
+    "lat": -23.433969,
+    "lng": -47.531996,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0018",
+    "nome": "Shell Recharge — Sorocaba #018",
+    "endereco": "Rua Central 3106",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "16766-915",
+    "lat": -23.530876,
+    "lng": -47.522114,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0019",
+    "nome": "Tupi — São Paulo #019",
+    "endereco": "Rua Central 7919",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "29521-486",
+    "lat": -23.487611,
+    "lng": -46.616419,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0020",
+    "nome": "EDP — São Paulo #020",
+    "endereco": "Rua das Flores 7930",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "55453-687",
+    "lat": -23.598843,
+    "lng": -46.570535,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0021",
+    "nome": "Copel — São Paulo #021",
+    "endereco": "Rua Brasil 1772",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "26786-915",
+    "lat": -23.53987,
+    "lng": -46.576241,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0022",
+    "nome": "Blink — Sorocaba #022",
+    "endereco": "Rua das Flores 8849",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "76244-328",
+    "lat": -23.473802,
+    "lng": -47.399639,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0023",
+    "nome": "Voe Energia — Campinas #023",
+    "endereco": "Rua das Flores 6347",
+    "cidade": "Campinas",
+    "estado": "SP",
+    "cep": "18456-287",
+    "lat": -22.900165,
+    "lng": -47.113518,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0024",
+    "nome": "Copel — Sorocaba #024",
+    "endereco": "Rua São Paulo 9333",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "27294-246",
+    "lat": -23.537362,
+    "lng": -47.384827,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0025",
+    "nome": "Privada — Sorocaba #025",
+    "endereco": "Rua São Paulo 5664",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "92873-527",
+    "lat": -23.449147,
+    "lng": -47.509252,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Em_manutencao",
+    "acesso": "Semi-público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0026",
+    "nome": "Tupi — Sorocaba #026",
+    "endereco": "Rua Brasil 4863",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "62772-166",
+    "lat": -23.456254,
+    "lng": -47.530406,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Em_manutencao",
+    "acesso": "Semi-público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0027",
+    "nome": "Privada — São Paulo #027",
+    "endereco": "Rua Brasil 1426",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "28952-214",
+    "lat": -23.486446,
+    "lng": -46.573223,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0028",
+    "nome": "Tupi — Campinas #028",
+    "endereco": "Rua das Flores 1538",
+    "cidade": "Campinas",
+    "estado": "SP",
+    "cep": "77463-103",
+    "lat": -22.911807,
+    "lng": -46.996254,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0029",
+    "nome": "Copel — Sorocaba #029",
+    "endereco": "Rua Central 5318",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "28115-940",
+    "lat": -23.576853,
+    "lng": -47.505185,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0030",
+    "nome": "Voe Energia — São Paulo #030",
+    "endereco": "Rua São Paulo 4137",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "23348-823",
+    "lat": -23.595222,
+    "lng": -46.680755,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0031",
+    "nome": "Engie — Sorocaba #031",
+    "endereco": "Rua Central 1762",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "64383-499",
+    "lat": -23.507386,
+    "lng": -47.392771,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0032",
+    "nome": "Shell Recharge — São Paulo #032",
+    "endereco": "Rua Central 4373",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "65056-254",
+    "lat": -23.62132,
+    "lng": -46.647193,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0033",
+    "nome": "Voe Energia — Sorocaba #033",
+    "endereco": "Rua Brasil 6757",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "24519-302",
+    "lat": -23.472744,
+    "lng": -47.439783,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0034",
+    "nome": "Blink — São Paulo #034",
+    "endereco": "Rua das Flores 9348",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "59517-848",
+    "lat": -23.572553,
+    "lng": -46.559708,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0035",
+    "nome": "Shell Recharge — Sorocaba #035",
+    "endereco": "Rua Brasil 6595",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "70459-511",
+    "lat": -23.563025,
+    "lng": -47.375089,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0036",
+    "nome": "Eletrocar — Sorocaba #036",
+    "endereco": "Rua Central 3205",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "72371-839",
+    "lat": -23.559302,
+    "lng": -47.386338,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0037",
+    "nome": "Copel — São Paulo #037",
+    "endereco": "Rua São Paulo 8615",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "21749-939",
+    "lat": -23.536949,
+    "lng": -46.670295,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Temporariamente_fechada",
+    "acesso": "Semi-público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0038",
+    "nome": "Voe Energia — Sorocaba #038",
+    "endereco": "Rua Central 8075",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "31673-816",
+    "lat": -23.425492,
+    "lng": -47.438256,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Temporariamente_fechada",
+    "acesso": "Semi-público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0039",
+    "nome": "Copel — Sorocaba #039",
+    "endereco": "Rua das Flores 5500",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "84425-785",
+    "lat": -23.522915,
+    "lng": -47.414182,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0040",
+    "nome": "Shell Recharge — Santo André #040",
+    "endereco": "Rua das Palmeiras 5487",
+    "cidade": "Santo André",
+    "estado": "SP",
+    "cep": "28978-780",
+    "lat": -23.604736,
+    "lng": -46.586272,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0041",
+    "nome": "Copel — Sorocaba #041",
+    "endereco": "Rua das Flores 3062",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "56587-653",
+    "lat": -23.448568,
+    "lng": -47.464494,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0042",
+    "nome": "Voe Energia — Sorocaba #042",
+    "endereco": "Rua das Palmeiras 1540",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "94107-467",
+    "lat": -23.466192,
+    "lng": -47.394483,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0043",
+    "nome": "Shell Recharge — Campinas #043",
+    "endereco": "Rua das Flores 554",
+    "cidade": "Campinas",
+    "estado": "SP",
+    "cep": "74412-555",
+    "lat": -22.949464,
+    "lng": -47.029127,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0044",
+    "nome": "Eletrocar — Sorocaba #044",
+    "endereco": "Rua Central 8653",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "60428-375",
+    "lat": -23.47147,
+    "lng": -47.43647,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0045",
+    "nome": "Copel — Sorocaba #045",
+    "endereco": "Rua Central 3573",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "88000-883",
+    "lat": -23.536799,
+    "lng": -47.455767,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0046",
+    "nome": "Engie — Sorocaba #046",
+    "endereco": "Rua das Flores 5036",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "58062-875",
+    "lat": -23.57151,
+    "lng": -47.433538,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0047",
+    "nome": "Copel — Sorocaba #047",
+    "endereco": "Rua Central 9074",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "32781-763",
+    "lat": -23.4261,
+    "lng": -47.507174,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0048",
+    "nome": "Tupi — Campinas #048",
+    "endereco": "Rua das Palmeiras 9238",
+    "cidade": "Campinas",
+    "estado": "SP",
+    "cep": "14936-539",
+    "lat": -22.878777,
+    "lng": -47.061905,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0049",
+    "nome": "Neoenergia — Ribeirão Preto #049",
+    "endereco": "Rua das Flores 332",
+    "cidade": "Ribeirão Preto",
+    "estado": "SP",
+    "cep": "36502-803",
+    "lat": -21.17783,
+    "lng": -47.859566,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 72,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0050",
+    "nome": "Voe Energia — São Paulo #050",
+    "endereco": "Rua Brasil 9363",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "30459-687",
+    "lat": -23.528722,
+    "lng": -46.59237,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0051",
+    "nome": "Neoenergia — Santos #051",
+    "endereco": "Rua Brasil 4063",
+    "cidade": "Santos",
+    "estado": "SP",
+    "cep": "41438-501",
+    "lat": -23.907316,
+    "lng": -46.349097,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0052",
+    "nome": "Copel — Sorocaba #052",
+    "endereco": "Rua das Flores 9337",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "41942-627",
+    "lat": -23.464572,
+    "lng": -47.462717,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0053",
+    "nome": "Eletrocar — Campinas #053",
+    "endereco": "Rua Brasil 4136",
+    "cidade": "Campinas",
+    "estado": "SP",
+    "cep": "12949-526",
+    "lat": -22.902808,
+    "lng": -47.015188,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0054",
+    "nome": "Tupi — Sorocaba #054",
+    "endereco": "Rua das Flores 2499",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "63756-828",
+    "lat": -23.557782,
+    "lng": -47.393353,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0055",
+    "nome": "Voe Energia — São Paulo #055",
+    "endereco": "Rua das Palmeiras 8898",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "92712-273",
+    "lat": -23.554818,
+    "lng": -46.683955,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0056",
+    "nome": "Tupi — Sorocaba #056",
+    "endereco": "Rua das Palmeiras 5743",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "32423-234",
+    "lat": -23.449911,
+    "lng": -47.475969,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0057",
+    "nome": "Blink — São Paulo #057",
+    "endereco": "Rua das Palmeiras 3901",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "83405-424",
+    "lat": -23.524665,
+    "lng": -46.594773,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0058",
+    "nome": "EDP — Sorocaba #058",
+    "endereco": "Rua das Palmeiras 4974",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "42408-386",
+    "lat": -23.543472,
+    "lng": -47.391774,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0059",
+    "nome": "Engie — Sorocaba #059",
+    "endereco": "Rua das Flores 2722",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "94731-773",
+    "lat": -23.539751,
+    "lng": -47.412562,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0060",
+    "nome": "Privada — Sorocaba #060",
+    "endereco": "Rua das Palmeiras 1359",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "53804-257",
+    "lat": -23.448885,
+    "lng": -47.47513,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0061",
+    "nome": "Voe Energia — Sorocaba #061",
+    "endereco": "Rua São Paulo 3126",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "85496-499",
+    "lat": -23.471094,
+    "lng": -47.494662,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0062",
+    "nome": "Eletrocar — São Paulo #062",
+    "endereco": "Rua São Paulo 6958",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "68775-462",
+    "lat": -23.618451,
+    "lng": -46.707891,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Temporariamente_fechada",
+    "acesso": "Semi-público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0063",
+    "nome": "Neoenergia — Sorocaba #063",
+    "endereco": "Rua Brasil 4954",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "57255-518",
+    "lat": -23.517652,
+    "lng": -47.427156,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0064",
+    "nome": "EDP — Sorocaba #064",
+    "endereco": "Rua das Flores 8674",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "73633-935",
+    "lat": -23.449496,
+    "lng": -47.52968,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0065",
+    "nome": "Engie — São Paulo #065",
+    "endereco": "Rua das Flores 7221",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "20975-586",
+    "lat": -23.597764,
+    "lng": -46.634025,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0066",
+    "nome": "Shell Recharge — São Paulo #066",
+    "endereco": "Rua das Flores 2737",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "52659-582",
+    "lat": -23.58102,
+    "lng": -46.629068,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0067",
+    "nome": "EDP — Campinas #067",
+    "endereco": "Rua Brasil 7392",
+    "cidade": "Campinas",
+    "estado": "SP",
+    "cep": "63932-892",
+    "lat": -22.845256,
+    "lng": -47.005117,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0068",
+    "nome": "Copel — Sorocaba #068",
+    "endereco": "Rua São Paulo 6801",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "43768-343",
+    "lat": -23.560778,
+    "lng": -47.410392,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0069",
+    "nome": "Copel — São Paulo #069",
+    "endereco": "Rua São Paulo 7672",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "67125-228",
+    "lat": -23.591756,
+    "lng": -46.678205,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0070",
+    "nome": "Engie — Sorocaba #070",
+    "endereco": "Rua São Paulo 4270",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "86274-906",
+    "lat": -23.448986,
+    "lng": -47.398419,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0071",
+    "nome": "Shell Recharge — Sorocaba #071",
+    "endereco": "Rua São Paulo 466",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "54046-247",
+    "lat": -23.513004,
+    "lng": -47.512014,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0072",
+    "nome": "Engie — Ribeirão Preto #072",
+    "endereco": "Rua Brasil 1293",
+    "cidade": "Ribeirão Preto",
+    "estado": "SP",
+    "cep": "22039-364",
+    "lat": -21.227978,
+    "lng": -47.812286,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0073",
+    "nome": "Eletrocar — Sorocaba #073",
+    "endereco": "Rua Central 4952",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "33067-107",
+    "lat": -23.472847,
+    "lng": -47.488345,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0074",
+    "nome": "Blink — Sorocaba #074",
+    "endereco": "Rua Brasil 1595",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "77562-185",
+    "lat": -23.527733,
+    "lng": -47.509389,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0075",
+    "nome": "Engie — Santos #075",
+    "endereco": "Rua Central 3745",
+    "cidade": "Santos",
+    "estado": "SP",
+    "cep": "94540-697",
+    "lat": -23.980573,
+    "lng": -46.409394,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0076",
+    "nome": "Privada — Sorocaba #076",
+    "endereco": "Rua São Paulo 1843",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "80227-263",
+    "lat": -23.439422,
+    "lng": -47.465326,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0077",
+    "nome": "BeCharge — São Paulo #077",
+    "endereco": "Rua São Paulo 9112",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "38901-543",
+    "lat": -23.473986,
+    "lng": -46.713182,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0078",
+    "nome": "BeCharge — Santo André #078",
+    "endereco": "Rua São Paulo 2499",
+    "cidade": "Santo André",
+    "estado": "SP",
+    "cep": "57367-751",
+    "lat": -23.679042,
+    "lng": -46.501434,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0079",
+    "nome": "Tupi — São Paulo #079",
+    "endereco": "Rua das Flores 792",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "59489-350",
+    "lat": -23.620739,
+    "lng": -46.558802,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0080",
+    "nome": "Engie — Sorocaba #080",
+    "endereco": "Rua Brasil 6678",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "12828-279",
+    "lat": -23.487819,
+    "lng": -47.531059,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0081",
+    "nome": "Privada — Santo André #081",
+    "endereco": "Rua Central 5187",
+    "cidade": "Santo André",
+    "estado": "SP",
+    "cep": "54414-207",
+    "lat": -23.716466,
+    "lng": -46.488561,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0082",
+    "nome": "Voe Energia — Sorocaba #082",
+    "endereco": "Rua São Paulo 8534",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "52069-475",
+    "lat": -23.480493,
+    "lng": -47.515473,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0083",
+    "nome": "Neoenergia — Sorocaba #083",
+    "endereco": "Rua Brasil 6827",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "22072-742",
+    "lat": -23.555106,
+    "lng": -47.377918,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0084",
+    "nome": "Privada — Sorocaba #084",
+    "endereco": "Rua das Palmeiras 3802",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "23122-443",
+    "lat": -23.574985,
+    "lng": -47.437519,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0085",
+    "nome": "BeCharge — Sorocaba #085",
+    "endereco": "Rua São Paulo 1246",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "51056-357",
+    "lat": -23.471062,
+    "lng": -47.504778,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0086",
+    "nome": "Blink — Sorocaba #086",
+    "endereco": "Rua Brasil 5123",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "13540-325",
+    "lat": -23.457567,
+    "lng": -47.46651,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0087",
+    "nome": "EDP — São Paulo #087",
+    "endereco": "Rua São Paulo 8365",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "58206-120",
+    "lat": -23.480766,
+    "lng": -46.558192,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0088",
+    "nome": "Blink — Campinas #088",
+    "endereco": "Rua Brasil 2640",
+    "cidade": "Campinas",
+    "estado": "SP",
+    "cep": "17213-493",
+    "lat": -22.867395,
+    "lng": -47.129053,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0089",
+    "nome": "Shell Recharge — Santo André #089",
+    "endereco": "Rua Central 8297",
+    "cidade": "Santo André",
+    "estado": "SP",
+    "cep": "71926-601",
+    "lat": -23.601321,
+    "lng": -46.583217,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0090",
+    "nome": "Copel — Santo André #090",
+    "endereco": "Rua São Paulo 2141",
+    "cidade": "Santo André",
+    "estado": "SP",
+    "cep": "92759-551",
+    "lat": -23.73287,
+    "lng": -46.576046,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0091",
+    "nome": "Voe Energia — Sorocaba #091",
+    "endereco": "Rua das Flores 9399",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "66121-815",
+    "lat": -23.52069,
+    "lng": -47.401046,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0092",
+    "nome": "Shell Recharge — São Paulo #092",
+    "endereco": "Rua das Palmeiras 5988",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "40686-215",
+    "lat": -23.513243,
+    "lng": -46.672817,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Temporariamente_fechada",
+    "acesso": "Privado",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0093",
+    "nome": "Tupi — Sorocaba #093",
+    "endereco": "Rua Brasil 6931",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "37343-349",
+    "lat": -23.55558,
+    "lng": -47.398278,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0094",
+    "nome": "Tupi — Sorocaba #094",
+    "endereco": "Rua Central 4979",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "15160-106",
+    "lat": -23.489512,
+    "lng": -47.446307,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 250,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0095",
+    "nome": "Shell Recharge — Campinas #095",
+    "endereco": "Rua das Flores 1373",
+    "cidade": "Campinas",
+    "estado": "SP",
+    "cep": "85881-421",
+    "lat": -22.974567,
+    "lng": -47.016999,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0096",
+    "nome": "Shell Recharge — Sorocaba #096",
+    "endereco": "Rua São Paulo 9546",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "92376-550",
+    "lat": -23.432445,
+    "lng": -47.378514,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0097",
+    "nome": "Shell Recharge — São Paulo #097",
+    "endereco": "Rua São Paulo 8038",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "30795-197",
+    "lat": -23.603096,
+    "lng": -46.592863,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0098",
+    "nome": "Neoenergia — São Paulo #098",
+    "endereco": "Rua São Paulo 8885",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "64790-490",
+    "lat": -23.564507,
+    "lng": -46.639343,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0099",
+    "nome": "Neoenergia — São Paulo #099",
+    "endereco": "Rua Central 9790",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "87229-694",
+    "lat": -23.519622,
+    "lng": -46.594518,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0100",
+    "nome": "BeCharge — São Paulo #100",
+    "endereco": "Rua Central 9218",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "45450-117",
+    "lat": -23.553551,
+    "lng": -46.652902,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0101",
+    "nome": "Eletrocar — São Paulo #101",
+    "endereco": "Rua Central 577",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "53013-749",
+    "lat": -23.619553,
+    "lng": -46.580323,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 250,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0102",
+    "nome": "EDP — Sorocaba #102",
+    "endereco": "Rua das Palmeiras 2760",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "61608-450",
+    "lat": -23.487689,
+    "lng": -47.512745,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0103",
+    "nome": "EDP — São Paulo #103",
+    "endereco": "Rua Central 4140",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "65665-879",
+    "lat": -23.607029,
+    "lng": -46.60562,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0104",
+    "nome": "Engie — Sorocaba #104",
+    "endereco": "Rua das Palmeiras 1383",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "29142-957",
+    "lat": -23.580465,
+    "lng": -47.522639,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0105",
+    "nome": "Voe Energia — Sorocaba #105",
+    "endereco": "Rua Brasil 6850",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "78522-814",
+    "lat": -23.504456,
+    "lng": -47.416754,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0106",
+    "nome": "Blink — São Paulo #106",
+    "endereco": "Rua São Paulo 7574",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "88586-433",
+    "lat": -23.543171,
+    "lng": -46.709369,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0107",
+    "nome": "Engie — Sorocaba #107",
+    "endereco": "Rua Central 3973",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "74063-335",
+    "lat": -23.537752,
+    "lng": -47.415101,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0108",
+    "nome": "Eletrocar — Sorocaba #108",
+    "endereco": "Rua das Flores 1805",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "94305-528",
+    "lat": -23.534405,
+    "lng": -47.380877,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0109",
+    "nome": "Shell Recharge — Sorocaba #109",
+    "endereco": "Rua das Flores 702",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "61843-146",
+    "lat": -23.453699,
+    "lng": -47.510052,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0110",
+    "nome": "Voe Energia — Sorocaba #110",
+    "endereco": "Rua das Flores 8856",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "98658-812",
+    "lat": -23.454395,
+    "lng": -47.505394,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0111",
+    "nome": "Voe Energia — São Paulo #111",
+    "endereco": "Rua Brasil 9482",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "83113-402",
+    "lat": -23.608218,
+    "lng": -46.583136,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 250,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sp_0112",
+    "nome": "EDP — Sorocaba #112",
+    "endereco": "Rua São Paulo 7513",
+    "cidade": "Sorocaba",
+    "estado": "SP",
+    "cep": "92239-636",
+    "lat": -23.525796,
+    "lng": -47.404217,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0113",
+    "nome": "Blink — Uberlândia #001",
+    "endereco": "Rua das Palmeiras 1552",
+    "cidade": "Uberlândia",
+    "estado": "MG",
+    "cep": "98292-669",
+    "lat": -18.971765,
+    "lng": -48.299203,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0114",
+    "nome": "EDP — Belo Horizonte #002",
+    "endereco": "Rua das Flores 2733",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "69681-899",
+    "lat": -19.841187,
+    "lng": -43.881896,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Em_manutencao",
+    "acesso": "Semi-público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0115",
+    "nome": "Neoenergia — Contagem #003",
+    "endereco": "Rua das Palmeiras 8325",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "90392-335",
+    "lat": -19.864288,
+    "lng": -43.994588,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0116",
+    "nome": "Tupi — Belo Horizonte #004",
+    "endereco": "Rua São Paulo 7129",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "42204-520",
+    "lat": -19.917995,
+    "lng": -43.879856,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0117",
+    "nome": "Copel — Belo Horizonte #005",
+    "endereco": "Rua São Paulo 2645",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "68622-553",
+    "lat": -19.840243,
+    "lng": -43.883361,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0118",
+    "nome": "Tupi — Contagem #006",
+    "endereco": "Rua das Flores 5329",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "80551-292",
+    "lat": -19.887978,
+    "lng": -44.033996,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0119",
+    "nome": "Blink — Contagem #007",
+    "endereco": "Rua Central 1107",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "84056-319",
+    "lat": -19.967325,
+    "lng": -44.079557,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0120",
+    "nome": "Eletrocar — Contagem #008",
+    "endereco": "Rua São Paulo 326",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "23079-426",
+    "lat": -19.916937,
+    "lng": -44.112286,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0121",
+    "nome": "Voe Energia — Belo Horizonte #009",
+    "endereco": "Rua Central 6424",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "75995-122",
+    "lat": -19.959837,
+    "lng": -43.998169,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0122",
+    "nome": "Eletrocar — Belo Horizonte #010",
+    "endereco": "Rua Brasil 1392",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "54703-216",
+    "lat": -19.843624,
+    "lng": -43.941731,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0123",
+    "nome": "Shell Recharge — Contagem #011",
+    "endereco": "Rua Central 8355",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "23038-940",
+    "lat": -19.852479,
+    "lng": -44.038221,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Em_manutencao",
+    "acesso": "Semi-público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0124",
+    "nome": "EDP — Belo Horizonte #012",
+    "endereco": "Rua São Paulo 6730",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "55186-995",
+    "lat": -19.983161,
+    "lng": -43.857035,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0125",
+    "nome": "Blink — Belo Horizonte #013",
+    "endereco": "Rua São Paulo 5940",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "33161-644",
+    "lat": -19.941916,
+    "lng": -43.917118,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0126",
+    "nome": "Engie — Belo Horizonte #014",
+    "endereco": "Rua das Palmeiras 1063",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "32268-159",
+    "lat": -19.9747,
+    "lng": -43.917611,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0127",
+    "nome": "Engie — Belo Horizonte #015",
+    "endereco": "Rua São Paulo 310",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "76300-666",
+    "lat": -19.887894,
+    "lng": -43.886005,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0128",
+    "nome": "Voe Energia — Contagem #016",
+    "endereco": "Rua São Paulo 9949",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "74918-695",
+    "lat": -19.934779,
+    "lng": -44.04075,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0129",
+    "nome": "EDP — Belo Horizonte #017",
+    "endereco": "Rua das Palmeiras 5276",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "75856-744",
+    "lat": -19.985498,
+    "lng": -43.979658,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0130",
+    "nome": "BeCharge — Uberlândia #018",
+    "endereco": "Rua das Flores 3521",
+    "cidade": "Uberlândia",
+    "estado": "MG",
+    "cep": "42797-786",
+    "lat": -18.890906,
+    "lng": -48.280352,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0131",
+    "nome": "Copel — Contagem #019",
+    "endereco": "Rua Brasil 264",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "11802-442",
+    "lat": -19.901424,
+    "lng": -44.107778,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0132",
+    "nome": "Voe Energia — Contagem #020",
+    "endereco": "Rua Central 126",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "61798-136",
+    "lat": -19.867699,
+    "lng": -44.08541,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0133",
+    "nome": "Tupi — Contagem #021",
+    "endereco": "Rua Central 882",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "45288-827",
+    "lat": -19.940766,
+    "lng": -44.130881,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0134",
+    "nome": "Tupi — Belo Horizonte #022",
+    "endereco": "Rua São Paulo 7605",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "21141-441",
+    "lat": -19.88075,
+    "lng": -43.959324,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0135",
+    "nome": "Eletrocar — Belo Horizonte #023",
+    "endereco": "Rua Brasil 5159",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "50745-583",
+    "lat": -19.897556,
+    "lng": -44.007113,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0136",
+    "nome": "Blink — Uberlândia #024",
+    "endereco": "Rua Central 8348",
+    "cidade": "Uberlândia",
+    "estado": "MG",
+    "cep": "53991-467",
+    "lat": -18.866001,
+    "lng": -48.347269,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 72,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0137",
+    "nome": "BeCharge — Contagem #025",
+    "endereco": "Rua Central 5537",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "28487-209",
+    "lat": -19.912794,
+    "lng": -44.016772,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0138",
+    "nome": "Blink — Uberlândia #026",
+    "endereco": "Rua das Palmeiras 2797",
+    "cidade": "Uberlândia",
+    "estado": "MG",
+    "cep": "89431-813",
+    "lat": -18.905694,
+    "lng": -48.355868,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 250,
+    "status": "Temporariamente_fechada",
+    "acesso": "Privado",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0139",
+    "nome": "Privada — Contagem #027",
+    "endereco": "Rua São Paulo 2911",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "16418-223",
+    "lat": -19.960213,
+    "lng": -44.097587,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Em_manutencao",
+    "acesso": "Privado",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0140",
+    "nome": "Neoenergia — Belo Horizonte #028",
+    "endereco": "Rua das Palmeiras 3797",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "92691-798",
+    "lat": -19.885478,
+    "lng": -43.945002,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0141",
+    "nome": "BeCharge — Contagem #029",
+    "endereco": "Rua Central 2822",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "75315-363",
+    "lat": -19.891936,
+    "lng": -44.007082,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Em_manutencao",
+    "acesso": "Semi-público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0142",
+    "nome": "Privada — Contagem #030",
+    "endereco": "Rua Brasil 4372",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "73519-733",
+    "lat": -19.8998,
+    "lng": -43.996412,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0143",
+    "nome": "Neoenergia — Uberlândia #031",
+    "endereco": "Rua São Paulo 2081",
+    "cidade": "Uberlândia",
+    "estado": "MG",
+    "cep": "75511-518",
+    "lat": -18.987091,
+    "lng": -48.269747,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0144",
+    "nome": "BeCharge — Contagem #032",
+    "endereco": "Rua São Paulo 8750",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "80011-928",
+    "lat": -19.948457,
+    "lng": -44.050609,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0145",
+    "nome": "Engie — Belo Horizonte #033",
+    "endereco": "Rua das Palmeiras 7844",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "71184-631",
+    "lat": -19.889482,
+    "lng": -44.007076,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0146",
+    "nome": "Tupi — Belo Horizonte #034",
+    "endereco": "Rua Brasil 5055",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "75141-857",
+    "lat": -19.959013,
+    "lng": -43.879083,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Temporariamente_fechada",
+    "acesso": "Semi-público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0147",
+    "nome": "Privada — Belo Horizonte #035",
+    "endereco": "Rua Brasil 7160",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "56363-734",
+    "lat": -19.929094,
+    "lng": -43.951906,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0148",
+    "nome": "Privada — Contagem #036",
+    "endereco": "Rua das Palmeiras 4162",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "53527-322",
+    "lat": -19.855173,
+    "lng": -44.022592,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0149",
+    "nome": "Shell Recharge — Belo Horizonte #037",
+    "endereco": "Rua Brasil 7763",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "90325-602",
+    "lat": -19.847749,
+    "lng": -43.958558,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0150",
+    "nome": "Voe Energia — Belo Horizonte #038",
+    "endereco": "Rua das Palmeiras 3859",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "94122-856",
+    "lat": -19.970699,
+    "lng": -43.902282,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 150,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0151",
+    "nome": "Voe Energia — Contagem #039",
+    "endereco": "Rua Central 7170",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "82675-213",
+    "lat": -19.977324,
+    "lng": -44.08649,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0152",
+    "nome": "Tupi — Belo Horizonte #040",
+    "endereco": "Rua São Paulo 5385",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "20302-902",
+    "lat": -19.977682,
+    "lng": -43.884808,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0153",
+    "nome": "Privada — Contagem #041",
+    "endereco": "Rua São Paulo 1502",
+    "cidade": "Contagem",
+    "estado": "MG",
+    "cep": "23716-127",
+    "lat": -19.887927,
+    "lng": -44.024243,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0154",
+    "nome": "Tupi — Belo Horizonte #042",
+    "endereco": "Rua Central 2561",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "46559-459",
+    "lat": -19.888322,
+    "lng": -43.993231,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0155",
+    "nome": "Neoenergia — Uberlândia #043",
+    "endereco": "Rua das Flores 388",
+    "cidade": "Uberlândia",
+    "estado": "MG",
+    "cep": "56930-781",
+    "lat": -18.878728,
+    "lng": -48.263196,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mg_0156",
+    "nome": "Tupi — Belo Horizonte #044",
+    "endereco": "Rua Brasil 2665",
+    "cidade": "Belo Horizonte",
+    "estado": "MG",
+    "cep": "69019-873",
+    "lat": -19.921964,
+    "lng": -43.908317,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 250,
+    "status": "Em_manutencao",
+    "acesso": "Semi-público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0157",
+    "nome": "EDP — Caxias do Sul #001",
+    "endereco": "Rua das Palmeiras 1250",
+    "cidade": "Caxias do Sul",
+    "estado": "RS",
+    "cep": "94150-112",
+    "lat": -29.169625,
+    "lng": -51.179266,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0158",
+    "nome": "Shell Recharge — Porto Alegre #002",
+    "endereco": "Rua Brasil 146",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "98801-354",
+    "lat": -30.08102,
+    "lng": -51.280652,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0159",
+    "nome": "Blink — Porto Alegre #003",
+    "endereco": "Rua Brasil 2107",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "42971-444",
+    "lat": -30.061752,
+    "lng": -51.269725,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0160",
+    "nome": "Engie — Gramado #004",
+    "endereco": "Rua São Paulo 5020",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "74930-890",
+    "lat": -29.362643,
+    "lng": -50.868677,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0161",
+    "nome": "Neoenergia — Porto Alegre #005",
+    "endereco": "Rua das Palmeiras 4314",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "44640-410",
+    "lat": -30.113491,
+    "lng": -51.145011,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0162",
+    "nome": "Privada — Gramado #006",
+    "endereco": "Rua das Palmeiras 284",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "67608-249",
+    "lat": -29.338934,
+    "lng": -50.934021,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0163",
+    "nome": "Privada — Porto Alegre #007",
+    "endereco": "Rua São Paulo 8183",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "10003-635",
+    "lat": -30.029101,
+    "lng": -51.232012,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0164",
+    "nome": "Neoenergia — Porto Alegre #008",
+    "endereco": "Rua Brasil 7040",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "12329-535",
+    "lat": -30.076085,
+    "lng": -51.22507,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Em_manutencao",
+    "acesso": "Privado",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0165",
+    "nome": "Privada — Porto Alegre #009",
+    "endereco": "Rua das Palmeiras 2575",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "48012-137",
+    "lat": -29.969567,
+    "lng": -51.177418,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0166",
+    "nome": "BeCharge — Gramado #010",
+    "endereco": "Rua Central 2631",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "93732-439",
+    "lat": -29.412286,
+    "lng": -50.806963,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0167",
+    "nome": "EDP — Porto Alegre #011",
+    "endereco": "Rua Central 2895",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "25287-699",
+    "lat": -30.009494,
+    "lng": -51.253706,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0168",
+    "nome": "Eletrocar — Porto Alegre #012",
+    "endereco": "Rua São Paulo 1698",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "40616-787",
+    "lat": -29.977822,
+    "lng": -51.197694,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 72,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0169",
+    "nome": "Copel — Porto Alegre #013",
+    "endereco": "Rua das Flores 3026",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "20828-723",
+    "lat": -29.961537,
+    "lng": -51.138306,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0170",
+    "nome": "Neoenergia — Gramado #014",
+    "endereco": "Rua São Paulo 2072",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "11870-355",
+    "lat": -29.452789,
+    "lng": -50.87239,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0171",
+    "nome": "Neoenergia — Gramado #015",
+    "endereco": "Rua das Flores 2942",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "79706-850",
+    "lat": -29.415703,
+    "lng": -50.831274,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 250,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0172",
+    "nome": "Copel — Porto Alegre #016",
+    "endereco": "Rua Central 4234",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "69816-132",
+    "lat": -30.087054,
+    "lng": -51.237727,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0173",
+    "nome": "Copel — Gramado #017",
+    "endereco": "Rua Brasil 4116",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "17201-937",
+    "lat": -29.428891,
+    "lng": -50.916319,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Temporariamente_fechada",
+    "acesso": "Semi-público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0174",
+    "nome": "Engie — Gramado #018",
+    "endereco": "Rua São Paulo 336",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "63887-875",
+    "lat": -29.301898,
+    "lng": -50.942063,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Em_manutencao",
+    "acesso": "Semi-público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0175",
+    "nome": "EDP — Gramado #019",
+    "endereco": "Rua São Paulo 2722",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "54819-285",
+    "lat": -29.359573,
+    "lng": -50.811608,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0176",
+    "nome": "EDP — Gramado #020",
+    "endereco": "Rua São Paulo 6721",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "47303-651",
+    "lat": -29.397561,
+    "lng": -50.820911,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0177",
+    "nome": "Tupi — Porto Alegre #021",
+    "endereco": "Rua das Palmeiras 2431",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "48812-930",
+    "lat": -29.975244,
+    "lng": -51.295193,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0178",
+    "nome": "Voe Energia — Caxias do Sul #022",
+    "endereco": "Rua São Paulo 6305",
+    "cidade": "Caxias do Sul",
+    "estado": "RS",
+    "cep": "99562-914",
+    "lat": -29.186031,
+    "lng": -51.171146,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 250,
+    "status": "Em_manutencao",
+    "acesso": "Privado",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0179",
+    "nome": "Shell Recharge — Gramado #023",
+    "endereco": "Rua Brasil 9901",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "26998-470",
+    "lat": -29.358148,
+    "lng": -50.842877,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0180",
+    "nome": "Engie — Caxias do Sul #024",
+    "endereco": "Rua das Flores 3636",
+    "cidade": "Caxias do Sul",
+    "estado": "RS",
+    "cep": "87791-361",
+    "lat": -29.175088,
+    "lng": -51.195035,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0181",
+    "nome": "Engie — Gramado #025",
+    "endereco": "Rua São Paulo 6812",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "94005-268",
+    "lat": -29.385566,
+    "lng": -50.81295,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0182",
+    "nome": "Eletrocar — Gramado #026",
+    "endereco": "Rua São Paulo 4433",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "82363-936",
+    "lat": -29.393496,
+    "lng": -50.941565,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0183",
+    "nome": "Blink — Gramado #027",
+    "endereco": "Rua Brasil 8005",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "33817-451",
+    "lat": -29.389331,
+    "lng": -50.806599,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0184",
+    "nome": "Eletrocar — Gramado #028",
+    "endereco": "Rua Central 5006",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "32093-910",
+    "lat": -29.387338,
+    "lng": -50.929035,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0185",
+    "nome": "Voe Energia — Porto Alegre #029",
+    "endereco": "Rua São Paulo 1035",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "43316-302",
+    "lat": -30.02255,
+    "lng": -51.255786,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0186",
+    "nome": "Engie — Gramado #030",
+    "endereco": "Rua das Flores 1605",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "72824-192",
+    "lat": -29.382017,
+    "lng": -50.827778,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0187",
+    "nome": "Voe Energia — Porto Alegre #031",
+    "endereco": "Rua Central 2945",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "14844-153",
+    "lat": -30.026851,
+    "lng": -51.139283,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0188",
+    "nome": "Blink — Gramado #032",
+    "endereco": "Rua Brasil 4117",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "88510-312",
+    "lat": -29.370097,
+    "lng": -50.828012,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0189",
+    "nome": "Eletrocar — Porto Alegre #033",
+    "endereco": "Rua das Flores 4340",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "25914-546",
+    "lat": -30.012577,
+    "lng": -51.172133,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0190",
+    "nome": "Privada — Porto Alegre #034",
+    "endereco": "Rua das Palmeiras 1850",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "18639-958",
+    "lat": -30.083189,
+    "lng": -51.220868,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0191",
+    "nome": "Privada — Porto Alegre #035",
+    "endereco": "Rua Brasil 1818",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "96745-134",
+    "lat": -30.024724,
+    "lng": -51.1767,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0192",
+    "nome": "Neoenergia — Porto Alegre #036",
+    "endereco": "Rua das Flores 9908",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "74568-674",
+    "lat": -29.966882,
+    "lng": -51.169701,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 250,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0193",
+    "nome": "Neoenergia — Porto Alegre #037",
+    "endereco": "Rua Central 8669",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "17990-790",
+    "lat": -30.049868,
+    "lng": -51.238522,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0194",
+    "nome": "Tupi — Porto Alegre #038",
+    "endereco": "Rua São Paulo 330",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "28143-396",
+    "lat": -30.015812,
+    "lng": -51.283242,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0195",
+    "nome": "Neoenergia — Gramado #039",
+    "endereco": "Rua das Flores 6790",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "47654-765",
+    "lat": -29.442067,
+    "lng": -50.942962,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0196",
+    "nome": "EDP — Gramado #040",
+    "endereco": "Rua Central 7844",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "68565-243",
+    "lat": -29.309618,
+    "lng": -50.924417,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0197",
+    "nome": "Blink — Gramado #041",
+    "endereco": "Rua das Flores 5913",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "60076-152",
+    "lat": -29.304701,
+    "lng": -50.855373,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0198",
+    "nome": "Shell Recharge — Gramado #042",
+    "endereco": "Rua Brasil 6292",
+    "cidade": "Gramado",
+    "estado": "RS",
+    "cep": "41234-398",
+    "lat": -29.373507,
+    "lng": -50.795061,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rs_0199",
+    "nome": "Neoenergia — Porto Alegre #043",
+    "endereco": "Rua das Palmeiras 9496",
+    "cidade": "Porto Alegre",
+    "estado": "RS",
+    "cep": "82591-391",
+    "lat": -30.042785,
+    "lng": -51.155226,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0200",
+    "nome": "Tupi — Rio de Janeiro #001",
+    "endereco": "Rua das Palmeiras 2049",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "78178-930",
+    "lat": -22.932393,
+    "lng": -43.137314,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0201",
+    "nome": "BeCharge — Rio de Janeiro #002",
+    "endereco": "Rua São Paulo 8670",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "47250-697",
+    "lat": -22.932817,
+    "lng": -43.165955,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0202",
+    "nome": "BeCharge — Petrópolis #003",
+    "endereco": "Rua das Palmeiras 3071",
+    "cidade": "Petrópolis",
+    "estado": "RJ",
+    "cep": "42657-268",
+    "lat": -22.565718,
+    "lng": -43.171622,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0203",
+    "nome": "Voe Energia — Rio de Janeiro #004",
+    "endereco": "Rua Central 3266",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "43508-732",
+    "lat": -22.929533,
+    "lng": -43.226572,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0204",
+    "nome": "Eletrocar — Rio de Janeiro #005",
+    "endereco": "Rua das Palmeiras 1126",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "87150-722",
+    "lat": -22.972661,
+    "lng": -43.216667,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0205",
+    "nome": "Tupi — Rio de Janeiro #006",
+    "endereco": "Rua Central 135",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "15645-588",
+    "lat": -22.893161,
+    "lng": -43.215375,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0206",
+    "nome": "Eletrocar — Rio de Janeiro #007",
+    "endereco": "Rua Brasil 6197",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "59982-229",
+    "lat": -22.887567,
+    "lng": -43.158407,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0207",
+    "nome": "Eletrocar — Rio de Janeiro #008",
+    "endereco": "Rua Brasil 4487",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "54770-980",
+    "lat": -22.966323,
+    "lng": -43.101052,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 72,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0208",
+    "nome": "Engie — Niterói #009",
+    "endereco": "Rua das Flores 1750",
+    "cidade": "Niterói",
+    "estado": "RJ",
+    "cep": "58492-769",
+    "lat": -22.943455,
+    "lng": -43.026159,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0209",
+    "nome": "Copel — Petrópolis #010",
+    "endereco": "Rua São Paulo 4861",
+    "cidade": "Petrópolis",
+    "estado": "RJ",
+    "cep": "35860-105",
+    "lat": -22.521141,
+    "lng": -43.197644,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 250,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0210",
+    "nome": "Shell Recharge — Rio de Janeiro #011",
+    "endereco": "Rua Central 5671",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "29114-245",
+    "lat": -22.956479,
+    "lng": -43.218051,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0211",
+    "nome": "Eletrocar — Petrópolis #012",
+    "endereco": "Rua das Flores 8974",
+    "cidade": "Petrópolis",
+    "estado": "RJ",
+    "cep": "15495-149",
+    "lat": -22.514995,
+    "lng": -43.220738,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0212",
+    "nome": "Copel — Petrópolis #013",
+    "endereco": "Rua das Flores 9789",
+    "cidade": "Petrópolis",
+    "estado": "RJ",
+    "cep": "66532-533",
+    "lat": -22.446034,
+    "lng": -43.255349,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0213",
+    "nome": "Blink — Rio de Janeiro #014",
+    "endereco": "Rua Brasil 7486",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "31848-543",
+    "lat": -22.936555,
+    "lng": -43.109391,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0214",
+    "nome": "BeCharge — Rio de Janeiro #015",
+    "endereco": "Rua Brasil 4302",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "81804-552",
+    "lat": -22.969349,
+    "lng": -43.17413,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0215",
+    "nome": "Neoenergia — Niterói #016",
+    "endereco": "Rua das Palmeiras 6494",
+    "cidade": "Niterói",
+    "estado": "RJ",
+    "cep": "72643-537",
+    "lat": -22.833025,
+    "lng": -43.02655,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0216",
+    "nome": "Privada — Rio de Janeiro #017",
+    "endereco": "Rua Central 1990",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "36492-895",
+    "lat": -22.974809,
+    "lng": -43.1052,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0217",
+    "nome": "Voe Energia — Rio de Janeiro #018",
+    "endereco": "Rua das Flores 1370",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "54878-913",
+    "lat": -22.959034,
+    "lng": -43.137519,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0218",
+    "nome": "Eletrocar — Rio de Janeiro #019",
+    "endereco": "Rua das Palmeiras 9655",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "52390-130",
+    "lat": -22.887231,
+    "lng": -43.114318,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0219",
+    "nome": "Blink — Rio de Janeiro #020",
+    "endereco": "Rua das Flores 1423",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "88696-848",
+    "lat": -22.971676,
+    "lng": -43.227121,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0220",
+    "nome": "BeCharge — Rio de Janeiro #021",
+    "endereco": "Rua São Paulo 9803",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "65877-433",
+    "lat": -22.883409,
+    "lng": -43.209475,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0221",
+    "nome": "Blink — Rio de Janeiro #022",
+    "endereco": "Rua São Paulo 5686",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "75620-853",
+    "lat": -22.967259,
+    "lng": -43.18459,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0222",
+    "nome": "Neoenergia — Rio de Janeiro #023",
+    "endereco": "Rua Central 4585",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "45609-556",
+    "lat": -22.923219,
+    "lng": -43.244118,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0223",
+    "nome": "Blink — Niterói #024",
+    "endereco": "Rua das Flores 7093",
+    "cidade": "Niterói",
+    "estado": "RJ",
+    "cep": "35989-214",
+    "lat": -22.823441,
+    "lng": -43.15319,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0224",
+    "nome": "EDP — Rio de Janeiro #025",
+    "endereco": "Rua Brasil 8380",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "80902-938",
+    "lat": -22.925217,
+    "lng": -43.188977,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0225",
+    "nome": "Tupi — Rio de Janeiro #026",
+    "endereco": "Rua Brasil 5395",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "18614-375",
+    "lat": -22.937606,
+    "lng": -43.132157,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0226",
+    "nome": "Blink — Niterói #027",
+    "endereco": "Rua Central 3406",
+    "cidade": "Niterói",
+    "estado": "RJ",
+    "cep": "73742-536",
+    "lat": -22.915032,
+    "lng": -43.103702,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0227",
+    "nome": "Neoenergia — Rio de Janeiro #028",
+    "endereco": "Rua Central 214",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "15248-175",
+    "lat": -22.83559,
+    "lng": -43.233262,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0228",
+    "nome": "Shell Recharge — Petrópolis #029",
+    "endereco": "Rua São Paulo 1171",
+    "cidade": "Petrópolis",
+    "estado": "RJ",
+    "cep": "74316-221",
+    "lat": -22.542471,
+    "lng": -43.14021,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0229",
+    "nome": "Engie — Rio de Janeiro #030",
+    "endereco": "Rua das Palmeiras 1919",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "33550-403",
+    "lat": -22.852206,
+    "lng": -43.190525,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0230",
+    "nome": "Blink — Petrópolis #031",
+    "endereco": "Rua das Palmeiras 4293",
+    "cidade": "Petrópolis",
+    "estado": "RJ",
+    "cep": "80756-842",
+    "lat": -22.444016,
+    "lng": -43.13109,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Temporariamente_fechada",
+    "acesso": "Semi-público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0231",
+    "nome": "Copel — Rio de Janeiro #032",
+    "endereco": "Rua Brasil 5714",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "78715-780",
+    "lat": -22.97854,
+    "lng": -43.217946,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0232",
+    "nome": "Copel — Rio de Janeiro #033",
+    "endereco": "Rua das Flores 6846",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "55131-556",
+    "lat": -22.951755,
+    "lng": -43.172385,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0233",
+    "nome": "Tupi — Rio de Janeiro #034",
+    "endereco": "Rua Central 9263",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "81052-669",
+    "lat": -22.925966,
+    "lng": -43.201443,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0234",
+    "nome": "BeCharge — Petrópolis #035",
+    "endereco": "Rua das Flores 3848",
+    "cidade": "Petrópolis",
+    "estado": "RJ",
+    "cep": "16428-514",
+    "lat": -22.542832,
+    "lng": -43.243515,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0235",
+    "nome": "Engie — Niterói #036",
+    "endereco": "Rua das Palmeiras 3442",
+    "cidade": "Niterói",
+    "estado": "RJ",
+    "cep": "14830-638",
+    "lat": -22.839398,
+    "lng": -43.042266,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0236",
+    "nome": "BeCharge — Rio de Janeiro #037",
+    "endereco": "Rua Central 3246",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "12798-627",
+    "lat": -22.852334,
+    "lng": -43.137184,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 72,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0237",
+    "nome": "BeCharge — Rio de Janeiro #038",
+    "endereco": "Rua São Paulo 2334",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "39605-422",
+    "lat": -22.856915,
+    "lng": -43.172936,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0238",
+    "nome": "Voe Energia — Petrópolis #039",
+    "endereco": "Rua das Flores 6704",
+    "cidade": "Petrópolis",
+    "estado": "RJ",
+    "cep": "18258-741",
+    "lat": -22.497441,
+    "lng": -43.147108,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0239",
+    "nome": "BeCharge — Rio de Janeiro #040",
+    "endereco": "Rua das Flores 1889",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ",
+    "cep": "28075-922",
+    "lat": -22.889278,
+    "lng": -43.213306,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rj_0240",
+    "nome": "Copel — Petrópolis #041",
+    "endereco": "Rua das Flores 5495",
+    "cidade": "Petrópolis",
+    "estado": "RJ",
+    "cep": "20162-398",
+    "lat": -22.575865,
+    "lng": -43.207758,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0241",
+    "nome": "Copel — Curitiba #001",
+    "endereco": "Rua Central 9822",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "89708-172",
+    "lat": -25.414628,
+    "lng": -49.261569,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0242",
+    "nome": "Copel — Londrina #002",
+    "endereco": "Rua Brasil 2444",
+    "cidade": "Londrina",
+    "estado": "PR",
+    "cep": "93347-438",
+    "lat": -23.290505,
+    "lng": -51.185048,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0243",
+    "nome": "Eletrocar — Maringá #003",
+    "endereco": "Rua das Flores 7008",
+    "cidade": "Maringá",
+    "estado": "PR",
+    "cep": "96040-488",
+    "lat": -23.410797,
+    "lng": -51.94035,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0244",
+    "nome": "Shell Recharge — Londrina #004",
+    "endereco": "Rua Brasil 251",
+    "cidade": "Londrina",
+    "estado": "PR",
+    "cep": "70166-456",
+    "lat": -23.354244,
+    "lng": -51.100541,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0245",
+    "nome": "EDP — Londrina #005",
+    "endereco": "Rua Brasil 8400",
+    "cidade": "Londrina",
+    "estado": "PR",
+    "cep": "75614-808",
+    "lat": -23.339592,
+    "lng": -51.191806,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0246",
+    "nome": "Shell Recharge — Londrina #006",
+    "endereco": "Rua Central 9523",
+    "cidade": "Londrina",
+    "estado": "PR",
+    "cep": "94236-508",
+    "lat": -23.309953,
+    "lng": -51.143977,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0247",
+    "nome": "EDP — Curitiba #007",
+    "endereco": "Rua Brasil 7880",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "43798-929",
+    "lat": -25.362506,
+    "lng": -49.338465,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0248",
+    "nome": "Blink — Curitiba #008",
+    "endereco": "Rua Central 1015",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "98149-195",
+    "lat": -25.407855,
+    "lng": -49.297572,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0249",
+    "nome": "Tupi — Curitiba #009",
+    "endereco": "Rua das Palmeiras 7454",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "80240-941",
+    "lat": -25.349374,
+    "lng": -49.196274,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0250",
+    "nome": "Tupi — Curitiba #010",
+    "endereco": "Rua Brasil 8457",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "85661-380",
+    "lat": -25.449539,
+    "lng": -49.265877,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Em_manutencao",
+    "acesso": "Semi-público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0251",
+    "nome": "BeCharge — Curitiba #011",
+    "endereco": "Rua das Flores 6149",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "70644-978",
+    "lat": -25.48052,
+    "lng": -49.290944,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0252",
+    "nome": "Privada — Maringá #012",
+    "endereco": "Rua das Palmeiras 7201",
+    "cidade": "Maringá",
+    "estado": "PR",
+    "cep": "64370-189",
+    "lat": -23.45162,
+    "lng": -51.995235,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0253",
+    "nome": "Neoenergia — Curitiba #013",
+    "endereco": "Rua Brasil 8605",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "54963-673",
+    "lat": -25.385204,
+    "lng": -49.210736,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0254",
+    "nome": "Tupi — Maringá #014",
+    "endereco": "Rua Central 6264",
+    "cidade": "Maringá",
+    "estado": "PR",
+    "cep": "82822-682",
+    "lat": -23.382492,
+    "lng": -51.907714,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 250,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0255",
+    "nome": "Shell Recharge — Curitiba #015",
+    "endereco": "Rua Central 1092",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "29769-808",
+    "lat": -25.41089,
+    "lng": -49.25414,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0256",
+    "nome": "Blink — Curitiba #016",
+    "endereco": "Rua das Flores 9387",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "82252-174",
+    "lat": -25.393386,
+    "lng": -49.231135,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0257",
+    "nome": "Copel — Curitiba #017",
+    "endereco": "Rua Brasil 9268",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "17870-530",
+    "lat": -25.405517,
+    "lng": -49.280516,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0258",
+    "nome": "Voe Energia — Curitiba #018",
+    "endereco": "Rua São Paulo 3008",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "23586-110",
+    "lat": -25.429704,
+    "lng": -49.33661,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0259",
+    "nome": "Voe Energia — Curitiba #019",
+    "endereco": "Rua Central 1211",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "80145-784",
+    "lat": -25.470448,
+    "lng": -49.276631,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Em_manutencao",
+    "acesso": "Semi-público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0260",
+    "nome": "Tupi — Curitiba #020",
+    "endereco": "Rua Brasil 8443",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "85188-538",
+    "lat": -25.356493,
+    "lng": -49.296143,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0261",
+    "nome": "BeCharge — Curitiba #021",
+    "endereco": "Rua das Palmeiras 4469",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "19302-367",
+    "lat": -25.441927,
+    "lng": -49.191802,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0262",
+    "nome": "Shell Recharge — Londrina #022",
+    "endereco": "Rua das Palmeiras 9140",
+    "cidade": "Londrina",
+    "estado": "PR",
+    "cep": "89628-354",
+    "lat": -23.299578,
+    "lng": -51.239418,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0263",
+    "nome": "EDP — Curitiba #023",
+    "endereco": "Rua Brasil 3222",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "52600-621",
+    "lat": -25.451863,
+    "lng": -49.211368,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0264",
+    "nome": "Shell Recharge — Londrina #024",
+    "endereco": "Rua das Flores 9251",
+    "cidade": "Londrina",
+    "estado": "PR",
+    "cep": "31151-251",
+    "lat": -23.291304,
+    "lng": -51.241448,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0265",
+    "nome": "Voe Energia — Maringá #025",
+    "endereco": "Rua São Paulo 2427",
+    "cidade": "Maringá",
+    "estado": "PR",
+    "cep": "97580-397",
+    "lat": -23.467017,
+    "lng": -51.954961,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Em_manutencao",
+    "acesso": "Semi-público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0266",
+    "nome": "Eletrocar — Londrina #026",
+    "endereco": "Rua das Palmeiras 6869",
+    "cidade": "Londrina",
+    "estado": "PR",
+    "cep": "96021-627",
+    "lat": -23.230264,
+    "lng": -51.17905,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0267",
+    "nome": "Eletrocar — Curitiba #027",
+    "endereco": "Rua das Palmeiras 6303",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "79450-701",
+    "lat": -25.421522,
+    "lng": -49.215174,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 250,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0268",
+    "nome": "EDP — Curitiba #028",
+    "endereco": "Rua das Palmeiras 9056",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "56562-348",
+    "lat": -25.451127,
+    "lng": -49.331611,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0269",
+    "nome": "Privada — Curitiba #029",
+    "endereco": "Rua São Paulo 1575",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "64713-343",
+    "lat": -25.465536,
+    "lng": -49.246788,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0270",
+    "nome": "Voe Energia — Curitiba #030",
+    "endereco": "Rua Central 8956",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "65328-444",
+    "lat": -25.459689,
+    "lng": -49.223351,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0271",
+    "nome": "Engie — Londrina #031",
+    "endereco": "Rua das Palmeiras 9740",
+    "cidade": "Londrina",
+    "estado": "PR",
+    "cep": "42394-701",
+    "lat": -23.261712,
+    "lng": -51.156519,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0272",
+    "nome": "Blink — Curitiba #032",
+    "endereco": "Rua Brasil 7368",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "80767-132",
+    "lat": -25.504359,
+    "lng": -49.284522,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0273",
+    "nome": "Blink — Curitiba #033",
+    "endereco": "Rua das Flores 1235",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "10888-770",
+    "lat": -25.463632,
+    "lng": -49.24961,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pr_0274",
+    "nome": "Neoenergia — Curitiba #034",
+    "endereco": "Rua Brasil 4390",
+    "cidade": "Curitiba",
+    "estado": "PR",
+    "cep": "18734-362",
+    "lat": -25.485643,
+    "lng": -49.342925,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0275",
+    "nome": "Neoenergia — Florianópolis #001",
+    "endereco": "Rua Brasil 2341",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "60554-213",
+    "lat": -27.650414,
+    "lng": -48.607819,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0276",
+    "nome": "Neoenergia — Florianópolis #002",
+    "endereco": "Rua das Flores 4277",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "99831-717",
+    "lat": -27.570101,
+    "lng": -48.605869,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0277",
+    "nome": "Shell Recharge — Florianópolis #003",
+    "endereco": "Rua Central 1301",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "90021-273",
+    "lat": -27.625187,
+    "lng": -48.550117,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 72,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0278",
+    "nome": "Engie — Blumenau #004",
+    "endereco": "Rua das Flores 3616",
+    "cidade": "Blumenau",
+    "estado": "SC",
+    "cep": "40479-951",
+    "lat": -26.969776,
+    "lng": -49.009567,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0279",
+    "nome": "Tupi — Blumenau #005",
+    "endereco": "Rua Central 3186",
+    "cidade": "Blumenau",
+    "estado": "SC",
+    "cep": "29732-424",
+    "lat": -26.947454,
+    "lng": -49.112351,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0280",
+    "nome": "Tupi — Joinville #006",
+    "endereco": "Rua Brasil 3330",
+    "cidade": "Joinville",
+    "estado": "SC",
+    "cep": "75982-332",
+    "lat": -26.323662,
+    "lng": -48.787977,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Temporariamente_fechada",
+    "acesso": "Semi-público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0281",
+    "nome": "Privada — Blumenau #007",
+    "endereco": "Rua Brasil 423",
+    "cidade": "Blumenau",
+    "estado": "SC",
+    "cep": "15242-879",
+    "lat": -26.841451,
+    "lng": -49.048338,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0282",
+    "nome": "BeCharge — Florianópolis #008",
+    "endereco": "Rua das Palmeiras 1949",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "67265-541",
+    "lat": -27.590223,
+    "lng": -48.623932,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0283",
+    "nome": "Shell Recharge — Florianópolis #009",
+    "endereco": "Rua Central 8732",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "55502-871",
+    "lat": -27.542646,
+    "lng": -48.527954,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0284",
+    "nome": "Voe Energia — Florianópolis #010",
+    "endereco": "Rua São Paulo 3887",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "83827-168",
+    "lat": -27.637836,
+    "lng": -48.480862,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Em_manutencao",
+    "acesso": "Semi-público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0285",
+    "nome": "Eletrocar — Blumenau #011",
+    "endereco": "Rua das Palmeiras 1786",
+    "cidade": "Blumenau",
+    "estado": "SC",
+    "cep": "63915-703",
+    "lat": -26.930528,
+    "lng": -48.992937,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0286",
+    "nome": "Copel — Florianópolis #012",
+    "endereco": "Rua das Flores 2219",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "87879-803",
+    "lat": -27.526209,
+    "lng": -48.576492,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0287",
+    "nome": "Voe Energia — Blumenau #013",
+    "endereco": "Rua das Palmeiras 7175",
+    "cidade": "Blumenau",
+    "estado": "SC",
+    "cep": "85246-334",
+    "lat": -26.993815,
+    "lng": -49.009632,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0288",
+    "nome": "Eletrocar — Florianópolis #014",
+    "endereco": "Rua Central 5679",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "98400-770",
+    "lat": -27.532295,
+    "lng": -48.481393,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0289",
+    "nome": "Engie — Florianópolis #015",
+    "endereco": "Rua Central 455",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "14886-788",
+    "lat": -27.610588,
+    "lng": -48.545651,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0290",
+    "nome": "Voe Energia — Florianópolis #016",
+    "endereco": "Rua Central 7620",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "33323-331",
+    "lat": -27.624869,
+    "lng": -48.566423,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0291",
+    "nome": "EDP — Florianópolis #017",
+    "endereco": "Rua das Palmeiras 633",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "19915-532",
+    "lat": -27.564089,
+    "lng": -48.571386,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0292",
+    "nome": "Tupi — Blumenau #018",
+    "endereco": "Rua São Paulo 6815",
+    "cidade": "Blumenau",
+    "estado": "SC",
+    "cep": "94048-311",
+    "lat": -26.970277,
+    "lng": -49.040612,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0293",
+    "nome": "Voe Energia — Joinville #019",
+    "endereco": "Rua Brasil 8023",
+    "cidade": "Joinville",
+    "estado": "SC",
+    "cep": "59170-519",
+    "lat": -26.231049,
+    "lng": -48.908512,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0294",
+    "nome": "Shell Recharge — Blumenau #020",
+    "endereco": "Rua Central 6660",
+    "cidade": "Blumenau",
+    "estado": "SC",
+    "cep": "55509-745",
+    "lat": -26.879076,
+    "lng": -49.140241,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0295",
+    "nome": "Shell Recharge — Blumenau #021",
+    "endereco": "Rua São Paulo 2667",
+    "cidade": "Blumenau",
+    "estado": "SC",
+    "cep": "87401-121",
+    "lat": -26.907082,
+    "lng": -49.116009,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0296",
+    "nome": "Voe Energia — Florianópolis #022",
+    "endereco": "Rua São Paulo 2357",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "37191-854",
+    "lat": -27.620958,
+    "lng": -48.614489,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0297",
+    "nome": "Voe Energia — Joinville #023",
+    "endereco": "Rua São Paulo 8866",
+    "cidade": "Joinville",
+    "estado": "SC",
+    "cep": "28466-565",
+    "lat": -26.25934,
+    "lng": -48.795106,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0298",
+    "nome": "Neoenergia — Florianópolis #024",
+    "endereco": "Rua das Palmeiras 3015",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "94663-595",
+    "lat": -27.536261,
+    "lng": -48.607982,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0299",
+    "nome": "BeCharge — Florianópolis #025",
+    "endereco": "Rua das Flores 5352",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "66094-708",
+    "lat": -27.534276,
+    "lng": -48.620571,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0300",
+    "nome": "Shell Recharge — Blumenau #026",
+    "endereco": "Rua das Palmeiras 1836",
+    "cidade": "Blumenau",
+    "estado": "SC",
+    "cep": "44190-501",
+    "lat": -26.855947,
+    "lng": -49.133063,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0301",
+    "nome": "EDP — Blumenau #027",
+    "endereco": "Rua Brasil 3055",
+    "cidade": "Blumenau",
+    "estado": "SC",
+    "cep": "39140-196",
+    "lat": -26.994006,
+    "lng": -49.121513,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0302",
+    "nome": "Shell Recharge — Florianópolis #028",
+    "endereco": "Rua das Flores 7356",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "24751-630",
+    "lat": -27.641924,
+    "lng": -48.52816,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0303",
+    "nome": "Voe Energia — Florianópolis #029",
+    "endereco": "Rua Brasil 1145",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "45924-917",
+    "lat": -27.524306,
+    "lng": -48.55118,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_sc_0304",
+    "nome": "Engie — Florianópolis #030",
+    "endereco": "Rua das Palmeiras 7270",
+    "cidade": "Florianópolis",
+    "estado": "SC",
+    "cep": "26509-241",
+    "lat": -27.517173,
+    "lng": -48.602644,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_df_0305",
+    "nome": "Shell Recharge — Distrito Federal #001",
+    "endereco": "Rua Central 2419",
+    "cidade": "Distrito Federal",
+    "estado": "DF",
+    "cep": "52549-694",
+    "lat": -18.269309,
+    "lng": -44.104763,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_df_0306",
+    "nome": "EDP — Distrito Federal #002",
+    "endereco": "Rua Brasil 2530",
+    "cidade": "Distrito Federal",
+    "estado": "DF",
+    "cep": "67923-561",
+    "lat": -13.468814,
+    "lng": -46.632122,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_df_0307",
+    "nome": "Privada — Distrito Federal #003",
+    "endereco": "Rua das Flores 5490",
+    "cidade": "Distrito Federal",
+    "estado": "DF",
+    "cep": "39281-967",
+    "lat": -12.904446,
+    "lng": -42.029253,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_df_0308",
+    "nome": "Blink — Distrito Federal #004",
+    "endereco": "Rua Central 5663",
+    "cidade": "Distrito Federal",
+    "estado": "DF",
+    "cep": "65484-682",
+    "lat": -15.019835,
+    "lng": -43.777581,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_df_0309",
+    "nome": "Neoenergia — Distrito Federal #005",
+    "endereco": "Rua das Palmeiras 1776",
+    "cidade": "Distrito Federal",
+    "estado": "DF",
+    "cep": "50893-972",
+    "lat": -13.508924,
+    "lng": -48.253973,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_df_0310",
+    "nome": "Voe Energia — Distrito Federal #006",
+    "endereco": "Rua Central 3416",
+    "cidade": "Distrito Federal",
+    "estado": "DF",
+    "cep": "59870-660",
+    "lat": -18.187075,
+    "lng": -44.056162,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_df_0311",
+    "nome": "Shell Recharge — Distrito Federal #007",
+    "endereco": "Rua das Palmeiras 8024",
+    "cidade": "Distrito Federal",
+    "estado": "DF",
+    "cep": "54876-468",
+    "lat": -12.424483,
+    "lng": -51.084111,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_df_0312",
+    "nome": "Neoenergia — Distrito Federal #008",
+    "endereco": "Rua das Flores 5266",
+    "cidade": "Distrito Federal",
+    "estado": "DF",
+    "cep": "11234-434",
+    "lat": -11.66357,
+    "lng": -47.62597,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_df_0313",
+    "nome": "Shell Recharge — Distrito Federal #009",
+    "endereco": "Rua das Flores 1152",
+    "cidade": "Distrito Federal",
+    "estado": "DF",
+    "cep": "76536-450",
+    "lat": -19.557387,
+    "lng": -46.54053,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_df_0314",
+    "nome": "BeCharge — Distrito Federal #010",
+    "endereco": "Rua Brasil 5666",
+    "cidade": "Distrito Federal",
+    "estado": "DF",
+    "cep": "43815-351",
+    "lat": -18.457184,
+    "lng": -51.000798,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_df_0315",
+    "nome": "Voe Energia — Distrito Federal #011",
+    "endereco": "Rua das Palmeiras 6447",
+    "cidade": "Distrito Federal",
+    "estado": "DF",
+    "cep": "41280-727",
+    "lat": -16.657271,
+    "lng": -48.016221,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_df_0316",
+    "nome": "Tupi — Distrito Federal #012",
+    "endereco": "Rua Brasil 150",
+    "cidade": "Distrito Federal",
+    "estado": "DF",
+    "cep": "25984-574",
+    "lat": -16.06772,
+    "lng": -42.766907,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_df_0317",
+    "nome": "Shell Recharge — Distrito Federal #013",
+    "endereco": "Rua das Palmeiras 3466",
+    "cidade": "Distrito Federal",
+    "estado": "DF",
+    "cep": "42693-996",
+    "lat": -19.69198,
+    "lng": -47.555818,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_df_0318",
+    "nome": "Neoenergia — Distrito Federal #014",
+    "endereco": "Rua Central 3045",
+    "cidade": "Distrito Federal",
+    "estado": "DF",
+    "cep": "78508-211",
+    "lat": -14.840497,
+    "lng": -51.747323,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ce_0319",
+    "nome": "Shell Recharge — Ceará #001",
+    "endereco": "Rua Brasil 2406",
+    "cidade": "Ceará",
+    "estado": "CE",
+    "cep": "73225-230",
+    "lat": -19.815647,
+    "lng": -50.197537,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ce_0320",
+    "nome": "Privada — Ceará #002",
+    "endereco": "Rua São Paulo 8261",
+    "cidade": "Ceará",
+    "estado": "CE",
+    "cep": "69556-724",
+    "lat": -19.147918,
+    "lng": -50.948641,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ce_0321",
+    "nome": "EDP — Ceará #003",
+    "endereco": "Rua das Flores 6067",
+    "cidade": "Ceará",
+    "estado": "CE",
+    "cep": "16319-143",
+    "lat": -11.164249,
+    "lng": -46.246336,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ce_0322",
+    "nome": "BeCharge — Ceará #004",
+    "endereco": "Rua Central 9846",
+    "cidade": "Ceará",
+    "estado": "CE",
+    "cep": "36423-697",
+    "lat": -12.281728,
+    "lng": -45.269736,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ce_0323",
+    "nome": "Copel — Ceará #005",
+    "endereco": "Rua das Palmeiras 7716",
+    "cidade": "Ceará",
+    "estado": "CE",
+    "cep": "40312-869",
+    "lat": -16.616617,
+    "lng": -45.738233,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ce_0324",
+    "nome": "BeCharge — Ceará #006",
+    "endereco": "Rua São Paulo 4271",
+    "cidade": "Ceará",
+    "estado": "CE",
+    "cep": "19063-739",
+    "lat": -11.266066,
+    "lng": -42.910688,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ce_0325",
+    "nome": "Engie — Ceará #007",
+    "endereco": "Rua Brasil 5566",
+    "cidade": "Ceará",
+    "estado": "CE",
+    "cep": "25064-748",
+    "lat": -18.210663,
+    "lng": -49.635389,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ce_0326",
+    "nome": "Privada — Ceará #008",
+    "endereco": "Rua Brasil 6925",
+    "cidade": "Ceará",
+    "estado": "CE",
+    "cep": "98999-456",
+    "lat": -19.730037,
+    "lng": -49.009904,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ce_0327",
+    "nome": "Eletrocar — Ceará #009",
+    "endereco": "Rua São Paulo 2087",
+    "cidade": "Ceará",
+    "estado": "CE",
+    "cep": "67300-844",
+    "lat": -12.854699,
+    "lng": -47.022739,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ce_0328",
+    "nome": "Neoenergia — Ceará #010",
+    "endereco": "Rua Brasil 1253",
+    "cidade": "Ceará",
+    "estado": "CE",
+    "cep": "51764-330",
+    "lat": -15.916254,
+    "lng": -48.929346,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ce_0329",
+    "nome": "BeCharge — Ceará #011",
+    "endereco": "Rua Brasil 4457",
+    "cidade": "Ceará",
+    "estado": "CE",
+    "cep": "97500-337",
+    "lat": -16.901699,
+    "lng": -50.668231,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ba_0330",
+    "nome": "Engie — Bahia #001",
+    "endereco": "Rua São Paulo 4776",
+    "cidade": "Bahia",
+    "estado": "BA",
+    "cep": "29925-238",
+    "lat": -13.733086,
+    "lng": -47.043537,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ba_0331",
+    "nome": "Copel — Bahia #002",
+    "endereco": "Rua Central 2934",
+    "cidade": "Bahia",
+    "estado": "BA",
+    "cep": "20721-215",
+    "lat": -17.296868,
+    "lng": -42.843316,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ba_0332",
+    "nome": "Voe Energia — Bahia #003",
+    "endereco": "Rua das Palmeiras 4735",
+    "cidade": "Bahia",
+    "estado": "BA",
+    "cep": "63221-717",
+    "lat": -17.22528,
+    "lng": -51.990968,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Em_manutencao",
+    "acesso": "Semi-público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ba_0333",
+    "nome": "Tupi — Bahia #004",
+    "endereco": "Rua Brasil 6491",
+    "cidade": "Bahia",
+    "estado": "BA",
+    "cep": "88055-234",
+    "lat": -12.197978,
+    "lng": -47.557486,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ba_0334",
+    "nome": "Tupi — Bahia #005",
+    "endereco": "Rua Brasil 3039",
+    "cidade": "Bahia",
+    "estado": "BA",
+    "cep": "78374-557",
+    "lat": -12.956153,
+    "lng": -48.467397,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ba_0335",
+    "nome": "Neoenergia — Bahia #006",
+    "endereco": "Rua das Palmeiras 4970",
+    "cidade": "Bahia",
+    "estado": "BA",
+    "cep": "82070-128",
+    "lat": -17.961327,
+    "lng": -48.896644,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ba_0336",
+    "nome": "Eletrocar — Bahia #007",
+    "endereco": "Rua São Paulo 5903",
+    "cidade": "Bahia",
+    "estado": "BA",
+    "cep": "49914-884",
+    "lat": -16.958906,
+    "lng": -42.906217,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ba_0337",
+    "nome": "Eletrocar — Bahia #008",
+    "endereco": "Rua das Palmeiras 8096",
+    "cidade": "Bahia",
+    "estado": "BA",
+    "cep": "70112-888",
+    "lat": -12.545305,
+    "lng": -42.995344,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ba_0338",
+    "nome": "Eletrocar — Bahia #009",
+    "endereco": "Rua das Flores 9433",
+    "cidade": "Bahia",
+    "estado": "BA",
+    "cep": "16000-725",
+    "lat": -14.048875,
+    "lng": -47.668951,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ba_0339",
+    "nome": "Voe Energia — Bahia #010",
+    "endereco": "Rua das Palmeiras 6230",
+    "cidade": "Bahia",
+    "estado": "BA",
+    "cep": "21570-968",
+    "lat": -18.86226,
+    "lng": -44.133066,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ba_0340",
+    "nome": "Voe Energia — Bahia #011",
+    "endereco": "Rua das Flores 9708",
+    "cidade": "Bahia",
+    "estado": "BA",
+    "cep": "20192-369",
+    "lat": -19.725007,
+    "lng": -45.18792,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_go_0341",
+    "nome": "Tupi — Goiás #001",
+    "endereco": "Rua Brasil 4920",
+    "cidade": "Goiás",
+    "estado": "GO",
+    "cep": "20330-828",
+    "lat": -12.708177,
+    "lng": -43.057401,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_go_0342",
+    "nome": "Voe Energia — Goiás #002",
+    "endereco": "Rua São Paulo 4427",
+    "cidade": "Goiás",
+    "estado": "GO",
+    "cep": "14321-699",
+    "lat": -18.899322,
+    "lng": -45.815346,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_go_0343",
+    "nome": "Eletrocar — Goiás #003",
+    "endereco": "Rua Brasil 7811",
+    "cidade": "Goiás",
+    "estado": "GO",
+    "cep": "30040-889",
+    "lat": -15.903412,
+    "lng": -47.641513,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_go_0344",
+    "nome": "Eletrocar — Goiás #004",
+    "endereco": "Rua Brasil 1072",
+    "cidade": "Goiás",
+    "estado": "GO",
+    "cep": "38130-149",
+    "lat": -14.756369,
+    "lng": -46.920372,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_go_0345",
+    "nome": "Eletrocar — Goiás #005",
+    "endereco": "Rua São Paulo 1253",
+    "cidade": "Goiás",
+    "estado": "GO",
+    "cep": "10142-788",
+    "lat": -19.971485,
+    "lng": -47.228413,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_go_0346",
+    "nome": "EDP — Goiás #006",
+    "endereco": "Rua Brasil 2389",
+    "cidade": "Goiás",
+    "estado": "GO",
+    "cep": "62905-100",
+    "lat": -18.952121,
+    "lng": -48.471051,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 120,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_go_0347",
+    "nome": "Voe Energia — Goiás #007",
+    "endereco": "Rua Central 3691",
+    "cidade": "Goiás",
+    "estado": "GO",
+    "cep": "63048-234",
+    "lat": -11.269425,
+    "lng": -51.181267,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_go_0348",
+    "nome": "Copel — Goiás #008",
+    "endereco": "Rua Central 7340",
+    "cidade": "Goiás",
+    "estado": "GO",
+    "cep": "90934-874",
+    "lat": -13.282947,
+    "lng": -42.174941,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_go_0349",
+    "nome": "EDP — Goiás #009",
+    "endereco": "Rua das Palmeiras 7092",
+    "cidade": "Goiás",
+    "estado": "GO",
+    "cep": "40805-152",
+    "lat": -12.198011,
+    "lng": -44.782114,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_es_0350",
+    "nome": "Shell Recharge — Espírito Santo #001",
+    "endereco": "Rua das Flores 1695",
+    "cidade": "Espírito Santo",
+    "estado": "ES",
+    "cep": "72843-489",
+    "lat": -13.439511,
+    "lng": -50.67143,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_es_0351",
+    "nome": "Eletrocar — Espírito Santo #002",
+    "endereco": "Rua das Palmeiras 5667",
+    "cidade": "Espírito Santo",
+    "estado": "ES",
+    "cep": "45015-234",
+    "lat": -17.294724,
+    "lng": -43.046807,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_es_0352",
+    "nome": "Privada — Espírito Santo #003",
+    "endereco": "Rua das Flores 8222",
+    "cidade": "Espírito Santo",
+    "estado": "ES",
+    "cep": "45492-848",
+    "lat": -10.931629,
+    "lng": -51.145311,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Temporariamente_fechada",
+    "acesso": "Semi-público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_es_0353",
+    "nome": "Copel — Espírito Santo #004",
+    "endereco": "Rua das Palmeiras 9859",
+    "cidade": "Espírito Santo",
+    "estado": "ES",
+    "cep": "57364-710",
+    "lat": -17.779876,
+    "lng": -42.69328,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_es_0354",
+    "nome": "Eletrocar — Espírito Santo #005",
+    "endereco": "Rua das Flores 3805",
+    "cidade": "Espírito Santo",
+    "estado": "ES",
+    "cep": "55944-810",
+    "lat": -17.406266,
+    "lng": -45.456987,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_es_0355",
+    "nome": "Voe Energia — Espírito Santo #006",
+    "endereco": "Rua Central 9037",
+    "cidade": "Espírito Santo",
+    "estado": "ES",
+    "cep": "79656-396",
+    "lat": -16.100433,
+    "lng": -44.99438,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_es_0356",
+    "nome": "Tupi — Espírito Santo #007",
+    "endereco": "Rua das Palmeiras 2999",
+    "cidade": "Espírito Santo",
+    "estado": "ES",
+    "cep": "95651-163",
+    "lat": -12.75978,
+    "lng": -44.309616,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pe_0357",
+    "nome": "BeCharge — Pernambuco #001",
+    "endereco": "Rua Brasil 5308",
+    "cidade": "Pernambuco",
+    "estado": "PE",
+    "cep": "79129-262",
+    "lat": -14.558955,
+    "lng": -51.360113,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pe_0358",
+    "nome": "Voe Energia — Pernambuco #002",
+    "endereco": "Rua das Flores 2868",
+    "cidade": "Pernambuco",
+    "estado": "PE",
+    "cep": "73248-154",
+    "lat": -14.483783,
+    "lng": -43.719972,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pe_0359",
+    "nome": "Voe Energia — Pernambuco #003",
+    "endereco": "Rua Brasil 7865",
+    "cidade": "Pernambuco",
+    "estado": "PE",
+    "cep": "89531-570",
+    "lat": -18.09945,
+    "lng": -46.665549,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pe_0360",
+    "nome": "Shell Recharge — Pernambuco #004",
+    "endereco": "Rua São Paulo 6637",
+    "cidade": "Pernambuco",
+    "estado": "PE",
+    "cep": "80845-146",
+    "lat": -15.256793,
+    "lng": -44.51573,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pe_0361",
+    "nome": "Voe Energia — Pernambuco #005",
+    "endereco": "Rua das Flores 3928",
+    "cidade": "Pernambuco",
+    "estado": "PE",
+    "cep": "12078-930",
+    "lat": -15.21089,
+    "lng": -50.306933,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pe_0362",
+    "nome": "BeCharge — Pernambuco #006",
+    "endereco": "Rua São Paulo 6375",
+    "cidade": "Pernambuco",
+    "estado": "PE",
+    "cep": "14623-534",
+    "lat": -11.962681,
+    "lng": -42.855917,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pe_0363",
+    "nome": "Tupi — Pernambuco #007",
+    "endereco": "Rua das Palmeiras 7187",
+    "cidade": "Pernambuco",
+    "estado": "PE",
+    "cep": "58656-899",
+    "lat": -18.925276,
+    "lng": -44.437339,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mt_0364",
+    "nome": "Neoenergia — Mato Grosso #001",
+    "endereco": "Rua Brasil 5484",
+    "cidade": "Mato Grosso",
+    "estado": "MT",
+    "cep": "81727-569",
+    "lat": -16.938853,
+    "lng": -44.782195,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mt_0365",
+    "nome": "BeCharge — Mato Grosso #002",
+    "endereco": "Rua Brasil 5911",
+    "cidade": "Mato Grosso",
+    "estado": "MT",
+    "cep": "98333-520",
+    "lat": -10.299166,
+    "lng": -48.128646,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mt_0366",
+    "nome": "Tupi — Mato Grosso #003",
+    "endereco": "Rua Central 3049",
+    "cidade": "Mato Grosso",
+    "estado": "MT",
+    "cep": "67234-152",
+    "lat": -15.374591,
+    "lng": -43.135488,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mt_0367",
+    "nome": "Shell Recharge — Mato Grosso #004",
+    "endereco": "Rua Brasil 8882",
+    "cidade": "Mato Grosso",
+    "estado": "MT",
+    "cep": "98928-637",
+    "lat": -13.470195,
+    "lng": -47.830256,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Shell Recharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_mt_0368",
+    "nome": "Neoenergia — Mato Grosso #005",
+    "endereco": "Rua das Palmeiras 9652",
+    "cidade": "Mato Grosso",
+    "estado": "MT",
+    "cep": "60403-284",
+    "lat": -18.006919,
+    "lng": -45.007096,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ms_0369",
+    "nome": "Privada — Mato Grosso do Sul #001",
+    "endereco": "Rua das Flores 3353",
+    "cidade": "Mato Grosso do Sul",
+    "estado": "MS",
+    "cep": "75040-256",
+    "lat": -13.823174,
+    "lng": -44.976009,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ms_0370",
+    "nome": "Engie — Mato Grosso do Sul #002",
+    "endereco": "Rua Central 8397",
+    "cidade": "Mato Grosso do Sul",
+    "estado": "MS",
+    "cep": "70412-720",
+    "lat": -15.684538,
+    "lng": -51.739722,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 250,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ms_0371",
+    "nome": "Neoenergia — Mato Grosso do Sul #003",
+    "endereco": "Rua São Paulo 6331",
+    "cidade": "Mato Grosso do Sul",
+    "estado": "MS",
+    "cep": "30405-107",
+    "lat": -12.052164,
+    "lng": -47.84724,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 250,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Neoenergia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ms_0372",
+    "nome": "Eletrocar — Mato Grosso do Sul #004",
+    "endereco": "Rua Central 2734",
+    "cidade": "Mato Grosso do Sul",
+    "estado": "MS",
+    "cep": "55713-609",
+    "lat": -12.62808,
+    "lng": -48.49928,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_am_0373",
+    "nome": "Eletrocar — Amazonas #001",
+    "endereco": "Rua das Flores 7020",
+    "cidade": "Amazonas",
+    "estado": "AM",
+    "cep": "90410-877",
+    "lat": -16.791832,
+    "lng": -47.990032,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_am_0374",
+    "nome": "Engie — Amazonas #002",
+    "endereco": "Rua Brasil 1950",
+    "cidade": "Amazonas",
+    "estado": "AM",
+    "cep": "85867-638",
+    "lat": -18.558682,
+    "lng": -43.458573,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_am_0375",
+    "nome": "BeCharge — Amazonas #003",
+    "endereco": "Rua das Palmeiras 2334",
+    "cidade": "Amazonas",
+    "estado": "AM",
+    "cep": "13032-843",
+    "lat": -13.845517,
+    "lng": -51.215551,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 7.4,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pa_0376",
+    "nome": "Eletrocar — Pará #001",
+    "endereco": "Rua Central 3347",
+    "cidade": "Pará",
+    "estado": "PA",
+    "cep": "93962-539",
+    "lat": -19.579422,
+    "lng": -48.369155,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pa_0377",
+    "nome": "Copel — Pará #002",
+    "endereco": "Rua das Flores 2515",
+    "cidade": "Pará",
+    "estado": "PA",
+    "cep": "63871-556",
+    "lat": -17.769197,
+    "lng": -51.930978,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pa_0378",
+    "nome": "Privada — Pará #003",
+    "endereco": "Rua Brasil 7311",
+    "cidade": "Pará",
+    "estado": "PA",
+    "cep": "95694-356",
+    "lat": -10.440022,
+    "lng": -48.48348,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ma_0379",
+    "nome": "BeCharge — Maranhão #001",
+    "endereco": "Rua das Palmeiras 841",
+    "cidade": "Maranhão",
+    "estado": "MA",
+    "cep": "91481-327",
+    "lat": -12.868527,
+    "lng": -44.878194,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ma_0380",
+    "nome": "Tupi — Maranhão #002",
+    "endereco": "Rua Central 501",
+    "cidade": "Maranhão",
+    "estado": "MA",
+    "cep": "26176-465",
+    "lat": -19.103234,
+    "lng": -49.343559,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pb_0381",
+    "nome": "BeCharge — Paraíba #001",
+    "endereco": "Rua das Flores 9100",
+    "cidade": "Paraíba",
+    "estado": "PB",
+    "cep": "23252-564",
+    "lat": -15.613664,
+    "lng": -48.139514,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pb_0382",
+    "nome": "Engie — Paraíba #002",
+    "endereco": "Rua Brasil 8236",
+    "cidade": "Paraíba",
+    "estado": "PB",
+    "cep": "90445-155",
+    "lat": -16.737859,
+    "lng": -48.684043,
+    "tipos_conector": [
+      "Wallbox AC"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rn_0383",
+    "nome": "Engie — Rio Grande do Norte #001",
+    "endereco": "Rua São Paulo 4271",
+    "cidade": "Rio Grande do Norte",
+    "estado": "RN",
+    "cep": "24188-989",
+    "lat": -12.007579,
+    "lng": -50.309938,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Engie",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rn_0384",
+    "nome": "Copel — Rio Grande do Norte #002",
+    "endereco": "Rua Brasil 3390",
+    "cidade": "Rio Grande do Norte",
+    "estado": "RN",
+    "cep": "89329-245",
+    "lat": -16.480774,
+    "lng": -49.818681,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Temporariamente_fechada",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pi_0385",
+    "nome": "Voe Energia — Piauí #001",
+    "endereco": "Rua São Paulo 2584",
+    "cidade": "Piauí",
+    "estado": "PI",
+    "cep": "40707-791",
+    "lat": -16.786472,
+    "lng": -47.950721,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_pi_0386",
+    "nome": "Blink — Piauí #002",
+    "endereco": "Rua das Flores 5183",
+    "cidade": "Piauí",
+    "estado": "PI",
+    "cep": "74715-936",
+    "lat": -10.709535,
+    "lng": -42.533117,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Blink",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_se_0387",
+    "nome": "Privada — Sergipe #001",
+    "endereco": "Rua Brasil 2810",
+    "cidade": "Sergipe",
+    "estado": "SE",
+    "cep": "64790-601",
+    "lat": -18.982704,
+    "lng": -43.827734,
+    "tipos_conector": [
+      "CCS2 (Combo 2)"
+    ],
+    "potencia_kw": 350,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_se_0388",
+    "nome": "BeCharge — Sergipe #002",
+    "endereco": "Rua das Flores 2569",
+    "cidade": "Sergipe",
+    "estado": "SE",
+    "cep": "79054-348",
+    "lat": -18.5072,
+    "lng": -43.421922,
+    "tipos_conector": [
+      "Tesla"
+    ],
+    "potencia_kw": 150,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_al_0389",
+    "nome": "Eletrocar — Alagoas #001",
+    "endereco": "Rua São Paulo 2746",
+    "cidade": "Alagoas",
+    "estado": "AL",
+    "cep": "29049-224",
+    "lat": -16.154872,
+    "lng": -49.965044,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_al_0390",
+    "nome": "EDP — Alagoas #002",
+    "endereco": "Rua das Palmeiras 7010",
+    "cidade": "Alagoas",
+    "estado": "AL",
+    "cep": "97258-436",
+    "lat": -19.50888,
+    "lng": -48.986127,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "EDP",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_to_0391",
+    "nome": "Voe Energia — Tocantins #001",
+    "endereco": "Rua Central 269",
+    "cidade": "Tocantins",
+    "estado": "TO",
+    "cep": "53528-676",
+    "lat": -10.200146,
+    "lng": -47.76517,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_to_0392",
+    "nome": "Copel — Tocantins #002",
+    "endereco": "Rua São Paulo 2560",
+    "cidade": "Tocantins",
+    "estado": "TO",
+    "cep": "48737-674",
+    "lat": -14.226728,
+    "lng": -45.826031,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 22,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ro_0393",
+    "nome": "Privada — Rondônia #001",
+    "endereco": "Rua das Flores 1344",
+    "cidade": "Rondônia",
+    "estado": "RO",
+    "cep": "55715-886",
+    "lat": -12.974721,
+    "lng": -44.539291,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ro_0394",
+    "nome": "Eletrocar — Rondônia #002",
+    "endereco": "Rua Central 2863",
+    "cidade": "Rondônia",
+    "estado": "RO",
+    "cep": "16282-917",
+    "lat": -19.503284,
+    "lng": -49.268556,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Semi-público",
+    "operadora": "Eletrocar",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ac_0395",
+    "nome": "Privada — Acre #001",
+    "endereco": "Rua das Flores 9888",
+    "cidade": "Acre",
+    "estado": "AC",
+    "cep": "42682-897",
+    "lat": -16.116306,
+    "lng": -42.777968,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Privada",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ac_0396",
+    "nome": "BeCharge — Acre #002",
+    "endereco": "Rua das Palmeiras 5890",
+    "cidade": "Acre",
+    "estado": "AC",
+    "cep": "23536-836",
+    "lat": -10.843156,
+    "lng": -50.512576,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 100,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "BeCharge",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ap_0397",
+    "nome": "Voe Energia — Amapá #001",
+    "endereco": "Rua das Flores 3155",
+    "cidade": "Amapá",
+    "estado": "AP",
+    "cep": "99073-254",
+    "lat": -10.711658,
+    "lng": -49.148981,
+    "tipos_conector": [
+      "CHAdeMO"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Público",
+    "operadora": "Voe Energia",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_ap_0398",
+    "nome": "Copel — Amapá #002",
+    "endereco": "Rua das Flores 4949",
+    "cidade": "Amapá",
+    "estado": "AP",
+    "cep": "68900-410",
+    "lat": -10.668333,
+    "lng": -46.532066,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Temporariamente_fechada",
+    "acesso": "Semi-público",
+    "operadora": "Copel",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rr_0399",
+    "nome": "Tupi — Roraima #001",
+    "endereco": "Rua das Flores 1992",
+    "cidade": "Roraima",
+    "estado": "RR",
+    "cep": "17549-210",
+    "lat": -10.209637,
+    "lng": -50.018903,
+    "tipos_conector": [
+      "Type 2"
+    ],
+    "potencia_kw": 11,
+    "status": "Em_manutencao",
+    "acesso": "Público",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  },
+  {
+    "id": "mock_rr_0400",
+    "nome": "Tupi — Roraima #002",
+    "endereco": "Rua São Paulo 8177",
+    "cidade": "Roraima",
+    "estado": "RR",
+    "cep": "93749-623",
+    "lat": -14.611231,
+    "lng": -43.228317,
+    "tipos_conector": [
+      "GB/T"
+    ],
+    "potencia_kw": 50,
+    "status": "Operacional",
+    "acesso": "Privado",
+    "operadora": "Tupi",
+    "fonte": "Mock/SustAmbiTech",
+    "data_atualizacao": "2026-09-08"
+  }
+]

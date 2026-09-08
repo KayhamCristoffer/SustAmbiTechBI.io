@@ -1,0 +1,52 @@
+{
+  "total": 400,
+  "fonte": "mock_sustambitech",
+  "atualizado_em": "2026-09-08T20:59:17.530313",
+  "por_estado": {
+    "SP": 112,
+    "MG": 44,
+    "RS": 43,
+    "RJ": 41,
+    "PR": 34,
+    "SC": 30,
+    "DF": 14,
+    "CE": 11,
+    "BA": 11,
+    "GO": 9,
+    "ES": 7,
+    "PE": 7,
+    "MT": 5,
+    "MS": 4,
+    "AM": 3,
+    "PA": 3,
+    "MA": 2,
+    "PB": 2,
+    "RN": 2,
+    "PI": 2,
+    "SE": 2,
+    "AL": 2,
+    "TO": 2,
+    "RO": 2,
+    "AC": 2,
+    "AP": 2,
+    "RR": 2
+  },
+  "por_status": {
+    "Operacional": 326,
+    "Temporariamente_fechada": 29,
+    "Em_manutencao": 45
+  },
+  "top_operadoras": {
+    "Voe Energia": 51,
+    "Shell Recharge": 42,
+    "Tupi": 42,
+    "Eletrocar": 39,
+    "Neoenergia": 37,
+    "BeCharge": 36,
+    "Copel": 35,
+    "Engie": 31,
+    "Privada": 30,
+    "Blink": 29
+  },
+  "hash": "74cf7513aad3bdb2dfc3a4fb9bd76af4"
+}

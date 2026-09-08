@@ -986,6 +986,204 @@
       .kpi-item { flex: 1 1 130px; }
       .pbi-tabs { gap: .3rem; }
     }
+
+    /* ===================================================== FOTO MEMBROS */
+    .team-photo {
+      width: 72px; height: 72px; border-radius: 50%;
+      object-fit: cover; border: 2px solid var(--border);
+      display: block;
+    }
+    .team-card.lead .team-photo { border-color: var(--green); box-shadow: 0 0 14px rgba(0,230,118,.3); }
+
+    /* ===================================================== NAV ADMIN BTN */
+    .nav-admin-link {
+      color: var(--muted) !important; font-size: .85rem !important;
+      padding: .38rem .55rem !important; border-radius: 7px;
+      transition: all .2s; opacity: .7;
+    }
+    .nav-admin-link:hover, .nav-admin-link.active {
+      color: var(--green) !important; background: rgba(0,230,118,.08) !important; opacity: 1;
+    }
+    .nav-admin-link.logged { color: var(--green) !important; opacity: 1; }
+
+    /* ===================================================== ADMIN PAGE */
+    .admin-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .admin-hero {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 2rem; padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .admin-hero-icon {
+      width: 52px; height: 52px; border-radius: 14px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      display: grid; place-items: center; font-size: 1.4rem;
+    }
+    .admin-hero-title { font-family: 'Orbitron',sans-serif; font-size: 1.2rem; font-weight: 800; color: #fff; }
+    .admin-hero-sub { font-size: .78rem; color: var(--muted); margin-top: .2rem; }
+    .admin-user-badge {
+      margin-left: auto; display: flex; align-items: center; gap: .6rem;
+      background: var(--bg3); border: 1px solid var(--border); border-radius: 10px;
+      padding: .45rem .9rem; font-size: .78rem; color: var(--dim);
+    }
+    .admin-user-badge i { color: var(--green); }
+
+    /* login card */
+    .admin-login-wrap {
+      max-width: 420px; margin: 3rem auto; background: var(--card);
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem; box-shadow: var(--shadow);
+    }
+    .admin-login-title {
+      font-family: 'Orbitron',sans-serif; font-size: 1.1rem; font-weight: 800;
+      color: #fff; text-align: center; margin-bottom: .4rem;
+    }
+    .admin-login-sub { text-align: center; font-size: .78rem; color: var(--muted); margin-bottom: 1.8rem; }
+    .admin-field { margin-bottom: 1rem; }
+    .admin-field label { display: block; font-size: .74rem; font-weight: 600; color: var(--dim); margin-bottom: .35rem; }
+    .admin-input {
+      width: 100%; background: var(--bg2); border: 1px solid var(--border2);
+      border-radius: 9px; padding: .65rem .9rem; color: var(--text); font-size: .88rem;
+      font-family: 'Inter',sans-serif; transition: border-color .2s; outline: none;
+    }
+    .admin-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(41,121,255,.15); }
+    .admin-forgot { font-size: .72rem; color: var(--muted); cursor: pointer; text-decoration: underline; float: right; margin-top: .2rem; }
+    .admin-forgot:hover { color: var(--cyan); }
+    .admin-btn {
+      width: 100%; padding: .75rem; border-radius: 9px; border: none; cursor: pointer;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      color: #fff; font-weight: 700; font-size: .92rem; font-family: 'Inter',sans-serif;
+      transition: opacity .2s; margin-top: .5rem;
+    }
+    .admin-btn:hover { opacity: .88; }
+    .admin-btn:disabled { opacity: .5; cursor: not-allowed; }
+    .admin-error {
+      background: rgba(255,82,82,.08); border: 1px solid rgba(255,82,82,.3);
+      border-radius: 8px; padding: .55rem .8rem; font-size: .78rem; color: #ff5252;
+      margin-bottom: .9rem; display: none;
+    }
+    .admin-success {
+      background: rgba(0,230,118,.08); border: 1px solid rgba(0,230,118,.3);
+      border-radius: 8px; padding: .55rem .8rem; font-size: .78rem; color: var(--green);
+      margin-bottom: .9rem; display: none;
+    }
+
+    /* tabs admin */
+    .admin-tabs { display: flex; gap: .4rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .admin-tab {
+      background: var(--bg3); border: 1px solid var(--border); border-radius: 9px;
+      color: var(--muted); font-size: .78rem; font-weight: 600; padding: .5rem 1rem;
+      cursor: pointer; transition: all .18s; font-family: 'Inter',sans-serif;
+    }
+    .admin-tab:hover { border-color: var(--blue); color: var(--dim); }
+    .admin-tab.active { background: linear-gradient(135deg,rgba(41,121,255,.2),rgba(124,77,255,.2)); border-color: var(--blue); color: #fff; }
+
+    .admin-panel { display: none; }
+    .admin-panel.active { display: block; }
+
+    /* tabela admin */
+    .admin-table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+    .admin-table {
+      width: 100%; border-collapse: collapse; font-size: .8rem;
+    }
+    .admin-table th {
+      background: var(--bg3); color: var(--dim); font-weight: 700; font-size: .72rem;
+      text-transform: uppercase; letter-spacing: .07em;
+      padding: .7rem 1rem; text-align: left; border-bottom: 1px solid var(--border);
+    }
+    .admin-table td { padding: .65rem 1rem; border-bottom: 1px solid rgba(0,230,118,.06); color: var(--text); }
+    .admin-table tr:last-child td { border-bottom: none; }
+    .admin-table tr:hover td { background: rgba(255,255,255,.02); }
+
+    /* badges de status */
+    .badge { display: inline-block; padding: .18rem .55rem; border-radius: 20px; font-size: .68rem; font-weight: 700; }
+    .badge-green { background: rgba(0,230,118,.12); color: var(--green); border: 1px solid rgba(0,230,118,.2); }
+    .badge-blue  { background: rgba(41,121,255,.12); color: #82b1ff; border: 1px solid rgba(41,121,255,.2); }
+    .badge-red   { background: rgba(255,82,82,.12);  color: #ff8a80; border: 1px solid rgba(255,82,82,.2); }
+    .badge-gray  { background: rgba(120,144,156,.12); color: var(--muted); border: 1px solid rgba(120,144,156,.2); }
+    .badge-yellow{ background: rgba(255,215,64,.12); color: #ffd740; border: 1px solid rgba(255,215,64,.2); }
+
+    /* admin forms inline */
+    .admin-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+    @media (max-width: 600px) { .admin-form-grid { grid-template-columns: 1fr; } }
+    .admin-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.5rem; margin-bottom: 1.2rem;
+    }
+    .admin-card-title {
+      font-weight: 700; font-size: .88rem; color: var(--dim); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .admin-card-title i { color: var(--blue); }
+
+    /* inline action btns */
+    .tbl-btn {
+      background: none; border: 1px solid var(--border); border-radius: 6px;
+      padding: .22rem .55rem; font-size: .72rem; cursor: pointer; color: var(--muted);
+      transition: all .15s; font-family: 'Inter',sans-serif;
+    }
+    .tbl-btn:hover { background: var(--bg3); color: var(--text); }
+    .tbl-btn.del:hover { border-color: #ff5252; color: #ff5252; }
+    .tbl-btn.ok:hover  { border-color: var(--green); color: var(--green); }
+
+    /* stats cards admin */
+    .admin-stats { display: grid; grid-template-columns: repeat(auto-fill,minmax(150px,1fr)); gap: .8rem; margin-bottom: 1.5rem; }
+    .admin-stat {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1rem; text-align: center;
+    }
+    .admin-stat-val { font-family: 'Orbitron',sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--green); }
+    .admin-stat-lbl { font-size: .7rem; color: var(--muted); margin-top: .2rem; text-transform: uppercase; letter-spacing: .05em; }
+
+    /* mapa MapLibre corrigido */
+    .map-alt-notice {
+      background: rgba(41,121,255,.08); border: 1px solid rgba(41,121,255,.25);
+      border-radius: 10px; padding: .7rem 1rem; font-size: .78rem; color: #82b1ff;
+      display: flex; align-items: center; gap: .6rem; margin-bottom: .8rem;
+    }
+    .map-mode-btns { display: flex; gap: .5rem; margin-bottom: .7rem; flex-wrap: wrap; }
+    .map-mode-btn {
+      background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
+      color: var(--muted); font-size: .75rem; font-weight: 600; padding: .4rem .9rem;
+      cursor: pointer; transition: all .18s; font-family: 'Inter',sans-serif;
+    }
+    .map-mode-btn.active { background: rgba(0,229,255,.1); border-color: var(--cyan); color: var(--cyan); }
+
+    /* CRUD estações inline */
+    .crud-search-bar { display: flex; gap: .6rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .crud-search-bar input {
+      flex: 1; min-width: 180px;
+      background: var(--bg2); border: 1px solid var(--border2); border-radius: 9px;
+      padding: .5rem .85rem; color: var(--text); font-size: .82rem;
+      font-family: 'Inter',sans-serif; outline: none;
+    }
+    .crud-search-bar input:focus { border-color: var(--blue); }
+    .crud-pager { display: flex; align-items: center; gap: .5rem; margin-top: .8rem; flex-wrap: wrap; }
+    .crud-pager button {
+      background: var(--bg3); border: 1px solid var(--border); border-radius: 7px;
+      color: var(--muted); font-size: .75rem; padding: .3rem .7rem; cursor: pointer;
+      font-family: 'Inter',sans-serif; transition: all .15s;
+    }
+    .crud-pager button:hover:not(:disabled) { border-color: var(--blue); color: #82b1ff; }
+    .crud-pager button:disabled { opacity: .4; cursor: not-allowed; }
+    .crud-pager span { font-size: .74rem; color: var(--muted); }
+
+    /* modal */
+    .modal-backdrop {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7);
+      z-index: 9000; align-items: center; justify-content: center; padding: 1rem;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-box {
+      background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius-lg);
+      padding: 1.8rem; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto;
+      box-shadow: var(--shadow);
+    }
+    .modal-title {
+      font-family: 'Orbitron',sans-serif; font-size: 1rem; font-weight: 800; color: #fff;
+      margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center;
+    }
+    .modal-close { background: none; border: none; color: var(--muted); font-size: 1.1rem; cursor: pointer; }
+    .modal-close:hover { color: #ff5252; }
   </style>
 </head>
 <body class="grid-bg">
@@ -1014,6 +1212,9 @@
     <a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io" target="_blank" class="nav-gh">
       <i class="fab fa-github"></i> GitHub
     </a>
+    <a href="#" onclick="showPage('admin')" id="nav-admin" class="nav-admin-link" title="Área Administrativa">
+      <i class="fas fa-lock"></i>
+    </a>
   </div>
 
   <!-- hamburger -->
@@ -1033,6 +1234,7 @@
   <a href="#" onclick="showPage('fontes');toggleMobile()"><i class="fas fa-database"></i> Fontes</a>
   <a href="#" onclick="showPage('politicas');toggleMobile()"><i class="fas fa-shield-alt"></i> Políticas</a>
   <a href="#" onclick="goHome();scrollToSection('team-section');toggleMobile()"><i class="fas fa-users"></i> Time</a>
+  <a href="#" onclick="showPage('admin');toggleMobile()"><i class="fas fa-lock"></i> Admin</a>
   <a href="https://github.com/KayhamCristoffer/SustAmbiTechBI.io" target="_blank"><i class="fab fa-github"></i> GitHub</a>
 </div>
 
@@ -1139,64 +1341,98 @@
     <div class="section">
       <div class="sec-tag">Mapa Interativo</div>
       <h2 class="sec-title">Estações de Recarga no Brasil</h2>
-      <p class="sec-sub">Mapa ao vivo via <strong style="color:var(--green)">Carregados.com.br</strong> — 11.783 estações em todo o país. Ative a localização para ver as mais próximas.</p>
+      <p class="sec-sub">Mapa interativo com dados de estações de recarga no Brasil. Use os filtros ou ative sua localização para encontrar postos próximos.</p>
+
+      <!-- aviso sobre Carregados -->
+      <div class="map-alt-notice">
+        <i class="fas fa-info-circle"></i>
+        <span>O site <strong>Carregados.com.br</strong> bloqueia exibição em outros sites (política SAMEORIGIN). Usando mapa alternativo com <strong>MapLibre GL + OpenFreeMap</strong> — mesma tecnologia do Carregados. <a href="https://carregados.com.br/mapa" target="_blank" style="color:var(--cyan);text-decoration:underline">Abrir Carregados.com.br ↗</a></span>
+      </div>
+
+      <!-- modos de visualização -->
+      <div class="map-mode-btns">
+        <button class="map-mode-btn active" id="mode-mapa" onclick="setMapMode(this,'mapa')"><i class="fas fa-map"></i> Mapa Interativo</button>
+        <button class="map-mode-btn" id="mode-lista" onclick="setMapMode(this,'lista')"><i class="fas fa-list"></i> Lista de Estações</button>
+        <button class="map-mode-btn" id="mode-stats" onclick="setMapMode(this,'stats')"><i class="fas fa-chart-pie"></i> Estatísticas</button>
+      </div>
 
       <!-- controls row -->
-      <div class="map-filter-row" style="flex-wrap:wrap;gap:.5rem;">
+      <div class="map-filter-row" style="flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem">
         <span style="font-size:.76rem;color:var(--muted);font-weight:600;"><i class="fas fa-filter" style="margin-right:.3rem"></i>Estado:</span>
-        <button class="map-filter-btn active" id="map-btn-all"  onclick="setMapEmbed(this,'https://carregados.com.br/mapa','Mapa Nacional')">Nacional</button>
-        <button class="map-filter-btn" onclick="setMapEmbed(this,'https://carregados.com.br/estacoes?estado=s%C3%A3o+paulo+%28sp%29','São Paulo')">São Paulo</button>
-        <button class="map-filter-btn" onclick="setMapEmbed(this,'https://carregados.com.br/estacoes?estado=minas+gerais+%28mg%29','Minas Gerais')">Minas Gerais</button>
-        <button class="map-filter-btn" onclick="setMapEmbed(this,'https://carregados.com.br/estacoes?estado=rio+de+janeiro+%28rj%29','Rio de Janeiro')">Rio de Janeiro</button>
-        <button class="map-filter-btn" onclick="setMapEmbed(this,'https://carregados.com.br/estacoes?estado=rio+grande+do+sul+%28rs%29','Rio Grande do Sul')">Rio Grande do Sul</button>
-        <button class="map-filter-btn" onclick="setMapEmbed(this,'https://carregados.com.br/estacoes?estado=paran%C3%A1+%28pr%29','Paraná')">Paraná</button>
-        <button class="map-filter-btn" onclick="setMapEmbed(this,'https://carregados.com.br/estacoes?estado=santa+catarina+%28sc%29','Santa Catarina')">Santa Catarina</button>
+        <button class="map-filter-btn active" id="map-btn-all" data-state="" onclick="setMapState(this,'')">Nacional</button>
+        <button class="map-filter-btn" data-state="SP" onclick="setMapState(this,'SP')">São Paulo</button>
+        <button class="map-filter-btn" data-state="MG" onclick="setMapState(this,'MG')">Minas Gerais</button>
+        <button class="map-filter-btn" data-state="RJ" onclick="setMapState(this,'RJ')">Rio de Janeiro</button>
+        <button class="map-filter-btn" data-state="RS" onclick="setMapState(this,'RS')">Rio Grande do Sul</button>
+        <button class="map-filter-btn" data-state="PR" onclick="setMapState(this,'PR')">Paraná</button>
+        <button class="map-filter-btn" data-state="SC" onclick="setMapState(this,'SC')">Santa Catarina</button>
         <button class="map-geo-btn" onclick="geolocateMap()" id="geo-btn" title="Usar minha localização">
           <i class="fas fa-crosshairs"></i> Minha Localização
         </button>
       </div>
 
       <div class="map-layout">
-        <!-- mapa principal: iframe carregados + fallback maplibre -->
+        <!-- mapa principal MapLibre (primário — carregados bloqueia iframe) -->
         <div class="map-iframe-wrap" style="position:relative;overflow:hidden;">
           <div class="map-iframe-topbar">
             <div class="pbi-dots"><span></span><span></span><span></span></div>
             <div class="map-iframe-url">
               <i class="fas fa-map-marker-alt fa-xs"></i>
-              <span id="map-url-text">carregados.com.br — Estações Nacionais</span>
+              <span id="map-url-text">MapLibre GL · OpenFreeMap · Dados SustAmbiTech</span>
             </div>
             <a id="map-open-btn" class="map-open-btn"
-               href="https://carregados.com.br/mapa" target="_blank" title="Abrir no Carregados.com.br">
+               href="https://carregados.com.br/mapa" target="_blank" title="Abrir Carregados.com.br">
               <i class="fas fa-external-link-alt fa-xs"></i>
             </a>
           </div>
 
-          <!-- IFRAME CARREGADOS (espelho) -->
-          <iframe id="map-iframe-carregados"
-            src="https://carregados.com.br/mapa"
-            title="Mapa de Estações de Recarga — Carregados.com.br"
-            allow="geolocation; fullscreen"
-            allowfullscreen loading="lazy"
-            style="width:100%;height:520px;border:none;display:block;"
-            onload="onMapIframeLoad(this)"
-            onerror="onMapIframeError()"
-          ></iframe>
-
-          <!-- FALLBACK: MapLibre GL (aparece se iframe falhar) -->
-          <div id="maplibre-map" style="width:100%;height:520px;display:none;border-radius:0 0 var(--radius) var(--radius);"></div>
+          <!-- MapLibre como mapa primário -->
+          <div id="maplibre-map" style="width:100%;height:520px;border-radius:0 0 var(--radius) var(--radius);"></div>
 
           <!-- overlay de status -->
           <div id="map-loading" style="position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);background:rgba(11,18,25,.88);border:1px solid var(--border);border-radius:20px;padding:.4rem 1rem;font-size:.75rem;color:var(--green);display:none;align-items:center;gap:.5rem;z-index:10;pointer-events:none;">
             <i class="fas fa-spinner fa-spin"></i> <span id="map-status">Carregando…</span>
           </div>
+        </div>
 
-          <!-- blocker overlay: se o iframe falhou, mostra fallback -->
-          <div id="map-blocked-overlay" style="display:none;position:absolute;inset:38px 0 0 0;background:var(--bg3);flex-direction:column;align-items:center;justify-content:center;gap:1rem;z-index:5;">
-            <i class="fas fa-map-marked-alt" style="font-size:2.5rem;color:var(--green);opacity:.7"></i>
-            <p style="color:var(--dim);font-size:.88rem;text-align:center;max-width:320px;">Mapa Carregados carregando…<br>Aguarde ou <strong style="color:var(--green)">use o mapa abaixo</strong>.</p>
-            <button class="btn-primary" onclick="showMapLibre()" style="padding:.6rem 1.4rem;font-size:.82rem">
-              <i class="fas fa-map"></i> Usar Mapa Alternativo
-            </button>
+        <!-- lista de estações (modo lista) -->
+        <div id="mapa-lista-view" style="display:none;width:100%;">
+          <div class="crud-search-bar">
+            <input type="text" id="lista-search" placeholder="Buscar por cidade, estado, operadora…" oninput="filtrarListaMapa()">
+            <select id="lista-estado-filter" onchange="filtrarListaMapa()"
+              style="background:var(--bg2);border:1px solid var(--border2);border-radius:9px;padding:.5rem .8rem;color:var(--text);font-size:.82rem;font-family:inherit;outline:none;">
+              <option value="">Todos os estados</option>
+              <option>SP</option><option>MG</option><option>RJ</option>
+              <option>RS</option><option>PR</option><option>SC</option>
+              <option>DF</option><option>CE</option><option>BA</option><option>GO</option>
+            </select>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table" id="mapa-lista-table">
+              <thead><tr>
+                <th>Nome</th><th>Cidade/UF</th><th>Conector</th><th>Potência</th><th>Status</th><th>Operadora</th>
+              </tr></thead>
+              <tbody id="mapa-lista-body">
+                <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem">Carregando dados…</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="crud-pager" id="lista-pager"></div>
+        </div>
+
+        <!-- stats das estações -->
+        <div id="mapa-stats-view" style="display:none;width:100%;">
+          <div class="admin-stats" id="mapa-stats-grid">
+            <div class="admin-stat"><div class="admin-stat-val" id="st-total">—</div><div class="admin-stat-lbl">Total Estações</div></div>
+            <div class="admin-stat"><div class="admin-stat-val" id="st-op" style="color:var(--cyan)">—</div><div class="admin-stat-lbl">Operacionais</div></div>
+            <div class="admin-stat"><div class="admin-stat-val" id="st-estados" style="color:var(--blue)">—</div><div class="admin-stat-lbl">Estados</div></div>
+            <div class="admin-stat"><div class="admin-stat-val" id="st-ops" style="color:var(--purple)">—</div><div class="admin-stat-lbl">Operadoras</div></div>
+          </div>
+          <div id="mapa-stats-table-wrap" class="admin-table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Estado</th><th>Estações</th><th>% do Total</th></tr></thead>
+              <tbody id="mapa-stats-body"></tbody>
+            </table>
           </div>
         </div>
 
@@ -1204,7 +1440,7 @@
         <aside class="map-sidebar">
           <div class="map-card">
             <div class="map-card-label">Total Nacional</div>
-            <div class="map-card-value">11.783</div>
+            <div class="map-card-value" id="sidebar-total">11.783</div>
             <div class="map-card-sub">Estações · Fonte: Carregados.com.br</div>
           </div>
           <div class="map-card">
@@ -1226,7 +1462,7 @@
             <i class="fas fa-crosshairs"></i> Usar Minha Localização
           </button>
           <a href="https://carregados.com.br/mapa" target="_blank" class="map-ext-btn" style="margin-top:.5rem">
-            <i class="fas fa-external-link-alt"></i> Ver mapa completo
+            <i class="fas fa-external-link-alt"></i> Ver no Carregados.com.br
           </a>
         </aside>
       </div>
@@ -1244,7 +1480,10 @@
         <!-- Kayham -->
         <div class="team-card lead">
           <div class="team-avatar" style="background:none;border:none;padding:0;">
-            <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+            <img src="public/static/img/kayham.svg" alt="Kayham C. G. de Oliveira"
+                 class="team-photo"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" style="display:none">
               <defs><linearGradient id="tg0" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00e676"/><stop offset="100%" style="stop-color:#00c853"/></linearGradient></defs>
               <circle cx="36" cy="36" r="36" fill="url(#tg0)"/>
               <circle cx="36" cy="28" r="11" fill="rgba(0,0,0,.35)"/>
@@ -1261,7 +1500,10 @@
         <!-- Gabriel -->
         <div class="team-card">
           <div class="team-avatar" style="background:none;border:none;padding:0;">
-            <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+            <img src="public/static/img/gabriel.svg" alt="Gabriel Luz Gomes da Silva"
+                 class="team-photo"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" style="display:none">
               <defs><linearGradient id="tg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00e5ff"/><stop offset="100%" style="stop-color:#0091ea"/></linearGradient></defs>
               <circle cx="36" cy="36" r="36" fill="url(#tg1)"/>
               <circle cx="36" cy="28" r="11" fill="rgba(0,0,0,.35)"/>
@@ -1278,7 +1520,10 @@
         <!-- Eric Jr -->
         <div class="team-card">
           <div class="team-avatar" style="background:none;border:none;padding:0;">
-            <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+            <img src="public/static/img/eric.svg" alt="Eric Junior Santos"
+                 class="team-photo"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" style="display:none">
               <defs><linearGradient id="tg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#2979ff"/><stop offset="100%" style="stop-color:#651fff"/></linearGradient></defs>
               <circle cx="36" cy="36" r="36" fill="url(#tg2)"/>
               <circle cx="36" cy="28" r="11" fill="rgba(0,0,0,.35)"/>
@@ -1295,7 +1540,10 @@
         <!-- Natan -->
         <div class="team-card">
           <div class="team-avatar" style="background:none;border:none;padding:0;">
-            <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+            <img src="public/static/img/natan.svg" alt="Natan Arroyo"
+                 class="team-photo"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" style="display:none">
               <defs><linearGradient id="tg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#aa00ff"/><stop offset="100%" style="stop-color:#7c4dff"/></linearGradient></defs>
               <circle cx="36" cy="36" r="36" fill="url(#tg3)"/>
               <circle cx="36" cy="28" r="11" fill="rgba(0,0,0,.35)"/>
@@ -1312,7 +1560,10 @@
         <!-- Leandro -->
         <div class="team-card">
           <div class="team-avatar" style="background:none;border:none;padding:0;">
-            <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+            <img src="public/static/img/leandro.svg" alt="Leandro Gama dos Santos"
+                 class="team-photo"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" style="display:none">
               <defs><linearGradient id="tg4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00e676"/><stop offset="100%" style="stop-color:#1de9b6"/></linearGradient></defs>
               <circle cx="36" cy="36" r="36" fill="url(#tg4)"/>
               <circle cx="36" cy="28" r="11" fill="rgba(0,0,0,.35)"/>
@@ -1866,7 +2117,524 @@
   </div>
 </div><!-- end page-contato -->
 
-<!-- ============================================================ FOOTER (global) -->
+<!-- ============================================================ PAGE: ADMIN -->
+<div class="page" id="page-admin">
+<div class="admin-wrap">
+
+  <!-- LOGIN VIEW (aparece quando não autenticado) -->
+  <div id="admin-login-view">
+    <div class="admin-login-wrap">
+      <div style="text-align:center;margin-bottom:1.5rem">
+        <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--blue),var(--purple));border-radius:14px;display:inline-grid;place-items:center;font-size:1.5rem;margin-bottom:.8rem">🔐</div>
+        <div class="admin-login-title">Área Administrativa</div>
+        <div class="admin-login-sub">SustAmbiTech BI — Acesso restrito a administradores autorizados</div>
+      </div>
+
+      <!-- view: form login -->
+      <div id="view-login">
+        <div class="admin-error" id="login-error"></div>
+        <div class="admin-success" id="login-success"></div>
+        <div class="admin-field">
+          <label>E-mail</label>
+          <input type="email" id="login-email" class="admin-input" placeholder="seu@email.com" autocomplete="email">
+        </div>
+        <div class="admin-field">
+          <label>Senha
+            <span class="admin-forgot" onclick="showForgot()">Esqueci minha senha</span>
+          </label>
+          <input type="password" id="login-senha" class="admin-input" placeholder="••••••••"
+            autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+        </div>
+        <button class="admin-btn" onclick="doLogin()" id="login-btn">
+          <i class="fas fa-sign-in-alt"></i> Entrar
+        </button>
+        <p style="text-align:center;font-size:.72rem;color:var(--muted);margin-top:1rem">
+          Não possui acesso? Entre em contato com o administrador do sistema.
+        </p>
+      </div>
+
+      <!-- view: esqueci senha -->
+      <div id="view-forgot" style="display:none">
+        <div class="admin-error" id="forgot-error"></div>
+        <div class="admin-success" id="forgot-success"></div>
+        <p style="font-size:.82rem;color:var(--dim);margin-bottom:1rem">
+          Informe seu e-mail cadastrado. Enviaremos um link de recuperação.
+        </p>
+        <div class="admin-field">
+          <label>E-mail cadastrado</label>
+          <input type="email" id="forgot-email" class="admin-input" placeholder="seu@email.com">
+        </div>
+        <button class="admin-btn" onclick="doForgot()"><i class="fas fa-paper-plane"></i> Enviar Recuperação</button>
+        <p style="text-align:center;margin-top:.8rem">
+          <span style="font-size:.75rem;color:var(--muted);cursor:pointer;text-decoration:underline" onclick="showLogin()">← Voltar ao login</span>
+        </p>
+      </div>
+
+      <!-- view: redefinir senha (via token na URL) -->
+      <div id="view-reset" style="display:none">
+        <div class="admin-error" id="reset-error"></div>
+        <div class="admin-success" id="reset-success"></div>
+        <p style="font-size:.82rem;color:var(--dim);margin-bottom:1rem">Digite sua nova senha.</p>
+        <div class="admin-field">
+          <label>Nova Senha</label>
+          <input type="password" id="reset-senha1" class="admin-input" placeholder="Mínimo 8 caracteres">
+        </div>
+        <div class="admin-field">
+          <label>Confirmar Nova Senha</label>
+          <input type="password" id="reset-senha2" class="admin-input" placeholder="Repita a senha">
+        </div>
+        <button class="admin-btn" onclick="doReset()"><i class="fas fa-key"></i> Redefinir Senha</button>
+      </div>
+
+      <!-- view: primeiro acesso (convite) -->
+      <div id="view-invite" style="display:none">
+        <div class="admin-error" id="invite-error"></div>
+        <div class="admin-success" id="invite-success"></div>
+        <p style="font-size:.82rem;color:var(--dim);margin-bottom:1rem">
+          Você foi convidado como administrador! Defina sua senha de acesso.
+        </p>
+        <div class="admin-field">
+          <label>Nome completo</label>
+          <input type="text" id="invite-nome" class="admin-input" placeholder="Seu nome">
+        </div>
+        <div class="admin-field">
+          <label>E-mail (do convite)</label>
+          <input type="email" id="invite-email" class="admin-input" placeholder="seu@email.com" readonly>
+        </div>
+        <div class="admin-field">
+          <label>Senha</label>
+          <input type="password" id="invite-senha1" class="admin-input" placeholder="Mínimo 8 caracteres">
+        </div>
+        <div class="admin-field">
+          <label>Confirmar Senha</label>
+          <input type="password" id="invite-senha2" class="admin-input" placeholder="Repita a senha">
+        </div>
+        <button class="admin-btn" onclick="doAcceptInvite()"><i class="fas fa-check"></i> Ativar Conta</button>
+      </div>
+    </div>
+  </div><!-- /admin-login-view -->
+
+  <!-- DASHBOARD ADMIN (aparece quando autenticado) -->
+  <div id="admin-dash-view" style="display:none">
+
+    <!-- hero -->
+    <div class="admin-hero">
+      <div class="admin-hero-icon">⚙️</div>
+      <div>
+        <div class="admin-hero-title">Painel de Configurações</div>
+        <div class="admin-hero-sub">SustAmbiTech BI — Sistema de Gestão</div>
+      </div>
+      <div class="admin-user-badge" id="admin-user-badge">
+        <i class="fas fa-user-shield"></i>
+        <span id="admin-user-name">—</span>
+        <button onclick="doLogout()" style="background:none;border:none;color:#ff8a80;font-size:.75rem;cursor:pointer;margin-left:.4rem" title="Sair">
+          <i class="fas fa-sign-out-alt"></i> Sair
+        </button>
+      </div>
+    </div>
+
+    <!-- stats rápidas -->
+    <div class="admin-stats" id="admin-top-stats">
+      <div class="admin-stat"><div class="admin-stat-val" id="ast-estacoes">—</div><div class="admin-stat-lbl">Estações no DB</div></div>
+      <div class="admin-stat"><div class="admin-stat-val" id="ast-usuarios" style="color:var(--cyan)">—</div><div class="admin-stat-lbl">Usuários Admin</div></div>
+      <div class="admin-stat"><div class="admin-stat-val" id="ast-estados" style="color:var(--blue)">—</div><div class="admin-stat-lbl">Estados</div></div>
+      <div class="admin-stat"><div class="admin-stat-val" id="ast-atualizado" style="color:var(--purple);font-size:.9rem">—</div><div class="admin-stat-lbl">Última Atualização</div></div>
+    </div>
+
+    <!-- tabs -->
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="setAdminTab(this,'tab-estacoes')"><i class="fas fa-charging-station"></i> Estações</button>
+      <button class="admin-tab" onclick="setAdminTab(this,'tab-usuarios')"><i class="fas fa-users-cog"></i> Usuários</button>
+      <button class="admin-tab" onclick="setAdminTab(this,'tab-dados')"><i class="fas fa-database"></i> Dados / DB</button>
+      <button class="admin-tab" onclick="setAdminTab(this,'tab-logs')"><i class="fas fa-scroll"></i> Logs</button>
+    </div>
+
+    <!-- ── TAB: ESTAÇÕES (CRUD) ── -->
+    <div class="admin-panel active" id="tab-estacoes">
+      <div class="admin-card">
+        <div class="admin-card-title"><i class="fas fa-plus-circle"></i> Adicionar Estação</div>
+        <div class="admin-form-grid">
+          <div class="admin-field"><label>Nome da Estação *</label><input type="text" id="es-nome" class="admin-input" placeholder="Ex: Blink — Shopping Iguatemi"></div>
+          <div class="admin-field"><label>Operadora *</label><input type="text" id="es-op" class="admin-input" placeholder="Ex: Blink, EDP, Neoenergia…"></div>
+          <div class="admin-field"><label>Cidade *</label><input type="text" id="es-cidade" class="admin-input" placeholder="Ex: São Paulo"></div>
+          <div class="admin-field"><label>Estado (UF) *</label>
+            <select id="es-estado" class="admin-input">
+              <option value="">— Selecione —</option>
+              <option>SP</option><option>MG</option><option>RJ</option><option>RS</option>
+              <option>PR</option><option>SC</option><option>DF</option><option>CE</option>
+              <option>BA</option><option>GO</option><option>ES</option><option>PE</option>
+              <option>AM</option><option>PA</option><option>MT</option><option>MS</option>
+              <option>RN</option><option>PB</option><option>PI</option><option>MA</option>
+              <option>SE</option><option>AL</option><option>TO</option><option>RO</option>
+              <option>AC</option><option>AP</option><option>RR</option>
+            </select>
+          </div>
+          <div class="admin-field"><label>Tipo de Conector</label>
+            <select id="es-conector" class="admin-input">
+              <option>CCS2 (Combo 2)</option><option>CHAdeMO</option><option>Type 2</option>
+              <option>GB/T</option><option>Tesla</option><option>Wallbox AC</option>
+            </select>
+          </div>
+          <div class="admin-field"><label>Potência (kW)</label><input type="number" id="es-potencia" class="admin-input" placeholder="Ex: 50" min="1" max="500"></div>
+          <div class="admin-field"><label>Status</label>
+            <select id="es-status" class="admin-input">
+              <option value="Operacional">Operacional</option>
+              <option value="Em_manutencao">Em Manutenção</option>
+              <option value="Temporariamente_fechada">Temporariamente Fechada</option>
+            </select>
+          </div>
+          <div class="admin-field"><label>Acesso</label>
+            <select id="es-acesso" class="admin-input">
+              <option>Público</option><option>Semi-público</option><option>Privado</option>
+            </select>
+          </div>
+          <div class="admin-field"><label>Latitude</label><input type="number" id="es-lat" class="admin-input" placeholder="-23.5505" step="0.000001"></div>
+          <div class="admin-field"><label>Longitude</label><input type="number" id="es-lng" class="admin-input" placeholder="-46.6333" step="0.000001"></div>
+          <div class="admin-field"><label>Endereço</label><input type="text" id="es-end" class="admin-input" placeholder="Rua, número"></div>
+          <div class="admin-field"><label>CEP</label><input type="text" id="es-cep" class="admin-input" placeholder="00000-000"></div>
+        </div>
+        <div class="admin-error" id="es-error"></div>
+        <div class="admin-success" id="es-success"></div>
+        <button class="admin-btn" style="max-width:220px;margin-top:.5rem" onclick="addEstacao()">
+          <i class="fas fa-plus"></i> Adicionar ao Banco
+        </button>
+      </div>
+
+      <!-- tabela CRUD -->
+      <div class="admin-card">
+        <div class="admin-card-title"><i class="fas fa-list"></i> Estações no Banco Local <span id="es-count-badge" class="badge badge-green" style="margin-left:.5rem">0</span></div>
+        <div class="crud-search-bar">
+          <input type="text" id="es-search" placeholder="Buscar nome, cidade, estado…" oninput="renderEstacoesTable()">
+          <select id="es-filter-estado" onchange="renderEstacoesTable()" style="background:var(--bg2);border:1px solid var(--border2);border-radius:9px;padding:.5rem .8rem;color:var(--text);font-size:.82rem;font-family:inherit;outline:none;">
+            <option value="">Todos estados</option>
+            <option>SP</option><option>MG</option><option>RJ</option><option>RS</option>
+            <option>PR</option><option>SC</option><option>DF</option><option>CE</option>
+            <option>BA</option><option>GO</option>
+          </select>
+          <select id="es-filter-status" onchange="renderEstacoesTable()" style="background:var(--bg2);border:1px solid var(--border2);border-radius:9px;padding:.5rem .8rem;color:var(--text);font-size:.82rem;font-family:inherit;outline:none;">
+            <option value="">Todos status</option>
+            <option>Operacional</option><option>Em_manutencao</option><option>Temporariamente_fechada</option>
+          </select>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead><tr>
+              <th>Nome</th><th>Cidade/UF</th><th>Conector</th><th>kW</th><th>Status</th><th>Ações</th>
+            </tr></thead>
+            <tbody id="es-table-body"></tbody>
+          </table>
+        </div>
+        <div class="crud-pager" id="es-pager"></div>
+      </div>
+    </div>
+
+    <!-- ── TAB: USUÁRIOS ── -->
+    <div class="admin-panel" id="tab-usuarios">
+      <div class="admin-card">
+        <div class="admin-card-title"><i class="fas fa-user-plus"></i> Convidar Novo Administrador</div>
+        <p style="font-size:.8rem;color:var(--muted);margin-bottom:1rem">
+          Apenas o administrador principal pode adicionar novos usuários. O convidado receberá um e-mail com link de ativação.
+        </p>
+        <div class="admin-form-grid">
+          <div class="admin-field"><label>Nome completo</label><input type="text" id="inv-nome" class="admin-input" placeholder="Nome do novo admin"></div>
+          <div class="admin-field"><label>E-mail</label><input type="email" id="inv-email" class="admin-input" placeholder="email@dominio.com"></div>
+          <div class="admin-field"><label>Nível de acesso</label>
+            <select id="inv-nivel" class="admin-input">
+              <option value="viewer">Visualizador (somente leitura)</option>
+              <option value="editor">Editor (CRUD estações)</option>
+              <option value="admin">Administrador (acesso total)</option>
+            </select>
+          </div>
+          <div class="admin-field"><label>Mensagem personalizada (opcional)</label>
+            <input type="text" id="inv-msg" class="admin-input" placeholder="Mensagem para o convidado">
+          </div>
+        </div>
+        <div class="admin-error" id="inv-error"></div>
+        <div class="admin-success" id="inv-success"></div>
+        <button class="admin-btn" style="max-width:240px;margin-top:.5rem" onclick="enviarConvite()">
+          <i class="fas fa-envelope"></i> Enviar Convite por E-mail
+        </button>
+      </div>
+
+      <!-- tabela de usuários -->
+      <div class="admin-card">
+        <div class="admin-card-title"><i class="fas fa-users-cog"></i> Usuários Cadastrados</div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead><tr>
+              <th>Nome</th><th>E-mail</th><th>Nível</th><th>Status</th><th>Cadastro</th><th>Ações</th>
+            </tr></thead>
+            <tbody id="usr-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: DADOS / DB ── -->
+    <div class="admin-panel" id="tab-dados">
+      <div class="admin-card">
+        <div class="admin-card-title"><i class="fas fa-cloud-download-alt"></i> Banco de Dados (GitHub como Storage)</div>
+        <p style="font-size:.8rem;color:var(--muted);margin-bottom:1rem">
+          Os dados são armazenados em <code style="color:var(--cyan);background:var(--bg3);padding:.1rem .3rem;border-radius:4px">data/estacoes.json</code> no repositório GitHub.
+          Atualizado automaticamente toda segunda-feira pelo GitHub Actions.
+        </p>
+        <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.2rem">
+          <button class="admin-btn" style="max-width:200px" onclick="syncDataGitHub()">
+            <i class="fas fa-sync-alt"></i> Sincronizar do GitHub
+          </button>
+          <button class="admin-btn" style="max-width:200px;background:linear-gradient(135deg,var(--green-dim),#00695c)" onclick="exportarJSON()">
+            <i class="fas fa-file-download"></i> Exportar JSON
+          </button>
+          <button class="admin-btn" style="max-width:200px;background:linear-gradient(135deg,#ff6d00,#e65100)" onclick="limparDB()">
+            <i class="fas fa-trash-alt"></i> Limpar Banco Local
+          </button>
+        </div>
+        <div class="admin-error" id="db-error"></div>
+        <div class="admin-success" id="db-success"></div>
+        <div id="db-info" style="font-size:.8rem;color:var(--dim)"></div>
+      </div>
+
+      <!-- SQL Procedures / Queries -->
+      <div class="admin-card">
+        <div class="admin-card-title"><i class="fas fa-code"></i> Queries &amp; Procedures (SQL)</div>
+        <p style="font-size:.8rem;color:var(--muted);margin-bottom:1rem">
+          Queries otimizadas para uso com banco SQL local. Copie e use no MySQL, SQLite ou D1.
+        </p>
+        <div class="admin-tabs" style="margin-bottom:1rem">
+          <button class="admin-tab active" onclick="setSqlTab(this,'sql-schema')">Schema</button>
+          <button class="admin-tab" onclick="setSqlTab(this,'sql-procs')">Procedures</button>
+          <button class="admin-tab" onclick="setSqlTab(this,'sql-views')">Views</button>
+          <button class="admin-tab" onclick="setSqlTab(this,'sql-queries')">Consultas</button>
+        </div>
+
+        <div id="sql-schema" class="admin-panel active">
+          <pre style="background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:1rem;font-size:.75rem;color:#a5d6a7;overflow-x:auto;white-space:pre-wrap">-- ============================================================
+-- SCHEMA SUSTAMBITECH — estações de recarga
+-- Compatível com MySQL 8, SQLite e Cloudflare D1
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS estacoes (
+  id              TEXT PRIMARY KEY,
+  nome            TEXT NOT NULL,
+  endereco        TEXT,
+  cidade          TEXT NOT NULL,
+  estado          CHAR(2) NOT NULL,
+  cep             TEXT,
+  lat             REAL,
+  lng             REAL,
+  tipos_conector  TEXT,          -- JSON array serializado
+  potencia_kw     REAL DEFAULT 0,
+  status          TEXT DEFAULT 'Operacional',
+  acesso          TEXT DEFAULT 'Público',
+  operadora       TEXT,
+  fonte           TEXT DEFAULT 'SustAmbiTech',
+  data_criacao    TEXT DEFAULT (datetime('now')),
+  data_atualizacao TEXT DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS usuarios_admin (
+  id              INTEGER PRIMARY KEY AUTOINCREMENT,
+  nome            TEXT NOT NULL,
+  email           TEXT UNIQUE NOT NULL,
+  senha_hash      TEXT NOT NULL,
+  nivel           TEXT DEFAULT 'viewer',
+  status          TEXT DEFAULT 'pendente',    -- pendente | ativo | inativo
+  token_convite   TEXT,
+  token_reset     TEXT,
+  token_exp       INTEGER,
+  criado_por      TEXT,
+  criado_em       TEXT DEFAULT (datetime('now')),
+  ultimo_acesso   TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_estacoes_estado  ON estacoes(estado);
+CREATE INDEX IF NOT EXISTS idx_estacoes_status  ON estacoes(status);
+CREATE INDEX IF NOT EXISTS idx_estacoes_lat_lng ON estacoes(lat, lng);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_admin_email ON usuarios_admin(email);</pre>
+        </div>
+
+        <div id="sql-procs" class="admin-panel">
+          <pre style="background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:1rem;font-size:.75rem;color:#a5d6a7;overflow-x:auto;white-space:pre-wrap">-- ============================================================
+-- STORED PROCEDURES / CTE HELPERS
+-- (SQLite usa WITH; MySQL usa DELIMITER $$)
+-- ============================================================
+
+-- PROC 1: upsert de estação (insert ou update por id)
+-- Uso: CALL upsert_estacao(id, nome, cidade, estado, ...)
+INSERT INTO estacoes (id, nome, cidade, estado, lat, lng, status, operadora, data_atualizacao)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+ON CONFLICT(id) DO UPDATE SET
+  nome = excluded.nome,
+  cidade = excluded.cidade,
+  lat = excluded.lat,
+  lng = excluded.lng,
+  status = excluded.status,
+  operadora = excluded.operadora,
+  data_atualizacao = excluded.data_atualizacao;
+
+-- PROC 2: estações próximas (por raio em graus ≈ km)
+-- 0.009 graus ≈ 1 km
+WITH nearby AS (
+  SELECT *, 
+    ((lat - ?) * (lat - ?) + (lng - ?) * (lng - ?)) AS dist_sq
+  FROM estacoes
+  WHERE lat BETWEEN ? - 0.5 AND ? + 0.5
+    AND lng BETWEEN ? - 0.5 AND ? + 0.5
+    AND status = 'Operacional'
+)
+SELECT id, nome, cidade, estado, lat, lng, tipos_conector, potencia_kw, operadora,
+       SQRT(dist_sq) * 111 AS dist_km
+FROM nearby
+ORDER BY dist_sq ASC
+LIMIT 20;
+
+-- PROC 3: resumo por estado
+SELECT estado,
+       COUNT(*) AS total,
+       SUM(CASE WHEN status='Operacional' THEN 1 ELSE 0 END) AS operacionais,
+       ROUND(AVG(potencia_kw),1) AS media_kw,
+       COUNT(DISTINCT operadora) AS operadoras
+FROM estacoes
+GROUP BY estado
+ORDER BY total DESC;
+
+-- PROC 4: inserir usuário admin com hash de senha (base64 simulado)
+INSERT INTO usuarios_admin (nome, email, senha_hash, nivel, status, token_convite, criado_por)
+VALUES (?, ?, ?, ?, 'pendente', ?, ?);</pre>
+        </div>
+
+        <div id="sql-views" class="admin-panel">
+          <pre style="background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:1rem;font-size:.75rem;color:#a5d6a7;overflow-x:auto;white-space:pre-wrap">-- ============================================================
+-- VIEWS PARA RELATÓRIOS
+-- ============================================================
+
+-- VIEW: mapa_operacionais — somente postos ativos com coords
+CREATE VIEW IF NOT EXISTS mapa_operacionais AS
+  SELECT id, nome, cidade, estado, lat, lng,
+         tipos_conector, potencia_kw, operadora, acesso
+  FROM estacoes
+  WHERE status = 'Operacional'
+    AND lat IS NOT NULL AND lng IS NOT NULL;
+
+-- VIEW: ranking_estados — ranking por número de estações
+CREATE VIEW IF NOT EXISTS ranking_estados AS
+  SELECT estado,
+         COUNT(*) AS total,
+         SUM(CASE WHEN acesso = 'Público' THEN 1 ELSE 0 END) AS publicas,
+         ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM estacoes), 2) AS pct_total
+  FROM estacoes
+  GROUP BY estado
+  ORDER BY total DESC;
+
+-- VIEW: dashboard_resumo — KPIs para o dashboard
+CREATE VIEW IF NOT EXISTS dashboard_resumo AS
+  SELECT
+    (SELECT COUNT(*) FROM estacoes) AS total_estacoes,
+    (SELECT COUNT(*) FROM estacoes WHERE status='Operacional') AS operacionais,
+    (SELECT COUNT(DISTINCT estado) FROM estacoes) AS estados_cobertos,
+    (SELECT COUNT(DISTINCT operadora) FROM estacoes) AS operadoras,
+    (SELECT AVG(potencia_kw) FROM estacoes WHERE potencia_kw > 0) AS media_kw,
+    (SELECT MAX(data_atualizacao) FROM estacoes) AS ultima_atualizacao;</pre>
+        </div>
+
+        <div id="sql-queries" class="admin-panel">
+          <pre style="background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:1rem;font-size:.75rem;color:#a5d6a7;overflow-x:auto;white-space:pre-wrap">-- ============================================================
+-- QUERIES DE CONSULTA FREQUENTES
+-- ============================================================
+
+-- Q1: Top 10 operadoras por número de estações
+SELECT operadora, COUNT(*) AS total,
+       ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM estacoes), 1) AS pct
+FROM estacoes
+GROUP BY operadora ORDER BY total DESC LIMIT 10;
+
+-- Q2: Distribuição por tipo de conector
+SELECT tipos_conector, COUNT(*) AS total
+FROM estacoes
+GROUP BY tipos_conector ORDER BY total DESC;
+
+-- Q3: Estações por potência (DC fast > 50kW)
+SELECT id, nome, cidade, estado, potencia_kw, operadora
+FROM estacoes WHERE potencia_kw >= 50
+ORDER BY potencia_kw DESC LIMIT 50;
+
+-- Q4: Estações em manutenção ou fechadas
+SELECT id, nome, cidade, estado, status, data_atualizacao
+FROM estacoes WHERE status != 'Operacional'
+ORDER BY data_atualizacao DESC;
+
+-- Q5: Verificar autenticidade do usuário (login)
+SELECT id, nome, email, nivel, status, ultimo_acesso
+FROM usuarios_admin
+WHERE email = ? AND senha_hash = ? AND status = 'ativo'
+LIMIT 1;
+
+-- Q6: Atualizar último acesso
+UPDATE usuarios_admin SET ultimo_acesso = datetime('now') WHERE id = ?;
+
+-- Q7: Busca full-text por cidade/nome
+SELECT * FROM estacoes
+WHERE nome LIKE ? OR cidade LIKE ? OR endereco LIKE ?
+ORDER BY cidade, nome LIMIT 100;</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: LOGS ── -->
+    <div class="admin-panel" id="tab-logs">
+      <div class="admin-card">
+        <div class="admin-card-title"><i class="fas fa-scroll"></i> Log de Atividades</div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead><tr><th>Data/Hora</th><th>Usuário</th><th>Ação</th><th>Detalhes</th></tr></thead>
+            <tbody id="log-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /admin-dash-view -->
+</div><!-- /admin-wrap -->
+</div><!-- end page-admin -->
+
+<!-- MODAL: editar estação -->
+<div class="modal-backdrop" id="modal-edit-estacao">
+  <div class="modal-box">
+    <div class="modal-title">
+      Editar Estação
+      <button class="modal-close" onclick="closeModal('modal-edit-estacao')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="admin-form-grid">
+      <input type="hidden" id="edit-es-id">
+      <div class="admin-field"><label>Nome *</label><input type="text" id="edit-es-nome" class="admin-input"></div>
+      <div class="admin-field"><label>Operadora</label><input type="text" id="edit-es-op" class="admin-input"></div>
+      <div class="admin-field"><label>Cidade</label><input type="text" id="edit-es-cidade" class="admin-input"></div>
+      <div class="admin-field"><label>Estado</label>
+        <select id="edit-es-estado" class="admin-input">
+          <option>SP</option><option>MG</option><option>RJ</option><option>RS</option>
+          <option>PR</option><option>SC</option><option>DF</option><option>CE</option>
+          <option>BA</option><option>GO</option><option>ES</option><option>PE</option>
+          <option>AM</option><option>PA</option><option>MT</option><option>MS</option>
+          <option>RN</option><option>PB</option><option>PI</option><option>MA</option>
+          <option>SE</option><option>AL</option><option>TO</option><option>RO</option>
+          <option>AC</option><option>AP</option><option>RR</option>
+        </select>
+      </div>
+      <div class="admin-field"><label>Status</label>
+        <select id="edit-es-status" class="admin-input">
+          <option>Operacional</option><option>Em_manutencao</option><option>Temporariamente_fechada</option>
+        </select>
+      </div>
+      <div class="admin-field"><label>Potência (kW)</label><input type="number" id="edit-es-potencia" class="admin-input" min="1" max="500"></div>
+      <div class="admin-field"><label>Latitude</label><input type="number" id="edit-es-lat" class="admin-input" step="0.000001"></div>
+      <div class="admin-field"><label>Longitude</label><input type="number" id="edit-es-lng" class="admin-input" step="0.000001"></div>
+    </div>
+    <div style="display:flex;gap:.6rem;margin-top:1rem">
+      <button class="admin-btn" style="max-width:160px" onclick="saveEditEstacao()"><i class="fas fa-save"></i> Salvar</button>
+      <button class="admin-btn" style="max-width:120px;background:var(--bg3);color:var(--muted)" onclick="closeModal('modal-edit-estacao')">Cancelar</button>
+    </div>
+  </div>
+</div>
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
@@ -2050,104 +2818,22 @@ function setPBITab(btn, url, label) {
 }
 
 /* =============================================================
-   MAPA — iframe Carregados (espelho real) + fallback MapLibre
-============================================================= */
-var _mapIframeOk = false;
-var _mapLibreActive = false;
-
-function setMapEmbed(btn, url, label) {
-  document.querySelectorAll('.map-filter-btn').forEach(function(b) { b.classList.remove('active'); });
-  btn.classList.add('active');
-  document.getElementById('map-url-text').textContent = 'carregados.com.br — ' + label;
-  document.getElementById('map-open-btn').href = url;
-  if (_mapLibreActive) {
-    // se maplibre já aberto, usa filtro de estado
-    var state = btn.getAttribute('data-state') || '';
-    applyStateFilter(state);
-  } else {
-    document.getElementById('map-iframe-carregados').src = url;
-  }
-}
-
-function onMapIframeLoad(iframe) {
-  _mapIframeOk = true;
-  var overlay = document.getElementById('map-blocked-overlay');
-  if (overlay) overlay.style.display = 'none';
-}
-
-function onMapIframeError() {
-  showMapLibre();
-}
-
-function showMapLibre() {
-  _mapLibreActive = true;
-  var iframe = document.getElementById('map-iframe-carregados');
-  var ml = document.getElementById('maplibre-map');
-  var overlay = document.getElementById('map-blocked-overlay');
-  if (iframe) iframe.style.display = 'none';
-  if (ml) ml.style.display = 'block';
-  if (overlay) overlay.style.display = 'none';
-  initMapLibre();
-}
-
-/* Detecta se iframe ficou bloqueado (height=0 ou sem conteúdo após 6s) */
-setTimeout(function() {
-  var iframe = document.getElementById('map-iframe-carregados');
-  if (!iframe) return;
-  try {
-    // Tenta acessar contentDocument — vai lançar erro se bloqueado por CSP
-    var cd = iframe.contentDocument || iframe.contentWindow.document;
-    if (!cd || !cd.body || cd.body.innerHTML === '') throw new Error('blocked');
-  } catch(e) {
-    // bloqueado → mostra overlay com opção de alternar para MapLibre
-    var overlay = document.getElementById('map-blocked-overlay');
-    if (overlay) overlay.style.display = 'flex';
-  }
-}, 6000);
-
-/* Geolocalização → centraliza iframe + solicita permissão */
-function geolocateMap() {
-  var btn = document.getElementById('geo-btn');
-  if (!navigator.geolocation) {
-    alert('Geolocalização não suportada neste navegador.');
-    return;
-  }
-  if (btn) { btn.classList.add('loading'); btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Localizando…'; }
-  navigator.geolocation.getCurrentPosition(
-    function(pos) {
-      var lat = pos.coords.latitude;
-      var lng = pos.coords.longitude;
-      if (btn) { btn.classList.remove('loading'); btn.innerHTML = '<i class="fas fa-crosshairs"></i> Minha Localização'; }
-      document.getElementById('map-url-text').textContent = 'carregados.com.br — Próximo a mim (' + lat.toFixed(4) + ', ' + lng.toFixed(4) + ')';
-      document.querySelectorAll('.map-filter-btn').forEach(function(b) { b.classList.remove('active'); });
-      if (_mapLibreActive && _mapInstance) {
-        _mapInstance.flyTo({ center: [lng, lat], zoom: 11, duration: 1400 });
-        new maplibregl.Marker({ color: '#00e5ff' }).setLngLat([lng, lat]).addTo(_mapInstance);
-      } else {
-        // passa coordenadas via URL do Carregados
-        var url = 'https://carregados.com.br/mapa#' + lat + '/' + lng + '/13';
-        document.getElementById('map-iframe-carregados').src = url;
-        document.getElementById('map-open-btn').href = url;
-      }
-    },
-    function(err) {
-      if (btn) { btn.classList.remove('loading'); btn.innerHTML = '<i class="fas fa-crosshairs"></i> Minha Localização'; }
-      var msgs = { 1:'Permissão de localização negada.', 2:'Localização indisponível.', 3:'Tempo esgotado.' };
-      alert('Erro de geolocalização: ' + (msgs[err.code] || err.message));
-    },
-    { enableHighAccuracy: true, timeout: 10000 }
-  );
-}
-
-/* =============================================================
-   MAPLIBRE GL — fallback (OpenFreeMap, sem API key)
+   MAPA — MapLibre GL PRIMÁRIO (Carregados bloqueia iframe)
 ============================================================= */
 var _mapInstance = null;
 var _allStations = [];
 var _mapLibreReady = false;
+var _currentStateFilter = '';
+var _mapMode = 'mapa'; // mapa | lista | stats
+var _listaPage = 0;
+var _listaPageSize = 20;
+var _listaFiltered = [];
 
+/* Garante que o mapa inicia imediatamente ao carregar a home */
 function initMapLibre() {
   if (_mapInstance) return;
+  var container = document.getElementById('maplibre-map');
+  if (!container) return;
   var map = new maplibregl.Map({
     container: 'maplibre-map',
     style: 'https://tiles.openfreemap.org/styles/liberty',
@@ -2159,37 +2845,826 @@ function initMapLibre() {
   _mapInstance = map;
   map.on('load', function() {
     _mapLibreReady = true;
-    map.addSource('stations', { type:'geojson', data:{type:'FeatureCollection',features:[]}, cluster:true, clusterMaxZoom:12, clusterRadius:45 });
-    map.addLayer({ id:'clusters', type:'circle', source:'stations', filter:['has','point_count'], paint:{ 'circle-color':['step',['get','point_count'],'#00e676',20,'#00e5ff',50,'#2979ff'], 'circle-radius':['step',['get','point_count'],16,20,22,50,28], 'circle-opacity':.85, 'circle-stroke-width':1.5, 'circle-stroke-color':'rgba(0,0,0,.4)' } });
-    map.addLayer({ id:'cluster-count', type:'symbol', source:'stations', filter:['has','point_count'], layout:{'text-field':'{point_count_abbreviated}','text-font':['Open Sans Bold','Arial Unicode MS Bold'],'text-size':11}, paint:{'text-color':'#050a0e'} });
-    map.addLayer({ id:'unclustered-point', type:'circle', source:'stations', filter:['!',[' has','point_count']], paint:{'circle-color':'#00e676','circle-radius':6,'circle-stroke-width':1.5,'circle-stroke-color':'rgba(0,230,118,.4)','circle-opacity':.85} });
-    map.on('click','unclustered-point',function(e){ var p=e.features[0].properties; var c=e.features[0].geometry.coordinates.slice(); new maplibregl.Popup({offset:12}).setLngLat(c).setHTML('<strong style="color:#00e676">'+(p.name||'Estação')+'</strong>'+(p.city?'<br><span style="color:#78909c;font-size:.78rem">'+p.city+(p.state?', '+p.state:'')+'</span>':'')).addTo(map); });
-    map.on('click','clusters',function(e){ var f=map.queryRenderedFeatures(e.point,{layers:['clusters']}); map.getSource('stations').getClusterExpansionZoom(f[0].properties.cluster_id,function(err,z){ if(!err) map.easeTo({center:f[0].geometry.coordinates,zoom:z}); }); });
-    ['clusters','unclustered-point'].forEach(function(l){ map.on('mouseenter',l,function(){map.getCanvas().style.cursor='pointer';}); map.on('mouseleave',l,function(){map.getCanvas().style.cursor='';}); });
-    loadFallbackStations();
+    map.addSource('stations', {
+      type: 'geojson',
+      data: { type: 'FeatureCollection', features: [] },
+      cluster: true, clusterMaxZoom: 12, clusterRadius: 45
+    });
+    map.addLayer({ id: 'clusters', type: 'circle', source: 'stations',
+      filter: ['has','point_count'],
+      paint: { 'circle-color': ['step',['get','point_count'],'#00e676',20,'#00e5ff',50,'#2979ff'],
+               'circle-radius': ['step',['get','point_count'],16,20,22,50,28],
+               'circle-opacity': .85, 'circle-stroke-width': 1.5, 'circle-stroke-color': 'rgba(0,0,0,.4)' }
+    });
+    map.addLayer({ id: 'cluster-count', type: 'symbol', source: 'stations',
+      filter: ['has','point_count'],
+      layout: { 'text-field': '{point_count_abbreviated}',
+                'text-font': ['Open Sans Bold','Arial Unicode MS Bold'], 'text-size': 11 },
+      paint: { 'text-color': '#050a0e' }
+    });
+    map.addLayer({ id: 'unclustered-point', type: 'circle', source: 'stations',
+      filter: ['!', ['has','point_count']],
+      paint: { 'circle-color': '#00e676', 'circle-radius': 6,
+               'circle-stroke-width': 1.5, 'circle-stroke-color': 'rgba(0,230,118,.4)', 'circle-opacity': .85 }
+    });
+    map.on('click','unclustered-point', function(e) {
+      var p = e.features[0].properties;
+      var c = e.features[0].geometry.coordinates.slice();
+      new maplibregl.Popup({ offset: 12 })
+        .setLngLat(c)
+        .setHTML(
+          '<strong style="color:#00e676">' + (p.name||'Estação EV') + '</strong>' +
+          (p.city ? '<br><span style="color:#78909c;font-size:.78rem">' + p.city + (p.state?', '+p.state:'') + '</span>' : '') +
+          (p.connector ? '<br><span style="color:#00e5ff;font-size:.74rem">' + p.connector + (p.power?' · '+p.power+'kW':'') + '</span>' : '') +
+          (p.operator ? '<br><span style="color:#b0bec5;font-size:.72rem">' + p.operator + '</span>' : '')
+        )
+        .addTo(map);
+    });
+    map.on('click','clusters', function(e) {
+      var f = map.queryRenderedFeatures(e.point,{layers:['clusters']});
+      map.getSource('stations').getClusterExpansionZoom(f[0].properties.cluster_id, function(err, z) {
+        if (!err) map.easeTo({ center: f[0].geometry.coordinates, zoom: z });
+      });
+    });
+    ['clusters','unclustered-point'].forEach(function(l) {
+      map.on('mouseenter', l, function() { map.getCanvas().style.cursor = 'pointer'; });
+      map.on('mouseleave', l, function() { map.getCanvas().style.cursor = ''; });
+    });
+    // Tenta carregar dados do GitHub primeiro
+    loadStationsData();
   });
 }
 
-function loadFallbackStations() {
-  var cities=[{name:'Posto SP Centro',lat:-23.5505,lng:-46.6333,city:'São Paulo',state:'SP'},{name:'Berrini EV',lat:-23.600,lng:-46.686,city:'São Paulo',state:'SP'},{name:'Vila Olímpia',lat:-23.595,lng:-46.683,city:'São Paulo',state:'SP'},{name:'Morumbi EV',lat:-23.6228,lng:-46.7218,city:'São Paulo',state:'SP'},{name:'Pinheiros EV',lat:-23.5662,lng:-46.6794,city:'São Paulo',state:'SP'},{name:'Itaim EV',lat:-23.5831,lng:-46.6752,city:'São Paulo',state:'SP'},{name:'Campinas EV',lat:-22.9056,lng:-47.0608,city:'Campinas',state:'SP'},{name:'Santos EV',lat:-23.9608,lng:-46.3336,city:'Santos',state:'SP'},{name:'Ribeirão Preto',lat:-21.1767,lng:-47.8208,city:'Ribeirão Preto',state:'SP'},{name:'RJ Ipanema',lat:-22.9838,lng:-43.2096,city:'Rio de Janeiro',state:'RJ'},{name:'Barra EV',lat:-23.0047,lng:-43.3658,city:'Rio de Janeiro',state:'RJ'},{name:'Copacabana',lat:-22.9711,lng:-43.1877,city:'Rio de Janeiro',state:'RJ'},{name:'BH Savassi',lat:-19.9391,lng:-43.9381,city:'Belo Horizonte',state:'MG'},{name:'BH Lourdes',lat:-19.9357,lng:-43.9357,city:'Belo Horizonte',state:'MG'},{name:'Uberlândia EV',lat:-18.9186,lng:-48.2772,city:'Uberlândia',state:'MG'},{name:'Curitiba Centro',lat:-25.4284,lng:-49.2733,city:'Curitiba',state:'PR'},{name:'Curitiba Batel',lat:-25.4411,lng:-49.2826,city:'Curitiba',state:'PR'},{name:'Londrina EV',lat:-23.3045,lng:-51.1696,city:'Londrina',state:'PR'},{name:'POA Centro',lat:-30.0346,lng:-51.2177,city:'Porto Alegre',state:'RS'},{name:'Moinhos EV',lat:-30.0280,lng:-51.2131,city:'Porto Alegre',state:'RS'},{name:'Caxias do Sul',lat:-29.1681,lng:-51.1793,city:'Caxias do Sul',state:'RS'},{name:'Florianópolis N',lat:-27.5954,lng:-48.5480,city:'Florianópolis',state:'SC'},{name:'Joinville EV',lat:-26.3044,lng:-48.8456,city:'Joinville',state:'SC'},{name:'Brasília Asa N',lat:-15.7801,lng:-47.8912,city:'Brasília',state:'DF'},{name:'Brasília Asa S',lat:-15.8267,lng:-47.9218,city:'Brasília',state:'DF'},{name:'Salvador Centro',lat:-12.9714,lng:-38.5014,city:'Salvador',state:'BA'},{name:'Fortaleza EV',lat:-3.7172,lng:-38.5433,city:'Fortaleza',state:'CE'},{name:'Recife EV',lat:-8.1199,lng:-34.9003,city:'Recife',state:'PE'},{name:'Manaus EV',lat:-3.1190,lng:-60.0217,city:'Manaus',state:'AM'},{name:'Goiânia EV',lat:-16.6869,lng:-49.2648,city:'Goiânia',state:'GO'},{name:'Vitória EV',lat:-20.3155,lng:-40.3128,city:'Vitória',state:'ES'}];
-  var all=[];
-  cities.forEach(function(c){ all.push(c); for(var i=0;i<3;i++) all.push({name:c.name+' #'+(i+2),lat:c.lat+(Math.random()-.5)*.1,lng:c.lng+(Math.random()-.5)*.1,city:c.city,state:c.state}); });
-  _allStations=all;
-  buildGeoJSON('');
+/* Carrega estações: GitHub JSON → fallback inline */
+function loadStationsData() {
+  var ghUrl = 'https://raw.githubusercontent.com/KayhamCristoffer/SustAmbiTechBI.io/main/data/estacoes.json';
+  fetch(ghUrl)
+    .then(function(r) { if (!r.ok) throw new Error('GitHub data not available'); return r.json(); })
+    .then(function(data) {
+      _allStations = data;
+      // Merge com localStorage
+      var local = getLocalEstacoes();
+      local.forEach(function(l) {
+        if (!_allStations.find(function(s) { return s.id === l.id; })) {
+          _allStations.push(l);
+        }
+      });
+      buildGeoJSON(_currentStateFilter);
+      updateSidebarTotal();
+    })
+    .catch(function() {
+      // Fallback: dados locais + inline
+      var local = getLocalEstacoes();
+      if (local.length > 0) {
+        _allStations = local;
+      } else {
+        _allStations = getInlineFallbackStations();
+      }
+      buildGeoJSON(_currentStateFilter);
+      updateSidebarTotal();
+    });
+}
+
+function getInlineFallbackStations() {
+  var pts = [
+    {id:'f001',nome:'Blink SP Centro',cidade:'São Paulo',estado:'SP',lat:-23.5505,lng:-46.6333,tipos_conector:['CCS2'],potencia_kw:150,status:'Operacional',operadora:'Blink'},
+    {id:'f002',nome:'EDP Berrini',cidade:'São Paulo',estado:'SP',lat:-23.600,lng:-46.686,tipos_conector:['Type 2'],potencia_kw:22,status:'Operacional',operadora:'EDP'},
+    {id:'f003',nome:'Shell Recharge Vila Olímpia',cidade:'São Paulo',estado:'SP',lat:-23.595,lng:-46.683,tipos_conector:['CCS2'],potencia_kw:50,status:'Operacional',operadora:'Shell'},
+    {id:'f004',nome:'Eletrocar Morumbi',cidade:'São Paulo',estado:'SP',lat:-23.6228,lng:-46.7218,tipos_conector:['CHAdeMO'],potencia_kw:50,status:'Operacional',operadora:'Eletrocar'},
+    {id:'f005',nome:'BeCharge Pinheiros',cidade:'São Paulo',estado:'SP',lat:-23.5662,lng:-46.6794,tipos_conector:['Type 2'],potencia_kw:7,status:'Operacional',operadora:'BeCharge'},
+    {id:'f006',nome:'Tesla SC Itaim',cidade:'São Paulo',estado:'SP',lat:-23.5831,lng:-46.6752,tipos_conector:['Tesla'],potencia_kw:250,status:'Operacional',operadora:'Tesla'},
+    {id:'f007',nome:'EDP Campinas',cidade:'Campinas',estado:'SP',lat:-22.9056,lng:-47.0608,tipos_conector:['CCS2'],potencia_kw:150,status:'Operacional',operadora:'EDP'},
+    {id:'f008',nome:'Voe Energia Santos',cidade:'Santos',estado:'SP',lat:-23.9608,lng:-46.3336,tipos_conector:['Type 2'],potencia_kw:22,status:'Operacional',operadora:'Voe'},
+    {id:'f009',nome:'Blink RJ Ipanema',cidade:'Rio de Janeiro',estado:'RJ',lat:-22.9838,lng:-43.2096,tipos_conector:['CCS2'],potencia_kw:150,status:'Operacional',operadora:'Blink'},
+    {id:'f010',nome:'Shell Barra',cidade:'Rio de Janeiro',estado:'RJ',lat:-23.0047,lng:-43.3658,tipos_conector:['Type 2'],potencia_kw:22,status:'Operacional',operadora:'Shell'},
+    {id:'f011',nome:'Tesla SC Copacabana',cidade:'Rio de Janeiro',estado:'RJ',lat:-22.9711,lng:-43.1877,tipos_conector:['Tesla'],potencia_kw:250,status:'Operacional',operadora:'Tesla'},
+    {id:'f012',nome:'Tupi BH Savassi',cidade:'Belo Horizonte',estado:'MG',lat:-19.9391,lng:-43.9381,tipos_conector:['CCS2'],potencia_kw:150,status:'Operacional',operadora:'Tupi'},
+    {id:'f013',nome:'EDP BH Lourdes',cidade:'Belo Horizonte',estado:'MG',lat:-19.9357,lng:-43.9357,tipos_conector:['Type 2'],potencia_kw:22,status:'Operacional',operadora:'EDP'},
+    {id:'f014',nome:'Blink Curitiba Centro',cidade:'Curitiba',estado:'PR',lat:-25.4284,lng:-49.2733,tipos_conector:['CCS2'],potencia_kw:150,status:'Operacional',operadora:'Blink'},
+    {id:'f015',nome:'Copel Batel',cidade:'Curitiba',estado:'PR',lat:-25.4411,lng:-49.2826,tipos_conector:['Type 2'],potencia_kw:22,status:'Operacional',operadora:'Copel'},
+    {id:'f016',nome:'CEEE POA Centro',cidade:'Porto Alegre',estado:'RS',lat:-30.0346,lng:-51.2177,tipos_conector:['CCS2'],potencia_kw:150,status:'Operacional',operadora:'CEEE'},
+    {id:'f017',nome:'Shell Moinhos',cidade:'Porto Alegre',estado:'RS',lat:-30.0280,lng:-51.2131,tipos_conector:['Tesla'],potencia_kw:250,status:'Operacional',operadora:'Shell'},
+    {id:'f018',nome:'Engie Florianópolis',cidade:'Florianópolis',estado:'SC',lat:-27.5954,lng:-48.5480,tipos_conector:['CCS2'],potencia_kw:150,status:'Operacional',operadora:'Engie'},
+    {id:'f019',nome:'EDP Brasília Asa N',cidade:'Brasília',estado:'DF',lat:-15.7801,lng:-47.8912,tipos_conector:['Type 2'],potencia_kw:22,status:'Operacional',operadora:'EDP'},
+    {id:'f020',nome:'Blink Salvador',cidade:'Salvador',estado:'BA',lat:-12.9714,lng:-38.5014,tipos_conector:['CCS2'],potencia_kw:50,status:'Operacional',operadora:'Blink'},
+    {id:'f021',nome:'BeCharge Fortaleza',cidade:'Fortaleza',estado:'CE',lat:-3.7172,lng:-38.5433,tipos_conector:['Type 2'],potencia_kw:22,status:'Operacional',operadora:'BeCharge'},
+    {id:'f022',nome:'Neoenergia Recife',cidade:'Recife',estado:'PE',lat:-8.0476,lng:-34.8770,tipos_conector:['CCS2'],potencia_kw:150,status:'Operacional',operadora:'Neoenergia'},
+    {id:'f023',nome:'EDP Goiânia',cidade:'Goiânia',estado:'GO',lat:-16.6869,lng:-49.2648,tipos_conector:['Type 2'],potencia_kw:22,status:'Operacional',operadora:'EDP'},
+    {id:'f024',nome:'Equatorial Manaus',cidade:'Manaus',estado:'AM',lat:-3.1190,lng:-60.0217,tipos_conector:['CCS2'],potencia_kw:50,status:'Operacional',operadora:'Equatorial'},
+    {id:'f025',nome:'Engie Vitória',cidade:'Vitória',estado:'ES',lat:-20.3155,lng:-40.3128,tipos_conector:['Type 2'],potencia_kw:22,status:'Operacional',operadora:'Engie'}
+  ];
+  // Expandir com variações
+  var expanded = [];
+  pts.forEach(function(p) {
+    expanded.push(p);
+    for (var i = 1; i <= 3; i++) {
+      expanded.push({
+        id: p.id+'_'+i, nome: p.nome+' #'+i,
+        cidade: p.cidade, estado: p.estado,
+        lat: p.lat + (Math.random()-.5)*.12,
+        lng: p.lng + (Math.random()-.5)*.12,
+        tipos_conector: p.tipos_conector, potencia_kw: p.potencia_kw,
+        status: i===3?'Em_manutencao':'Operacional',
+        operadora: p.operadora, fonte: 'inline_fallback'
+      });
+    }
+  });
+  return expanded;
 }
 
 function buildGeoJSON(stateFilter) {
-  var features=_allStations.filter(function(s){ return !stateFilter||(s.state||'')===stateFilter; }).map(function(s){ var lat=parseFloat(s.lat||0),lng=parseFloat(s.lng||0); if(!lat||!lng) return null; return {type:'Feature',geometry:{type:'Point',coordinates:[lng,lat]},properties:{name:s.name||'Estação EV',city:s.city||'',state:s.state||''}}; }).filter(Boolean);
-  if(_mapInstance&&_mapLibreReady) _mapInstance.getSource('stations').setData({type:'FeatureCollection',features:features});
+  var filtered = _allStations.filter(function(s) {
+    return !stateFilter || (s.estado||'') === stateFilter;
+  });
+  var features = filtered.map(function(s) {
+    var lat = parseFloat(s.lat||0), lng = parseFloat(s.lng||0);
+    if (!lat || !lng) return null;
+    return {
+      type: 'Feature',
+      geometry: { type: 'Point', coordinates: [lng, lat] },
+      properties: {
+        name: s.nome||'Estação EV', city: s.cidade||'',
+        state: s.estado||'', connector: (s.tipos_conector||[])[0]||'',
+        power: s.potencia_kw||0, operator: s.operadora||'', status: s.status||''
+      }
+    };
+  }).filter(Boolean);
+  if (_mapInstance && _mapLibreReady) {
+    _mapInstance.getSource('stations').setData({ type:'FeatureCollection', features: features });
+  }
 }
 
-function applyStateFilter(stateCode) {
-  if(!_mapLibreActive) return;
-  buildGeoJSON(stateCode);
-  var centers={'SP':[-46.65,-23.5],'RJ':[-43.2,-22.9],'MG':[-44.0,-19.9],'RS':[-51.2,-30.0],'PR':[-49.27,-25.4],'SC':[-48.55,-27.6],'BA':[-38.5,-12.97],'CE':[-38.54,-3.72],'DF':[-47.9,-15.8]};
-  if(stateCode&&centers[stateCode]&&_mapInstance) _mapInstance.flyTo({center:centers[stateCode],zoom:7.5,duration:1200});
-  else if(!stateCode&&_mapInstance) _mapInstance.flyTo({center:[-51.5,-15.8],zoom:3.8,duration:1200});
+function updateSidebarTotal() {
+  var el = document.getElementById('sidebar-total');
+  if (el) el.textContent = _allStations.length.toLocaleString('pt-BR');
 }
+
+function setMapState(btn, state) {
+  document.querySelectorAll('.map-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  _currentStateFilter = state;
+  buildGeoJSON(state);
+  var centers = {
+    'SP':[-46.65,-23.5],'RJ':[-43.2,-22.9],'MG':[-44.0,-19.9],'RS':[-51.2,-30.0],
+    'PR':[-49.27,-25.4],'SC':[-48.55,-27.6],'BA':[-38.5,-12.97],'CE':[-38.54,-3.72],'DF':[-47.9,-15.8]
+  };
+  if (state && centers[state] && _mapInstance) {
+    _mapInstance.flyTo({ center: centers[state], zoom: 7.5, duration: 1200 });
+  } else if (!state && _mapInstance) {
+    _mapInstance.flyTo({ center: [-51.5,-15.8], zoom: 3.8, duration: 1200 });
+  }
+  // atualizar lista e stats se visíveis
+  if (_mapMode === 'lista') filtrarListaMapa();
+  if (_mapMode === 'stats') renderMapaStats();
+}
+
+function setMapMode(btn, mode) {
+  _mapMode = mode;
+  document.querySelectorAll('.map-mode-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  var mapDiv   = document.getElementById('maplibre-map');
+  var listaDiv = document.getElementById('mapa-lista-view');
+  var statsDiv = document.getElementById('mapa-stats-view');
+  if (mapDiv)   mapDiv.style.display   = mode==='mapa'  ? 'block' : 'none';
+  if (listaDiv) listaDiv.style.display = mode==='lista' ? 'block' : 'none';
+  if (statsDiv) statsDiv.style.display = mode==='stats' ? 'block' : 'none';
+  if (mode === 'lista') { _listaPage = 0; filtrarListaMapa(); }
+  if (mode === 'stats') renderMapaStats();
+}
+
+function filtrarListaMapa() {
+  var q = (document.getElementById('lista-search')||{}).value||'';
+  var uf = (document.getElementById('lista-estado-filter')||{}).value||'';
+  q = q.toLowerCase();
+  _listaFiltered = _allStations.filter(function(s) {
+    var match = !q || (s.nome||'').toLowerCase().includes(q) ||
+      (s.cidade||'').toLowerCase().includes(q) || (s.operadora||'').toLowerCase().includes(q);
+    var matchUf = !uf || s.estado === uf;
+    return match && matchUf;
+  });
+  renderListaTable();
+}
+
+function renderListaTable() {
+  var body = document.getElementById('mapa-lista-body');
+  if (!body) return;
+  var start = _listaPage * _listaPageSize;
+  var page = _listaFiltered.slice(start, start + _listaPageSize);
+  var statusColor = { 'Operacional':'badge-green','Em_manutencao':'badge-yellow','Temporariamente_fechada':'badge-red' };
+  body.innerHTML = page.length === 0 ? '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem">Nenhuma estação encontrada</td></tr>' :
+    page.map(function(s) {
+      return '<tr><td>' + (s.nome||'—') + '</td><td>' + (s.cidade||'—') + ' · ' + (s.estado||'') + '</td>' +
+        '<td>' + ((s.tipos_conector||[])[0]||'—') + '</td>' +
+        '<td>' + (s.potencia_kw?s.potencia_kw+'kW':'—') + '</td>' +
+        '<td><span class="badge ' + (statusColor[s.status]||'badge-gray') + '">' + (s.status||'—').replace('_',' ') + '</span></td>' +
+        '<td>' + (s.operadora||'—') + '</td></tr>';
+    }).join('');
+  // pager
+  var pager = document.getElementById('lista-pager');
+  if (pager) {
+    var total = _listaFiltered.length;
+    var pages = Math.ceil(total / _listaPageSize);
+    pager.innerHTML = '<button onclick="_listaPage=Math.max(0,_listaPage-1);renderListaTable()" ' + (_listaPage===0?'disabled':'') + '>← Anterior</button>' +
+      '<span>Pág. ' + (_listaPage+1) + ' de ' + Math.max(1,pages) + ' · ' + total + ' registros</span>' +
+      '<button onclick="_listaPage=Math.min(' + (pages-1) + ',_listaPage+1);renderListaTable()" ' + (_listaPage>=pages-1?'disabled':'') + '>Próxima →</button>';
+  }
+}
+
+function renderMapaStats() {
+  var all = _currentStateFilter ? _allStations.filter(function(s){return s.estado===_currentStateFilter;}) : _allStations;
+  var op = all.filter(function(s){return s.status==='Operacional';}).length;
+  var estados = {};
+  var ops = {};
+  all.forEach(function(s) {
+    estados[s.estado||'N/A'] = (estados[s.estado||'N/A']||0)+1;
+    ops[s.operadora||'N/A'] = (ops[s.operadora||'N/A']||0)+1;
+  });
+  var el = function(id, v) { var e=document.getElementById(id); if(e) e.textContent=v; };
+  el('st-total', all.length.toLocaleString('pt-BR'));
+  el('st-op', op.toLocaleString('pt-BR'));
+  el('st-estados', Object.keys(estados).length);
+  el('st-ops', Object.keys(ops).length);
+  var tbody = document.getElementById('mapa-stats-body');
+  if (tbody) {
+    var sorted = Object.entries(estados).sort(function(a,b){return b[1]-a[1];});
+    tbody.innerHTML = sorted.map(function(e) {
+      var pct = all.length ? (100*e[1]/all.length).toFixed(1) : 0;
+      return '<tr><td><strong>' + e[0] + '</strong></td><td>' + e[1].toLocaleString('pt-BR') +
+        '</td><td><div style="display:flex;align-items:center;gap:.5rem"><div style="flex:1;height:4px;background:var(--border);border-radius:2px"><div style="width:'+pct+'%;height:4px;background:var(--green);border-radius:2px"></div></div>' + pct + '%</div></td></tr>';
+    }).join('');
+  }
+}
+
+function geolocateMap() {
+  var btn = document.getElementById('geo-btn');
+  if (!navigator.geolocation) { alert('Geolocalização não suportada.'); return; }
+  if (btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Localizando…'; }
+  navigator.geolocation.getCurrentPosition(
+    function(pos) {
+      var lat = pos.coords.latitude, lng = pos.coords.longitude;
+      if (btn) btn.innerHTML = '<i class="fas fa-crosshairs"></i> Minha Localização';
+      document.querySelectorAll('.map-filter-btn').forEach(function(b){b.classList.remove('active');});
+      if (_mapInstance) {
+        _mapInstance.flyTo({ center: [lng, lat], zoom: 11, duration: 1400 });
+        new maplibregl.Marker({ color: '#00e5ff' }).setLngLat([lng, lat]).addTo(_mapInstance);
+      }
+    },
+    function(err) {
+      if (btn) btn.innerHTML = '<i class="fas fa-crosshairs"></i> Minha Localização';
+      var msgs = {1:'Permissão de localização negada.',2:'Localização indisponível.',3:'Tempo esgotado.'};
+      alert('Erro de geolocalização: ' + (msgs[err.code]||err.message));
+    },
+    { enableHighAccuracy: true, timeout: 10000 }
+  );
+}
+
+// Inicia mapa ao carregar página
+document.addEventListener('DOMContentLoaded', function() {
+  initMapLibre();
+});
+
+/* =============================================================
+   ADMIN SYSTEM — Auth localStorage + hash SHA256 fake
+   (segurança suficiente para GitHub Pages sem backend)
+============================================================= */
+var ADMIN_DB_KEY = 'sustambi_users';
+var ADMIN_SESSION_KEY = 'sustambi_session';
+var ADMIN_ESTACOES_KEY = 'sustambi_estacoes_local';
+var ADMIN_LOGS_KEY = 'sustambi_logs';
+var _estacoesPage = 0;
+var _estacoesPageSize = 15;
+
+/* Hash simples baseado em btoa — NÃO é segurança criptográfica real,
+   mas suficiente para GitHub Pages sem backend */
+function hashSenha(senha) {
+  return btoa(unescape(encodeURIComponent('sat2024:' + senha + ':sustambi'))).split('').reverse().join('');
+}
+
+function getAdminUsers() {
+  try { return JSON.parse(localStorage.getItem(ADMIN_DB_KEY) || '[]'); } catch(e) { return []; }
+}
+function saveAdminUsers(users) { localStorage.setItem(ADMIN_DB_KEY, JSON.stringify(users)); }
+function getSession() {
+  try { return JSON.parse(localStorage.getItem(ADMIN_SESSION_KEY) || 'null'); } catch(e) { return null; }
+}
+function saveSession(s) { localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(s)); }
+function clearSession() { localStorage.removeItem(ADMIN_SESSION_KEY); }
+function getLocalEstacoes() {
+  try { return JSON.parse(localStorage.getItem(ADMIN_ESTACOES_KEY) || '[]'); } catch(e) { return []; }
+}
+function saveLocalEstacoes(data) { localStorage.setItem(ADMIN_ESTACOES_KEY, JSON.stringify(data)); }
+function addLog(user, acao, detalhes) {
+  try {
+    var logs = JSON.parse(localStorage.getItem(ADMIN_LOGS_KEY)||'[]');
+    logs.unshift({ ts: new Date().toISOString(), user: user, acao: acao, detalhes: detalhes });
+    if (logs.length > 200) logs = logs.slice(0, 200);
+    localStorage.setItem(ADMIN_LOGS_KEY, JSON.stringify(logs));
+  } catch(e) {}
+}
+
+/* Garante que o admin principal existe */
+function ensurePrimaryAdmin() {
+  var users = getAdminUsers();
+  var exists = users.find(function(u) { return u.email === 'kayham98.1@hotmail.com'; });
+  if (!exists) {
+    users.push({
+      id: 'admin_001',
+      nome: 'Kayham C. G. de Oliveira',
+      email: 'kayham98.1@hotmail.com',
+      senha_hash: hashSenha('Sustambi@2024'),
+      nivel: 'superadmin',
+      status: 'ativo',
+      criado_em: new Date().toISOString(),
+      ultimo_acesso: null,
+      criado_por: 'sistema'
+    });
+    saveAdminUsers(users);
+  }
+}
+ensurePrimaryAdmin();
+
+/* Verificar URL params para flows de token */
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get('token');
+  var flow = params.get('flow');
+  if (token && flow === 'reset') { window.__resetToken = token; }
+  if (token && flow === 'invite') { window.__inviteToken = token; }
+})();
+
+/* Mostrar página admin com estado correto */
+function showAdminPage() {
+  var session = getSession();
+  if (session) {
+    document.getElementById('admin-login-view').style.display = 'none';
+    document.getElementById('admin-dash-view').style.display = 'block';
+    document.getElementById('admin-user-name').textContent = session.nome;
+    var adminLink = document.getElementById('nav-admin');
+    if (adminLink) adminLink.classList.add('logged');
+    loadAdminDash();
+  } else {
+    document.getElementById('admin-login-view').style.display = 'block';
+    document.getElementById('admin-dash-view').style.display = 'none';
+    // verificar flows de token
+    if (window.__resetToken) { showReset(); } 
+    else if (window.__inviteToken) { showInvite(); }
+    else { showLogin(); }
+  }
+}
+
+/* Override showPage para acionar showAdminPage */
+var _origShowPage = showPage;
+showPage = function(name) {
+  _origShowPage(name);
+  if (name === 'admin') { showAdminPage(); }
+};
+
+function showLogin() {
+  ['view-login','view-forgot','view-reset','view-invite'].forEach(function(v) {
+    document.getElementById(v).style.display = 'none';
+  });
+  document.getElementById('view-login').style.display = 'block';
+}
+function showForgot() {
+  ['view-login','view-forgot','view-reset','view-invite'].forEach(function(v) {
+    document.getElementById(v).style.display = 'none';
+  });
+  document.getElementById('view-forgot').style.display = 'block';
+}
+function showReset() {
+  ['view-login','view-forgot','view-reset','view-invite'].forEach(function(v) {
+    document.getElementById(v).style.display = 'none';
+  });
+  document.getElementById('view-reset').style.display = 'block';
+}
+function showInvite() {
+  ['view-login','view-forgot','view-reset','view-invite'].forEach(function(v) {
+    document.getElementById(v).style.display = 'none';
+  });
+  document.getElementById('view-invite').style.display = 'block';
+  if (window.__inviteToken) {
+    var users = getAdminUsers();
+    var u = users.find(function(u) { return u.token_convite === window.__inviteToken; });
+    if (u) { document.getElementById('invite-email').value = u.email; }
+  }
+}
+
+function showAdminMsg(elId, msg, isErr) {
+  var el = document.getElementById(elId);
+  if (!el) return;
+  el.innerHTML = msg;
+  el.style.display = 'block';
+  if (isErr) { el.className = 'admin-error'; el.style.display = 'block'; }
+  else { el.className = 'admin-success'; el.style.display = 'block'; }
+}
+function hideAdminMsgs() {
+  document.querySelectorAll('.admin-error,.admin-success').forEach(function(e){ e.style.display='none'; });
+}
+
+function doLogin() {
+  hideAdminMsgs();
+  var email = document.getElementById('login-email').value.trim();
+  var senha = document.getElementById('login-senha').value;
+  if (!email || !senha) { showAdminMsg('login-error','Preencha e-mail e senha.', true); return; }
+  var users = getAdminUsers();
+  var user = users.find(function(u) { return u.email === email && u.senha_hash === hashSenha(senha) && u.status === 'ativo'; });
+  if (!user) {
+    showAdminMsg('login-error', '<i class="fas fa-exclamation-circle"></i> E-mail ou senha incorretos, ou conta inativa.', true);
+    addLog(email, 'login_falha', 'Tentativa de login incorreto');
+    return;
+  }
+  // Atualizar último acesso
+  user.ultimo_acesso = new Date().toISOString();
+  saveAdminUsers(users);
+  saveSession({ id: user.id, nome: user.nome, email: user.email, nivel: user.nivel });
+  addLog(user.email, 'login_ok', 'Login realizado com sucesso');
+  showAdminMsg('login-success','<i class="fas fa-check-circle"></i> Login realizado! Carregando painel…');
+  setTimeout(function() { showAdminPage(); }, 900);
+}
+
+function doForgot() {
+  hideAdminMsgs();
+  var email = document.getElementById('forgot-email').value.trim();
+  if (!email) { showAdminMsg('forgot-error','Informe o e-mail.', true); return; }
+  var users = getAdminUsers();
+  var user = users.find(function(u) { return u.email === email; });
+  if (!user) { showAdminMsg('forgot-error','E-mail não encontrado no sistema.', true); return; }
+  // Gerar token de reset
+  var token = btoa(email + ':' + Date.now() + ':reset').replace(/[^a-zA-Z0-9]/g,'').substring(0,32);
+  var exp = Date.now() + 3600000; // 1h
+  user.token_reset = token;
+  user.token_exp = exp;
+  saveAdminUsers(users);
+  // URL de reset
+  var resetUrl = window.location.origin + window.location.pathname + '?flow=reset&token=' + token + '#page-admin';
+  // Abre mailto com o link (sem backend)
+  var mailtoLink = 'mailto:' + email + '?subject=SustAmbiTech+BI+—+Recuperação+de+Senha&body=' +
+    encodeURIComponent('Olá ' + user.nome + ',\n\nVocê solicitou recuperação de senha no SustAmbiTech BI.\n\nClique no link abaixo para redefinir sua senha (válido por 1 hora):\n\n' + resetUrl + '\n\nSe não foi você, ignore este e-mail.\n\n— Equipe SustAmbiTech BI');
+  window.open(mailtoLink);
+  addLog(email, 'forgot_senha', 'Link de reset gerado');
+  showAdminMsg('forgot-success', '<i class="fas fa-check-circle"></i> Link de recuperação gerado! Um e-mail (mailto) foi aberto no seu cliente de e-mail.<br><small style="word-break:break-all">Link: <a href="' + resetUrl + '" style="color:var(--cyan)">' + resetUrl + '</a></small>');
+}
+
+function doReset() {
+  hideAdminMsgs();
+  var s1 = document.getElementById('reset-senha1').value;
+  var s2 = document.getElementById('reset-senha2').value;
+  if (s1.length < 8) { showAdminMsg('reset-error','Senha deve ter pelo menos 8 caracteres.', true); return; }
+  if (s1 !== s2) { showAdminMsg('reset-error','As senhas não coincidem.', true); return; }
+  var token = window.__resetToken;
+  var users = getAdminUsers();
+  var user = users.find(function(u) { return u.token_reset === token && (!u.token_exp || u.token_exp > Date.now()); });
+  if (!user) { showAdminMsg('reset-error','Token inválido ou expirado. Solicite nova recuperação.', true); return; }
+  user.senha_hash = hashSenha(s1);
+  user.token_reset = null; user.token_exp = null;
+  saveAdminUsers(users);
+  addLog(user.email, 'reset_senha', 'Senha redefinida com sucesso');
+  showAdminMsg('reset-success','<i class="fas fa-check-circle"></i> Senha redefinida com sucesso! <span style="cursor:pointer;text-decoration:underline;color:var(--cyan)" onclick="showLogin()">Fazer login →</span>');
+}
+
+function doAcceptInvite() {
+  hideAdminMsgs();
+  var nome = document.getElementById('invite-nome').value.trim();
+  var email = document.getElementById('invite-email').value.trim();
+  var s1 = document.getElementById('invite-senha1').value;
+  var s2 = document.getElementById('invite-senha2').value;
+  if (!nome) { showAdminMsg('invite-error','Informe seu nome.', true); return; }
+  if (s1.length < 8) { showAdminMsg('invite-error','Senha deve ter pelo menos 8 caracteres.', true); return; }
+  if (s1 !== s2) { showAdminMsg('invite-error','As senhas não coincidem.', true); return; }
+  var token = window.__inviteToken;
+  var users = getAdminUsers();
+  var user = users.find(function(u) { return u.email === email && u.token_convite === token; });
+  if (!user) { showAdminMsg('invite-error','Token de convite inválido ou já utilizado.', true); return; }
+  user.nome = nome;
+  user.senha_hash = hashSenha(s1);
+  user.status = 'ativo';
+  user.token_convite = null;
+  saveAdminUsers(users);
+  addLog(email, 'invite_aceito', 'Conta ativada: ' + nome);
+  showAdminMsg('invite-success','<i class="fas fa-check-circle"></i> Conta ativada com sucesso! <span style="cursor:pointer;text-decoration:underline;color:var(--cyan)" onclick="showLogin()">Fazer login →</span>');
+}
+
+function doLogout() {
+  var session = getSession();
+  if (session) addLog(session.email, 'logout', 'Sessão encerrada');
+  clearSession();
+  var adminLink = document.getElementById('nav-admin');
+  if (adminLink) { adminLink.classList.remove('logged'); adminLink.classList.remove('active'); }
+  showAdminPage();
+}
+
+/* ── Dashboard Admin ── */
+function loadAdminDash() {
+  // Stats
+  var local = getLocalEstacoes();
+  var users = getAdminUsers();
+  var estados = {};
+  local.forEach(function(s) { estados[s.estado||'N/A']=true; });
+  document.getElementById('ast-estacoes').textContent = local.length.toLocaleString('pt-BR');
+  document.getElementById('ast-usuarios').textContent = users.length;
+  document.getElementById('ast-estados').textContent = Object.keys(estados).length;
+  try {
+    var meta = JSON.parse(localStorage.getItem('sustambi_meta')||'{}');
+    document.getElementById('ast-atualizado').textContent = meta.atualizado_em ? meta.atualizado_em.split('T')[0] : 'Nunca';
+  } catch(e) { document.getElementById('ast-atualizado').textContent = '—'; }
+  renderEstacoesTable();
+  renderUsuariosTable();
+  renderLogsTable();
+}
+
+function setAdminTab(btn, tabId) {
+  document.querySelectorAll('.admin-tab').forEach(function(t){ t.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.admin-panel').forEach(function(p){ p.classList.remove('active'); });
+  var panel = document.getElementById(tabId);
+  if (panel) panel.classList.add('active');
+}
+
+function setSqlTab(btn, tabId) {
+  // Encontra o container de abas pai e reseta só aquelas
+  var wrap = btn.closest('.admin-card');
+  if (wrap) {
+    wrap.querySelectorAll('.admin-tab').forEach(function(t){ t.classList.remove('active'); });
+    wrap.querySelectorAll('.admin-panel').forEach(function(p){ p.classList.remove('active'); });
+    btn.classList.add('active');
+    var panel = document.getElementById(tabId);
+    if (panel) panel.classList.add('active');
+  }
+}
+
+/* CRUD Estações */
+function addEstacao() {
+  hideAdminMsgs();
+  var session = getSession(); if (!session) return;
+  var nome    = document.getElementById('es-nome').value.trim();
+  var op      = document.getElementById('es-op').value.trim();
+  var cidade  = document.getElementById('es-cidade').value.trim();
+  var estado  = document.getElementById('es-estado').value;
+  var lat     = parseFloat(document.getElementById('es-lat').value||0);
+  var lng     = parseFloat(document.getElementById('es-lng').value||0);
+  if (!nome || !cidade || !estado) {
+    showAdminMsg('es-error','Preencha Nome, Cidade e Estado.', true); return;
+  }
+  var estacoes = getLocalEstacoes();
+  var novo = {
+    id: 'usr_' + Date.now(),
+    nome: nome, operadora: op, cidade: cidade, estado: estado,
+    endereco: document.getElementById('es-end').value.trim(),
+    cep: document.getElementById('es-cep').value.trim(),
+    lat: lat||null, lng: lng||null,
+    tipos_conector: [document.getElementById('es-conector').value],
+    potencia_kw: parseFloat(document.getElementById('es-potencia').value)||0,
+    status: document.getElementById('es-status').value,
+    acesso: document.getElementById('es-acesso').value,
+    fonte: 'manual_' + session.email,
+    data_criacao: new Date().toISOString(),
+    data_atualizacao: new Date().toISOString()
+  };
+  estacoes.push(novo);
+  saveLocalEstacoes(estacoes);
+  addLog(session.email, 'add_estacao', 'Adicionada: ' + nome + ' (' + cidade + '/' + estado + ')');
+  // Reset form
+  ['es-nome','es-op','es-cidade','es-end','es-cep','es-lat','es-lng','es-potencia'].forEach(function(id) {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('ast-estacoes').textContent = estacoes.length;
+  showAdminMsg('es-success','<i class="fas fa-check-circle"></i> Estação "' + nome + '" adicionada ao banco local!');
+  renderEstacoesTable();
+  // Atualiza mapa
+  if (_mapInstance && _mapLibreReady && lat && lng) {
+    _allStations.push(novo);
+    buildGeoJSON(_currentStateFilter);
+    updateSidebarTotal();
+  }
+}
+
+function renderEstacoesTable() {
+  var q  = (document.getElementById('es-search')||{}).value||'';
+  var uf = (document.getElementById('es-filter-estado')||{}).value||'';
+  var st = (document.getElementById('es-filter-status')||{}).value||'';
+  q = q.toLowerCase();
+  var estacoes = getLocalEstacoes().filter(function(s) {
+    var mq = !q || (s.nome||'').toLowerCase().includes(q) || (s.cidade||'').toLowerCase().includes(q);
+    var mu = !uf || s.estado === uf;
+    var ms = !st || s.status === st;
+    return mq && mu && ms;
+  });
+  var badge = document.getElementById('es-count-badge');
+  if (badge) badge.textContent = getLocalEstacoes().length;
+  var start = _estacoesPage * _estacoesPageSize;
+  var page = estacoes.slice(start, start + _estacoesPageSize);
+  var statusColor = {'Operacional':'badge-green','Em_manutencao':'badge-yellow','Temporariamente_fechada':'badge-red'};
+  var body = document.getElementById('es-table-body');
+  if (!body) return;
+  body.innerHTML = page.length === 0 ? '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:1.5rem">Nenhuma estação no banco local ainda.</td></tr>' :
+    page.map(function(s) {
+      return '<tr><td>' + (s.nome||'—') + '</td><td>' + (s.cidade||'—') + '/' + (s.estado||'') + '</td>' +
+        '<td>' + ((s.tipos_conector||[])[0]||'—') + '</td><td>' + (s.potencia_kw?s.potencia_kw+'kW':'—') + '</td>' +
+        '<td><span class="badge ' + (statusColor[s.status]||'badge-gray') + '">' + (s.status||'—').replace('_',' ') + '</span></td>' +
+        '<td style="display:flex;gap:.3rem">' +
+        '<button class="tbl-btn ok" onclick="openEditEstacao(' + "'" + s.id + "'" + ')"><i class="fas fa-edit"></i></button>' +
+        '<button class="tbl-btn del" onclick="deleteEstacao(' + "'" + s.id + "'" + ')"><i class="fas fa-trash"></i></button></td></tr>';
+    }).join('');
+  // pager
+  var pager = document.getElementById('es-pager');
+  if (pager) {
+    var total = estacoes.length;
+    var pages = Math.ceil(total / _estacoesPageSize);
+    pager.innerHTML = '<button onclick="_estacoesPage=Math.max(0,_estacoesPage-1);renderEstacoesTable()" ' + (_estacoesPage===0?'disabled':'') + '>← Anterior</button>' +
+      '<span>Pág. ' + (_estacoesPage+1) + ' de ' + Math.max(1,pages) + ' · ' + total + ' registros</span>' +
+      '<button onclick="_estacoesPage=Math.min(' + (pages-1) + ',_estacoesPage+1);renderEstacoesTable()" ' + (_estacoesPage>=pages-1?'disabled':'') + '>Próxima →</button>';
+  }
+}
+
+function openEditEstacao(id) {
+  var estacoes = getLocalEstacoes();
+  var s = estacoes.find(function(e){ return e.id === id; });
+  if (!s) return;
+  document.getElementById('edit-es-id').value = s.id;
+  document.getElementById('edit-es-nome').value = s.nome||'';
+  document.getElementById('edit-es-op').value = s.operadora||'';
+  document.getElementById('edit-es-cidade').value = s.cidade||'';
+  document.getElementById('edit-es-estado').value = s.estado||'SP';
+  document.getElementById('edit-es-status').value = s.status||'Operacional';
+  document.getElementById('edit-es-potencia').value = s.potencia_kw||'';
+  document.getElementById('edit-es-lat').value = s.lat||'';
+  document.getElementById('edit-es-lng').value = s.lng||'';
+  document.getElementById('modal-edit-estacao').classList.add('open');
+}
+
+function saveEditEstacao() {
+  var id = document.getElementById('edit-es-id').value;
+  var estacoes = getLocalEstacoes();
+  var idx = estacoes.findIndex(function(e){ return e.id === id; });
+  if (idx === -1) return;
+  var session = getSession();
+  estacoes[idx].nome = document.getElementById('edit-es-nome').value.trim();
+  estacoes[idx].operadora = document.getElementById('edit-es-op').value.trim();
+  estacoes[idx].cidade = document.getElementById('edit-es-cidade').value.trim();
+  estacoes[idx].estado = document.getElementById('edit-es-estado').value;
+  estacoes[idx].status = document.getElementById('edit-es-status').value;
+  estacoes[idx].potencia_kw = parseFloat(document.getElementById('edit-es-potencia').value)||0;
+  estacoes[idx].lat = parseFloat(document.getElementById('edit-es-lat').value)||null;
+  estacoes[idx].lng = parseFloat(document.getElementById('edit-es-lng').value)||null;
+  estacoes[idx].data_atualizacao = new Date().toISOString();
+  saveLocalEstacoes(estacoes);
+  if (session) addLog(session.email, 'edit_estacao', 'Editada: ' + estacoes[idx].nome);
+  closeModal('modal-edit-estacao');
+  renderEstacoesTable();
+  loadStationsData(); // Recarrega mapa
+}
+
+function deleteEstacao(id) {
+  if (!confirm('Excluir esta estação do banco local?')) return;
+  var estacoes = getLocalEstacoes().filter(function(e){ return e.id !== id; });
+  saveLocalEstacoes(estacoes);
+  var session = getSession();
+  if (session) addLog(session.email, 'delete_estacao', 'ID: ' + id);
+  renderEstacoesTable();
+  document.getElementById('ast-estacoes').textContent = estacoes.length;
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+/* Usuários */
+function enviarConvite() {
+  hideAdminMsgs();
+  var session = getSession(); if (!session) return;
+  if (session.nivel !== 'superadmin' && session.nivel !== 'admin') {
+    showAdminMsg('inv-error','Apenas administradores podem convidar usuários.', true); return;
+  }
+  var nome  = document.getElementById('inv-nome').value.trim();
+  var email = document.getElementById('inv-email').value.trim();
+  var nivel = document.getElementById('inv-nivel').value;
+  var msg   = document.getElementById('inv-msg').value.trim();
+  if (!nome || !email) { showAdminMsg('inv-error','Preencha nome e e-mail.', true); return; }
+  var users = getAdminUsers();
+  if (users.find(function(u){ return u.email === email; })) {
+    showAdminMsg('inv-error','Este e-mail já está cadastrado.', true); return;
+  }
+  var token = btoa(email + ':' + Date.now() + ':invite').replace(/[^a-zA-Z0-9]/g,'').substring(0,32);
+  var inviteUrl = window.location.origin + window.location.pathname + '?flow=invite&token=' + token;
+  users.push({
+    id: 'usr_' + Date.now(),
+    nome: nome, email: email, senha_hash: '',
+    nivel: nivel, status: 'pendente', token_convite: token,
+    criado_por: session.email, criado_em: new Date().toISOString(), ultimo_acesso: null
+  });
+  saveAdminUsers(users);
+  addLog(session.email, 'invite_enviado', 'Convidou: ' + email + ' (' + nivel + ')');
+  // Abre mailto com link de convite
+  var msgExtra = msg ? '\n\nMensagem do administrador: "' + msg + '"' : '';
+  var body = 'Olá ' + nome + ',\n\nVocê foi convidado para ser administrador do SustAmbiTech BI!' + msgExtra +
+    '\n\nClique no link abaixo para ativar sua conta:\n\n' + inviteUrl +
+    '\n\n— ' + session.nome + ' (SustAmbiTech BI)';
+  var mailtoLink = 'mailto:' + email + '?subject=SustAmbiTech+BI+—+Convite+de+Acesso&body=' + encodeURIComponent(body);
+  window.open(mailtoLink);
+  showAdminMsg('inv-success','<i class="fas fa-check-circle"></i> Convite gerado para <strong>' + email + '</strong>! E-mail (mailto) aberto.<br><small>Link: <a href="' + inviteUrl + '" target="_blank" style="color:var(--cyan)">' + inviteUrl + '</a></small>');
+  document.getElementById('inv-nome').value = '';
+  document.getElementById('inv-email').value = '';
+  document.getElementById('inv-msg').value = '';
+  renderUsuariosTable();
+}
+
+function renderUsuariosTable() {
+  var users = getAdminUsers();
+  var body = document.getElementById('usr-table-body');
+  if (!body) return;
+  var nivelLabel = {'superadmin':'Super Admin','admin':'Admin','editor':'Editor','viewer':'Visualizador'};
+  var statusColor = {'ativo':'badge-green','pendente':'badge-yellow','inativo':'badge-red'};
+  body.innerHTML = users.map(function(u) {
+    return '<tr><td><strong>' + u.nome + '</strong></td>' +
+      '<td>' + u.email + '</td>' +
+      '<td><span class="badge badge-blue">' + (nivelLabel[u.nivel]||u.nivel) + '</span></td>' +
+      '<td><span class="badge ' + (statusColor[u.status]||'badge-gray') + '">' + (u.status||'—') + '</span></td>' +
+      '<td style="font-size:.72rem;color:var(--muted)">' + (u.criado_em?u.criado_em.split('T')[0]:'—') + '</td>' +
+      '<td style="display:flex;gap:.3rem">' +
+      (u.nivel !== 'superadmin' ? '<button class="tbl-btn del" onclick="desativarUsuario(' + "'" + u.id + "'" + ')"><i class="fas fa-user-slash"></i></button>' : '<span style="color:var(--muted);font-size:.72rem">Principal</span>') +
+      '</td></tr>';
+  }).join('');
+}
+
+function desativarUsuario(id) {
+  if (!confirm('Desativar este usuário?')) return;
+  var session = getSession(); if (!session) return;
+  var users = getAdminUsers();
+  var u = users.find(function(u){ return u.id === id; });
+  if (u && u.nivel !== 'superadmin') {
+    u.status = u.status === 'ativo' ? 'inativo' : 'ativo';
+    saveAdminUsers(users);
+    addLog(session.email, 'toggle_usuario', 'Usuário ' + u.email + ' → ' + u.status);
+    renderUsuariosTable();
+  }
+}
+
+/* Dados / DB */
+function syncDataGitHub() {
+  var db = document.getElementById('db-success'); var er = document.getElementById('db-error');
+  if (db) { db.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sincronizando do GitHub…'; db.style.display='block'; }
+  var url = 'https://raw.githubusercontent.com/KayhamCristoffer/SustAmbiTechBI.io/main/data/estacoes.json';
+  fetch(url + '?t=' + Date.now())
+    .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function(data) {
+      localStorage.setItem('sustambi_meta', JSON.stringify({ total: data.length, atualizado_em: new Date().toISOString() }));
+      _allStations = data;
+      buildGeoJSON(_currentStateFilter);
+      updateSidebarTotal();
+      if (db) db.innerHTML = '<i class="fas fa-check-circle"></i> Sincronizado! ' + data.length + ' estações carregadas do GitHub.';
+      document.getElementById('ast-estacoes').textContent = data.length.toLocaleString('pt-BR');
+      document.getElementById('ast-atualizado').textContent = new Date().toISOString().split('T')[0];
+    })
+    .catch(function(e) {
+      if (er) { er.innerHTML = '<i class="fas fa-exclamation-circle"></i> Erro ao sincronizar: ' + e.message; er.style.display='block'; }
+      if (db) db.style.display='none';
+    });
+}
+
+function exportarJSON() {
+  var data = getLocalEstacoes();
+  if (!data.length) { alert('Banco local está vazio. Adicione estações primeiro.'); return; }
+  var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'sustambitech_estacoes_' + new Date().toISOString().split('T')[0] + '.json';
+  a.click();
+  var session = getSession();
+  if (session) addLog(session.email, 'exportar_json', data.length + ' registros exportados');
+}
+
+function limparDB() {
+  if (!confirm('Tem certeza que deseja limpar o banco local? Esta ação não pode ser desfeita.')) return;
+  saveLocalEstacoes([]);
+  var session = getSession();
+  if (session) addLog(session.email, 'limpar_db', 'Banco local limpo');
+  renderEstacoesTable();
+  document.getElementById('ast-estacoes').textContent = '0';
+  var suc = document.getElementById('db-success');
+  if (suc) { suc.innerHTML = '<i class="fas fa-check-circle"></i> Banco local limpo.'; suc.style.display='block'; }
+}
+
+/* Logs */
+function renderLogsTable() {
+  var body = document.getElementById('log-table-body');
+  if (!body) return;
+  try {
+    var logs = JSON.parse(localStorage.getItem(ADMIN_LOGS_KEY)||'[]');
+    body.innerHTML = logs.length === 0 ? '<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:1.5rem">Nenhum log registrado ainda.</td></tr>' :
+      logs.map(function(l) {
+        var dt = new Date(l.ts);
+        return '<tr><td style="font-size:.72rem;color:var(--muted)">' + dt.toLocaleDateString('pt-BR') + ' ' + dt.toLocaleTimeString('pt-BR') + '</td>' +
+          '<td>' + (l.user||'—') + '</td><td><code style="color:var(--cyan);font-size:.72rem">' + (l.acao||'—') + '</code></td><td style="font-size:.75rem;color:var(--dim)">' + (l.detalhes||'—') + '</td></tr>';
+      }).join('');
+  } catch(e) { body.innerHTML = '<tr><td colspan="4" style="color:#ff5252">Erro ao ler logs.</td></tr>'; }
+}
+
+/* Verificar sessão ao abrir página admin */
+document.addEventListener('DOMContentLoaded', function() {
+  var session = getSession();
+  var adminLink = document.getElementById('nav-admin');
+  if (session && adminLink) adminLink.classList.add('logged');
+});
 
 /* =============================================================
    CLIMA — PAINEL FLUTUANTE (Open-Meteo, sem API key)
