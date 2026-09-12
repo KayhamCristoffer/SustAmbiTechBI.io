@@ -1,7 +1,7 @@
 {
   "total": 500,
   "fonte": "mock_sustambitech",
-  "atualizado_em": "2026-09-12T17:14:21.950463",
+  "atualizado_em": "2026-09-12T17:21:02.902938",
   "por_estado": {
     "SP": 138,
     "MG": 55,
@@ -30,35 +30,35 @@
     "AC": 2
   },
   "por_status": {
-    "Operacional": 423,
-    "Em_manutencao": 39,
-    "Temporariamente_fechada": 38
+    "Operacional": 414,
+    "Temporariamente_fechada": 45,
+    "Em_manutencao": 41
   },
   "top_operadoras": {
+    "Voe Energia": 43,
     "Zletric": 40,
-    "Tesla": 35,
-    "EDP": 34,
+    "Siemens": 37,
+    "EVPlug": 36,
+    "Shell Recharge": 35,
+    "BeCharge": 35,
+    "ChargePoint": 34,
     "Blink": 34,
-    "EVPlug": 33,
-    "ChargePoint": 32,
-    "Siemens": 32,
     "Eletrocar": 32,
     "Neoenergia": 31,
-    "ABB": 29,
-    "Shell Recharge": 29,
-    "WEG": 29,
-    "Copel": 29,
-    "Voe Energia": 28,
-    "Engie": 28
+    "EDP": 29,
+    "Copel": 26,
+    "Engie": 24,
+    "WEG": 23,
+    "Tesla": 21
   },
   "por_conector": {
-    "Type 2 (IEC 62196)": 183,
-    "CCS2 (Combo 2)": 165,
+    "CCS2 (Combo 2)": 177,
+    "Type 2 (IEC 62196)": 162,
     "CHAdeMO": 86,
-    "AC Nível 2 (Wallbox)": 82,
-    "Tesla Supercharger": 66,
-    "AC Nível 1 (Tomada)": 57
+    "AC Nível 1 (Tomada)": 69,
+    "Tesla Supercharger": 69,
+    "AC Nível 2 (Wallbox)": 68
   },
-  "hash": "1656f5d343a4c2bc50a29a88b0f71282",
+  "hash": "9e1ff0caf8affd502638e633027123a0",
   "versao_scraper": "2.0"
 }

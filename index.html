@@ -3753,16 +3753,21 @@ function buildEnderecoCompleto() {
   if (end) end.value = parts.join(' — ');
 }
 
+var _geocodeDebounce = null;
 function onNumeroChange() {
   buildEnderecoCompleto();
-  geocodeEnderecoPin();
+  // Debounce geocode: aguarda 800ms após parar de digitar
+  if (_geocodeDebounce) clearTimeout(_geocodeDebounce);
+  _geocodeDebounce = setTimeout(geocodeEnderecoPin, 800);
 }
 
 function buscarCEP() {
   var rawCep = (document.getElementById('es-cep')||{}).value || '';
   var cep    = rawCep.replace(/\D/g, '');
+  // Silencioso se vazio (usuário apenas saiu do campo sem digitar nada)
+  if (cep.length === 0) return;
   if (cep.length !== 8) {
-    setCepStatus('<i class="fas fa-exclamation-triangle"></i> CEP deve ter 8 dígitos.', true);
+    setCepStatus('<i class="fas fa-exclamation-triangle"></i> CEP incompleto — digite 8 dígitos.', true);
     return;
   }
   setCepStatus('<i class="fas fa-spinner fa-spin"></i> Buscando CEP ' + rawCep + '…', false);
